@@ -6,4 +6,6 @@ from frappe.model.document import Document
 
 
 class VendorInvoice(Document):
-	pass
+	def onload(self):
+		add="<h1>{0}</h1>".format(self.supplier)
+		self.set_onload("supplier_bank_detail", add)

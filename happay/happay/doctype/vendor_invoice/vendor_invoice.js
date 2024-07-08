@@ -2,6 +2,19 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Vendor Invoice", {
+    onload(frm){
+        if (
+			frm.fields_dict["supplier_bank_detail"] &&
+			frm.is_new() == undefined &&
+			frm.doc.__onload &&
+			"supplier_bank_detail" in frm.doc.__onload
+		){
+            $(frm.fields_dict["supplier_bank_detail"].wrapper).html(
+                frm.doc.__onload.supplier_bank_detail
+            )
+        }
+
+    },
 	setup(frm) {
         frm.set_query("supplier", function(doc){
             return {
