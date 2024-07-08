@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "workflow_state",
   "company",
   "vendor_invoice_attachment",
   "supplier",
@@ -17,6 +18,11 @@
   "supplier_email",
   "type",
   "purpose",
+  "bill_amount",
+  "supplier_bank_account",
+  "bank",
+  "bank_account_no",
+  "branch_code",
   "section_break_qbxx",
   "expense_account",
   "department",
@@ -153,6 +159,7 @@
    "fieldtype": "Link",
    "label": "Project Manager",
    "options": "User",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -168,12 +175,55 @@
    "fieldname": "supplier_email",
    "fieldtype": "Data",
    "label": "Supplier Email"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Workflow State",
+   "no_copy": 1,
+   "options": "Workflow State"
+  },
+  {
+   "fieldname": "bill_amount",
+   "fieldtype": "Currency",
+   "label": "Bill Amount"
+  },
+  {
+   "description": "fetch supplier default or top 1 linkedbank account",
+   "fieldname": "supplier_bank_account",
+   "fieldtype": "Link",
+   "label": "Supplier Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "fetch_from": "supplier_bank_account.bank",
+   "fetch_if_empty": 1,
+   "fieldname": "bank",
+   "fieldtype": "Link",
+   "label": "Bank",
+   "options": "Bank"
+  },
+  {
+   "fetch_from": "supplier_bank_account.bank_account_no",
+   "fetch_if_empty": 1,
+   "fieldname": "bank_account_no",
+   "fieldtype": "Data",
+   "label": "Bank Account"
+  },
+  {
+   "fetch_from": "supplier_bank_account.branch_code",
+   "fetch_if_empty": 1,
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "label": "IFSC Code"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-08 12:02:18.645153",
+ "modified": "2024-07-08 17:21:39.980449",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
@@ -181,53 +231,14 @@
  "owner": "Administrator",
  "permissions": [
   {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "if_owner": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "PoC",
-   "write": 1
-  },
-  {
    "cancel": 1,
-   "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Accounts Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Accounts User",
+   "role": "Projects Approver",
    "share": 1,
    "submit": 1,
    "write": 1
