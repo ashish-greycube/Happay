@@ -1,11 +1,12 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:VIH-#",
+ "autoname": "format:VIH-{#}",
  "creation": "2024-07-07 05:48:28.342865",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "company",
   "vendor_invoice_attachment",
   "supplier",
   "posting_date",
@@ -13,24 +14,27 @@
   "column_break_usbi",
   "supplier_invoice_number",
   "supplier_invoice_date",
+  "supplier_email",
   "type",
   "purpose",
   "section_break_qbxx",
-  "company",
   "expense_account",
-  "project_manager",
+  "department",
   "column_break_icwf",
   "cost_center",
-  "department",
+  "project_manager",
+  "follow_up_via_email",
   "amended_from"
  ],
  "fields": [
   {
    "fieldname": "vendor_invoice_attachment",
    "fieldtype": "Attach",
-   "label": "Vendor Invoice Attachment"
+   "label": "Vendor Invoice Attachment",
+   "reqd": 1
   },
   {
+   "description": "Fetch Supplier based on the company selected",
    "fieldname": "supplier",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -81,7 +85,7 @@
    "reqd": 1
   },
   {
-   "depends_on": "doc.company",
+   "depends_on": "eval:doc.company",
    "description": "filtered based on company & root type expense ,is_group = 0",
    "fieldname": "expense_account",
    "fieldtype": "Link",
@@ -94,6 +98,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.company",
    "description": "filtered based on company , ,is_group = 0",
    "fieldname": "cost_center",
    "fieldtype": "Link",
@@ -104,7 +109,8 @@
    "reqd": 1
   },
   {
-   "description": "filtered based on company , ,is_group = 0",
+   "depends_on": "eval:doc.company",
+   "description": "filtered based on company ,is_group = 0",
    "fieldname": "department",
    "fieldtype": "Link",
    "label": "Department",
@@ -141,18 +147,33 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.cost_center",
    "description": "fetch from the parent of cost_center",
    "fieldname": "project_manager",
    "fieldtype": "Link",
    "label": "Project Manager",
    "options": "User",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.project_manager",
+   "fieldname": "follow_up_via_email",
+   "fieldtype": "Check",
+   "label": "Follow Up PM via Email "
+  },
+  {
+   "fetch_from": "supplier.email_id",
+   "fetch_if_empty": 1,
+   "fieldname": "supplier_email",
+   "fieldtype": "Data",
+   "label": "Supplier Email"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-08 09:00:48.684209",
+ "modified": "2024-07-08 12:02:18.645153",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
