@@ -9,6 +9,7 @@ def change_status_of_vendor_invoice_on_submit_of_purchase_invoice(self,method):
         vi_doc = frappe.get_doc("Vendor Invoice",vi_number)
         vi_doc.workflow_state = "To Pay"
         vi_doc.save()
+        frappe.msgprint(_("Vendor Invoice's status changed to {0}").format(vi_doc.workflow_state),alert=1)
 
 def change_status_of_vendor_invoice_on_submit_of_payment_entry(self,method):
     for row in self.references:
@@ -19,3 +20,4 @@ def change_status_of_vendor_invoice_on_submit_of_payment_entry(self,method):
                 vi_doc = frappe.get_doc("Vendor Invoice",vi_name_from_pi)
                 vi_doc.workflow_state = "Paid"
                 vi_doc.save()
+                frappe.msgprint(_("Vendor Invoice's status changed to {0}").format(vi_doc.workflow_state),alert=1)

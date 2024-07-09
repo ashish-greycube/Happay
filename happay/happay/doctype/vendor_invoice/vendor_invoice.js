@@ -2,16 +2,17 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Vendor Invoice", {
-    onload(frm){
-        // frm.trigger("vendon_invoice_on_refresh_load")
-    },
     refresh(frm){
         frm.trigger("vendon_invoice_on_refresh_load")
     },
     vendon_invoice_on_refresh_load : function(frm){
         if (frm.doc.docstatus == 1 && frm.doc.workflow_state == "To Account") {
-            console.log('worked')
-            frm.add_custom_button(__('Purchase Invoice'), () => create_purchase_invoice_from_vendor_invoice(frm), __("Create"));
+            if (frm.doc.type == "Invoice"){
+                frm.add_custom_button(__('Purchase Invoice'), () => create_purchase_invoice_from_vendor_invoice(frm), __("Create"));
+            }
+            else {
+                frm.add_custom_button(__('Payment'), () => make_payment_from_vendor_invoice(frm), __("Create"));
+            }
         }
     },
 	setup(frm) {
@@ -59,6 +60,7 @@ frappe.ui.form.on("Vendor Invoice", {
                 frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_project_manager").then(
                     value => {
                         if (value.message.custom_project_manager==undefined){
+                            frm.set_value("project_manager","")
                             frappe.throw(__("Please set project manager in {0}",[r.message.parent_cost_center]))
                         }
                         frm.set_value("project_manager",value.message.custom_project_manager)
@@ -107,12 +109,27 @@ function create_purchase_invoice_from_vendor_invoice(frm){
         callback: function (response) {
             if (response.message) {
                 let url_list = '<a href="/app/purchase-invoice/' + response.message + '" target="_blank">' + response.message + '</a><br>'
-                frappe.show_alert({
-                    title: __('Purchase Invoice is created'),
+                frappe.msgprint({
+                    title: __('Notification'),
                     message: __('Purchase Invoice is created ' + url_list),
                     indicator: 'green'
                 }, 12);
-                // window.open(`/app/sales-invoice/` + response.message);
+                window.open(`/app/purchase-invoice/` + response.message);
+            }
+        }
+    });
+}
+
+function make_payment_from_vendor_invoice(frm){
+    frappe.call({
+        method: "happay.happay.doctype.vendor_invoice.vendor_invoice.make_payment_from_vendor_invoice",
+        args: {
+            "docname": frm.doc.name
+        },
+        callback: function (response) {
+            if (response.message) {
+				var doc = frappe.model.sync(response.message);
+				frappe.set_route("Form", doc[0].doctype, doc[0].name);
             }
         }
     });
