@@ -122,13 +122,14 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Purchase Invoice": {
+		"on_submit": "happay.api.change_status_of_vendor_invoice_on_submit_of_purchase_invoice"
+	},
+    "Payment Entry": {
+		"on_submit": "happay.api.change_status_of_vendor_invoice_on_submit_of_payment_entry"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

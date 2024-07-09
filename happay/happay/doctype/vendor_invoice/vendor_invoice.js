@@ -3,17 +3,16 @@
 
 frappe.ui.form.on("Vendor Invoice", {
     onload(frm){
-        if (
-			frm.fields_dict["supplier_bank_detail"] &&
-			frm.is_new() == undefined &&
-			frm.doc.__onload &&
-			"supplier_bank_detail" in frm.doc.__onload
-		){
-            $(frm.fields_dict["supplier_bank_detail"].wrapper).html(
-                frm.doc.__onload.supplier_bank_detail
-            )
+        // frm.trigger("vendon_invoice_on_refresh_load")
+    },
+    refresh(frm){
+        frm.trigger("vendon_invoice_on_refresh_load")
+    },
+    vendon_invoice_on_refresh_load : function(frm){
+        if (frm.doc.docstatus == 1 && frm.doc.workflow_state == "To Account") {
+            console.log('worked')
+            frm.add_custom_button(__('Purchase Invoice'), () => create_purchase_invoice_from_vendor_invoice(frm), __("Create"));
         }
-
     },
 	setup(frm) {
         frm.set_query("supplier", function(doc){
@@ -59,10 +58,62 @@ frappe.ui.form.on("Vendor Invoice", {
             r => {
                 frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_project_manager").then(
                     value => {
+                        if (value.message.custom_project_manager==undefined){
+                            frappe.throw(__("Please set project manager in {0}",[r.message.parent_cost_center]))
+                        }
                         frm.set_value("project_manager",value.message.custom_project_manager)
                     }
                 )
             }
         )
+    },
+
+    supplier(frm){
+        let supplier_name = frm.doc.supplier
+        console.log(supplier_name)
+        frappe.db.get_list('Bank Account', {
+            filters : {party_type:'Supplier', party: supplier_name, is_default:1},
+            fields : ['name']
+        }).then(records => {
+            if (records.length > 0){
+                console.log("default")
+                frm.set_value("supplier_bank_account",records[0].name)
+            }
+            else{
+                frappe.db.get_list('Bank Account', {
+                    filters : {party_type:'Supplier', party: supplier_name},
+                    fields : ['name']
+                }).then(records => {
+                    if (records.length > 0){
+                        frm.set_value("supplier_bank_account",records[0].name)
+                    }
+                    else{
+                        frappe.throw(__("Please set bank account for supplier"))
+                    }
+                })
+            }
+        })
+            
     }
 });
+
+
+function create_purchase_invoice_from_vendor_invoice(frm){
+    frappe.call({
+        method: "happay.happay.doctype.vendor_invoice.vendor_invoice.create_purchase_invoice_from_vendor_invoice",
+        args: {
+            "docname": frm.doc.name
+        },
+        callback: function (response) {
+            if (response.message) {
+                let url_list = '<a href="/app/purchase-invoice/' + response.message + '" target="_blank">' + response.message + '</a><br>'
+                frappe.show_alert({
+                    title: __('Purchase Invoice is created'),
+                    message: __('Purchase Invoice is created ' + url_list),
+                    indicator: 'green'
+                }, 12);
+                // window.open(`/app/sales-invoice/` + response.message);
+            }
+        }
+    });
+}
