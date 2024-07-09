@@ -11,7 +11,8 @@
   "vendor_invoice_attachment",
   "supplier",
   "posting_date",
-  "supplier_bank_detail",
+  "supplier_bank_account",
+  "bank",
   "column_break_usbi",
   "supplier_invoice_number",
   "supplier_invoice_date",
@@ -19,8 +20,6 @@
   "type",
   "purpose",
   "bill_amount",
-  "supplier_bank_account",
-  "bank",
   "bank_account_no",
   "branch_code",
   "section_break_qbxx",
@@ -29,7 +28,6 @@
   "column_break_icwf",
   "cost_center",
   "project_manager",
-  "follow_up_via_email",
   "amended_from"
  ],
  "fields": [
@@ -139,12 +137,6 @@
    "search_index": 1
   },
   {
-   "description": "Fetch Default Bank Account Details linked with the supplier <br>\nBank :  <br>\nBank Account #: <br>\nIFSC Code : ",
-   "fieldname": "supplier_bank_detail",
-   "fieldtype": "HTML",
-   "label": "Supplier Bank Detail"
-  },
-  {
    "default": "Invoice",
    "fieldname": "type",
    "fieldtype": "Select",
@@ -161,13 +153,6 @@
    "options": "User",
    "read_only": 1,
    "reqd": 1
-  },
-  {
-   "default": "0",
-   "depends_on": "eval:doc.project_manager",
-   "fieldname": "follow_up_via_email",
-   "fieldtype": "Check",
-   "label": "Follow Up PM via Email "
   },
   {
    "fetch_from": "supplier.email_id",
@@ -223,7 +208,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-08 17:21:39.980449",
+ "modified": "2024-07-09 11:43:51.845397",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",

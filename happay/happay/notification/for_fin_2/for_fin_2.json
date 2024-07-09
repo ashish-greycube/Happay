@@ -1,0 +1,33 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state==\"Pending at Fin 2\"",
+ "creation": "2024-07-09 11:47:42.401546",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Vendor Invoice",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Pending for FIN 2 Approval</p>\n",
+ "message_type": "Markdown",
+ "modified": "2024-07-09 11:47:42.401546",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "For Fin 2",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "",
+   "receiver_by_role": "Fin 2"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "CIIE Finance",
+ "sender_email": "ciie.finance@iima.ac.in",
+ "subject": "For fin 2",
+ "value_changed": "workflow_state"
+}
