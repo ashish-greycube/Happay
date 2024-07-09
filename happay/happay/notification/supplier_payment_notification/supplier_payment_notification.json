@@ -1,0 +1,35 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state==\"Paid\"",
+ "creation": "2024-07-09 13:44:43.068211",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Vendor Invoice",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>{% set supplier_name = (doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\")) %}</p>\n\n<p>Dear {{supplier_name}},<br></p>\n\n<p>We hope this email finds you well.<br></p>\n\n<p>We are writing to confirm that the payment for your invoice no {{doc.supplier_invoice_number}} dated {{ doc.get_formatted(\"supplier_invoice_date\") }} for the amount {{doc.bill_amount}} has been completed.<br></p>\n\n<p><p>Thank you for your cooperation.</p><br><br>\n\n{{doc.company}}</p>\n",
+ "message_type": "Markdown",
+ "modified": "2024-07-09 17:27:10.553343",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Supplier Payment Notification",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "owner"
+  },
+  {
+   "receiver_by_document_field": "supplier_email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "CIIE Finance",
+ "sender_email": "ciie.finance@iima.ac.in",
+ "subject": "Confirmation of Payment to {{(doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}}",
+ "value_changed": "workflow_state"
+}

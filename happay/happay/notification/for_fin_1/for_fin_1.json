@@ -13,10 +13,10 @@
  "is_standard": 1,
  "message": "<p>Hello,<br>\n\n<p>The vendor invoice {{doc.name}} for {{(doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}} uploaded by {% set u = frappe.get_doc(\"User\", doc.owner) %} {{u.first_name}} {{u.last_name or ''}} is Pending for FIN 1 approval.<br><br>\nPlease review.<br><br>\nClick on the below link to take the necessary action:<br>\n<a href=\"{{ frappe.utils.get_url_to_form('Vendor Invoice', doc.name) }}\">{{ doc.name }}</a>.<br></p></p>\n",
  "message_type": "Markdown",
- "modified": "2024-07-09 16:58:36.322518",
+ "modified": "2024-07-09 17:57:10.706300",
  "modified_by": "Administrator",
  "module": "Happay",
- "name": "Pending at Fin 1 Notification",
+ "name": "For Fin 1",
  "owner": "Administrator",
  "recipients": [
   {
@@ -28,6 +28,6 @@
  "send_to_all_assignees": 0,
  "sender": "CIIE Finance",
  "sender_email": "ciie.finance@iima.ac.in",
- "subject": "Vendor Invoice {{doc.name}} For FIN 1 is Pending for Approval",
+ "subject": "Vendor Invoice {{doc.name}} For the Supplier {{doc.supplier}} is Pending for FIN 1 Approval",
  "value_changed": "workflow_state"
 }

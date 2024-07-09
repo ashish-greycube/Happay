@@ -159,7 +159,8 @@
    "fetch_if_empty": 1,
    "fieldname": "supplier_email",
    "fieldtype": "Data",
-   "label": "Supplier Email"
+   "label": "Supplier Email",
+   "options": "Email"
   },
   {
    "allow_on_submit": 1,
@@ -208,7 +209,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-09 11:43:51.845397",
+ "modified": "2024-07-09 13:46:06.163836",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",

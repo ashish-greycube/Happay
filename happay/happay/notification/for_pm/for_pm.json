@@ -13,10 +13,10 @@
  "is_standard": 1,
  "message": "<p>Hello {% set u = frappe.get_doc(\"User\", doc.project_manager) %} {{u.first_name}} {{u.last_name or ''}}, <br></p>\n\n<p>The vendor invoice {{doc.name}} for {{(doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}} uploaded by {% set u = frappe.get_doc(\"User\", doc.owner) %} {{u.first_name}} {{u.last_name or ''}}  is Pending for your approval.<br><br>\nPlease review.<br><br>\nClick on the below link to take the necessary action:<br>\n<a href=\"{{ frappe.utils.get_url_to_form('Vendor Invoice', doc.name) }}\">{{ doc.name }}</a>.<br></p></p>\n",
  "message_type": "Markdown",
- "modified": "2024-07-09 16:56:16.462306",
+ "modified": "2024-07-09 17:57:21.713507",
  "modified_by": "Administrator",
  "module": "Happay",
- "name": "PM",
+ "name": "For PM",
  "owner": "Administrator",
  "recipients": [
   {
@@ -27,6 +27,6 @@
  "send_to_all_assignees": 0,
  "sender": "CIIE Finance",
  "sender_email": "ciie.finance@iima.ac.in",
- "subject": "Vendor Invoice {{doc.name}} is Pending for PM Approval",
+ "subject": "Vendor Invoice {{doc.name}} for the Supplier {{doc.supplier}} is Pending for PM Approval",
  "value_changed": "workflow_state"
 }
