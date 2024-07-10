@@ -6,7 +6,6 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "workflow_state",
   "company",
   "vendor_invoice_attachment",
   "supplier",
@@ -163,15 +162,6 @@
    "options": "Email"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "workflow_state",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Workflow State",
-   "no_copy": 1,
-   "options": "Workflow State"
-  },
-  {
    "fieldname": "bill_amount",
    "fieldtype": "Currency",
    "label": "Bill Amount"
@@ -209,7 +199,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-09 13:46:06.163836",
+ "modified": "2024-07-10 12:40:17.429095",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
