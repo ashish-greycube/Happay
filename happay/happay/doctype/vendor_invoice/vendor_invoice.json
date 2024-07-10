@@ -123,7 +123,8 @@
   {
    "fieldname": "purpose",
    "fieldtype": "Data",
-   "label": "Purpose"
+   "label": "Purpose",
+   "reqd": 1
   },
   {
    "fieldname": "amended_from",
@@ -199,7 +200,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-10 14:11:40.204413",
+ "modified": "2024-07-10 17:23:53.600882",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
