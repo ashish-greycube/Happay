@@ -20,7 +20,6 @@ class VendorInvoice(Document):
 
 @frappe.whitelist()
 def create_purchase_invoice_from_vendor_invoice(docname):
-	print("PI")
 	vi_doc = frappe.get_doc("Vendor Invoice",docname)
 	pi_doc = frappe.new_doc("Purchase Invoice")
 	pi_doc.supplier = vi_doc.supplier
@@ -49,15 +48,8 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 
 @frappe.whitelist()
 def make_payment_from_vendor_invoice(docname,target_doc=None):
-	print("PE")
 	vi_doc = frappe.get_doc("Vendor Invoice",docname)
 	def set_missing_values(source, target):
-		# po_doc = frappe.new_doc("Purchase Order")
-		# target.supplier = vi_doc.supplier
-		# target.company = vi_doc.company
-		# po_doc.custom_vendor_invoice = vi_doc.name
-		# target.cost_center = vi_doc.cost_center
-		# target.department = vi_doc.department
 		target.payment_type = "Pay"
 		target.party_type = "Supplier"
 		target.company = vi_doc.company
@@ -71,7 +63,13 @@ def make_payment_from_vendor_invoice(docname,target_doc=None):
 		target.reference_date = today()
 		target.posting_date = today()
 		target.party_account = get_party_account(target.party_type ,target.party,target.company)
-
+		company_default_payable_account = frappe.db.get_value("Company",vi_doc.company,"default_payable_account")
+		default_company_currency = frappe.db.get_value("Company",vi_doc.company,"default_currency")
+		if company_default_payable_account:
+			target.paid_to = company_default_payable_account
+		if default_company_currency:
+			target.paid_to_account_currency = default_company_currency
+		target.custom_vendor_invoice = vi_doc.name
 	doc = get_mapped_doc('Vendor Invoice', vi_doc, {
 		'Vendor Invoice': {
 			'doctype': 'Payment Entry',

@@ -127,7 +127,8 @@ doc_events = {
 		"on_submit": "happay.api.change_status_of_vendor_invoice_on_submit_of_purchase_invoice"
 	},
     "Payment Entry": {
-		"on_submit": "happay.api.change_status_of_vendor_invoice_on_submit_of_payment_entry"
+        "after_insert": "happay.api.change_status_of_vendor_invoice",
+		"on_submit": "happay.api.change_status_of_vendor_invoice"
 	}
 }
 

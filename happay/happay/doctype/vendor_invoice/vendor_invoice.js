@@ -55,15 +55,13 @@ frappe.ui.form.on("Vendor Invoice", {
 
     cost_center(frm){
         let cost_center = frm.doc.cost_center
+        frm.set_value("project_manager","")
         frappe.db.get_value("Cost Center",cost_center,"parent_cost_center").then(
             r => {
                 frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_project_manager").then(
                     value => {
-                        if (value.message.custom_project_manager==undefined){
-                            frm.set_value("project_manager","")
-                            frappe.throw(__("Please set project manager in {0}",[r.message.parent_cost_center]))
-                        }
-                        frm.set_value("project_manager",value.message.custom_project_manager)
+                            frm.set_value("project_manager",value.message.custom_project_manager)
+                        
                     }
                 )
             }
@@ -72,6 +70,7 @@ frappe.ui.form.on("Vendor Invoice", {
 
     supplier(frm){
         let supplier_name = frm.doc.supplier
+        frm.set_value("supplier_bank_account","")
         console.log(supplier_name)
         frappe.db.get_list('Bank Account', {
             filters : {party_type:'Supplier', party: supplier_name, is_default:1},
@@ -89,13 +88,18 @@ frappe.ui.form.on("Vendor Invoice", {
                     if (records.length > 0){
                         frm.set_value("supplier_bank_account",records[0].name)
                     }
-                    else{
-                        frappe.throw(__("Please set bank account for supplier"))
-                    }
                 })
             }
         })
             
+    },
+    before_save(frm){
+        if (frm.doc.project_manager==undefined || frm.doc.project_manager ==""){
+            frappe.throw(__("Project manager is missing, please set project manager in parent cost center"))
+        }
+        if (frm.doc.supplier_bank_account==undefined || frm.doc.supplier_bank_account ==""){
+            frappe.throw(__("Please set bank account for supplier"))
+        }
     }
 });
 
