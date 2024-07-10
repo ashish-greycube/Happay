@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"67lR2qVSBs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Happay</span>\",\"col\":12}},{\"id\":\"ltnujbZEaN\",\"type\":\"card\",\"data\":{\"card_name\":\"Doctype\",\"col\":4}}]",
+ "content": "[{\"id\":\"67lR2qVSBs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Happay</span>\",\"col\":12}},{\"id\":\"xqf8dc7vvq\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft Vendor Invoices\",\"col\":4}},{\"id\":\"dFvQ1dxPoO\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending at PM Vendor Invoices\",\"col\":4}},{\"id\":\"XSBA3F41YK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending at FIN 1 Vendor Invoices\",\"col\":4}},{\"id\":\"QvvmuUYaJK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending at FIN 2 Vendor Invoices\",\"col\":4}},{\"id\":\"vF5cEWzOf3\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"To Account - Vendor Invoices\",\"col\":4}},{\"id\":\"TumZrNx-7H\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"To Pay - Vendor Invoices\",\"col\":4}},{\"id\":\"rFs90A1lfZ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Paid - Vendor Invoices\",\"col\":4}},{\"id\":\"q8ixXohdzK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Project Manger wise Vendor Invoice\",\"col\":4}},{\"id\":\"LN3KZ59ZKx\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"ltnujbZEaN\",\"type\":\"card\",\"data\":{\"card_name\":\"Doctype\",\"col\":4}}]",
  "creation": "2024-07-08 12:38:15.323632",
  "custom_blocks": [],
  "docstatus": 0,
@@ -63,11 +63,44 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-09 12:24:15.201050",
+ "modified": "2024-07-10 13:27:30.034201",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Happay",
- "number_cards": [],
+ "number_cards": [
+  {
+   "label": "Draft Vendor Invoices",
+   "number_card_name": "Draft Vendor Invoices"
+  },
+  {
+   "label": "Pending at PM Vendor Invoices",
+   "number_card_name": "Pending at PM Vendor Invoices"
+  },
+  {
+   "label": "Pending at FIN 1 Vendor Invoices",
+   "number_card_name": "Pending at FIN 1 Vendor Invoices"
+  },
+  {
+   "label": "To Account - Vendor Invoices",
+   "number_card_name": "To Account - Vendor Invoices"
+  },
+  {
+   "label": "Paid - Vendor Invoices",
+   "number_card_name": "Paid - Vendor Invoices"
+  },
+  {
+   "label": "Project Manger wise Vendor Invoice",
+   "number_card_name": "Project Manger wise Vendor Invoice"
+  },
+  {
+   "label": "Pending at FIN 2 Vendor Invoices",
+   "number_card_name": "Pending at FIN 2 Vendor Invoices"
+  },
+  {
+   "label": "To Pay - Vendor Invoices",
+   "number_card_name": "To Pay - Vendor Invoices"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
