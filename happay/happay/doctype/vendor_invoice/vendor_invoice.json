@@ -17,6 +17,7 @@
   "supplier_invoice_date",
   "supplier_email",
   "type",
+  "mode_of_payment",
   "purpose",
   "bill_amount",
   "bank_account_no",
@@ -195,12 +196,20 @@
    "fieldname": "branch_code",
    "fieldtype": "Data",
    "label": "IFSC Code"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Advance\"",
+   "fieldname": "mode_of_payment",
+   "fieldtype": "Link",
+   "label": "Mode of Payment",
+   "mandatory_depends_on": "eval:doc.type==\"Advance\"",
+   "options": "Mode of Payment"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-10 17:23:53.600882",
+ "modified": "2024-07-11 12:01:12.390718",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
