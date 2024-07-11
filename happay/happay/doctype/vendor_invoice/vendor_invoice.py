@@ -7,6 +7,7 @@ from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 from frappe.utils import today,get_link_to_form
 from erpnext.accounts.party import get_party_account
+from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 
 class VendorInvoice(Document):
 	def validate(self):
@@ -35,13 +36,13 @@ class VendorInvoice(Document):
 				else:
 					frappe.msgprint(_("You donot have required account roles to auto create Purchase Invoice from vendor invoice"))
 					
-			# elif self.type=='Advance':
-			# 	user_roles = frappe.get_roles(frappe.session.user)
-			# 	if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
-			# 		pe=make_payment_from_vendor_invoice(docname=self.name)
-			# 		# frappe.msgprint(_("Payment Entry {0} is created.").format(get_link_to_form("Payment Entry", pe)))
-			# 	else:
-			# 		frappe.msgprint(_("You donot have required account roles to auto create Purchase Invoice from vendor invoice"))	
+			elif self.type=='Advance':
+				user_roles = frappe.get_roles(frappe.session.user)
+				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
+					pe=make_payment_from_vendor_invoice(docname=self.name)
+					frappe.msgprint(_("Payment Entry {0} is created.").format(get_link_to_form("Payment Entry", pe)))
+				else:
+					frappe.msgprint(_("You donot have required account roles to auto create Payment Entry from vendor invoice"))	
 
 		if self.workflow_state=="Paid":
 			if self.type=='Invoice':
@@ -114,6 +115,10 @@ def make_payment_from_vendor_invoice(docname,target_doc=None):
 			target.reference_date = today()
 			target.posting_date = today()
 			target.party_account = get_party_account(target.party_type ,target.party,target.company)
+			target.mode_of_payment = vi_doc.mode_of_payment
+			bank_cash_account = get_bank_cash_account(target.mode_of_payment,target.company)
+			target.paid_from = bank_cash_account.get("account")
+			# target.received_amount = vi_doc.bill_amount
 			company_default_payable_account = frappe.db.get_value("Company",vi_doc.company,"default_payable_account")
 			default_company_currency = frappe.db.get_value("Company",vi_doc.company,"default_currency")
 			if company_default_payable_account:
@@ -132,10 +137,14 @@ def make_payment_from_vendor_invoice(docname,target_doc=None):
 				}
 			}	
 		}, target_doc,set_missing_values)
-		doc.run_method("onload")
+		# doc.run_method("onload")
 		doc.run_method("set_missing_values")
+		doc.run_method("setup_party_account_field")
+		doc.run_method("set_missing_ref_details")
+		doc.run_method("set_amounts")
+		doc.save(ignore_permissions = True)
 
-		return doc
+		return doc.name
 	else :
 		frappe.msgprint(_("Payment Entry {0} is already exists for vendor invoice {1}").format(get_link_to_form("Payment Entry", check_pe_exists),docname))
 

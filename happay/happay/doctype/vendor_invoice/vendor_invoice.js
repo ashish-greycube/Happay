@@ -125,8 +125,7 @@ function make_payment_from_vendor_invoice(frm){
         },
         callback: function (response) {
             if (response.message) {
-				var doc = frappe.model.sync(response.message);
-				frappe.set_route("Form", doc[0].doctype, doc[0].name);
+                frappe.set_route("Form", "Payment Entry", response.message);
             }
         }
     });
