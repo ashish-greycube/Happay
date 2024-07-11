@@ -48,10 +48,19 @@ class VendorInvoice(Document):
 				check_pi_exists = frappe.db.exists("Purchase Invoice", {"custom_vendor_invoice": self.name})
 				if check_pi_exists == None:
 					frappe.throw(_("Purchase invoice is not created, hence you cannot complete vendor invoice."))
+				elif check_pi_exists:
+					pi_status = frappe.db.get_value("Purchase Invoice",check_pi_exists,"docstatus")
+					if pi_status == 0:
+						frappe.throw(_("Purchase invoice {0} is in draft state, hence you cannot complete vendor invoice.").format(get_link_to_form("Purchase Invoice", check_pi_exists)))
+
 			elif self.type=='Advance':
 				check_pe_exists = frappe.db.exists("Payment Entry", {"custom_vendor_invoice": self.name})
 				if check_pe_exists == None:
 					frappe.throw(_("Payment entry is not created, hence you cannot complete vendor invoice."))
+				elif check_pe_exists:
+					pi_status = frappe.db.get_value("Payment Entry",check_pe_exists,"docstatus")
+					if pi_status == 0:
+						frappe.throw(_("Payment Entry {0} is in draft state, hence you cannot complete vendor invoice.").format(get_link_to_form("Payment Entry", check_pe_exists)))
 
 
 @frappe.whitelist()
