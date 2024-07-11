@@ -71,24 +71,17 @@ frappe.ui.form.on("Vendor Invoice", {
     supplier(frm){
         let supplier_name = frm.doc.supplier
         frm.set_value("supplier_bank_account","")
-        console.log(supplier_name)
-        frappe.db.get_list('Bank Account', {
-            filters : {party_type:'Supplier', party: supplier_name, is_default:1},
-            fields : ['name']
-        }).then(records => {
-            if (records.length > 0){
-                console.log("default")
-                frm.set_value("supplier_bank_account",records[0].name)
-            }
-            else{
-                frappe.db.get_list('Bank Account', {
-                    filters : {party_type:'Supplier', party: supplier_name},
-                    fields : ['name']
-                }).then(records => {
-                    if (records.length > 0){
-                        frm.set_value("supplier_bank_account",records[0].name)
-                    }
-                })
+        frappe.call({
+            method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_supplier_bank_account",
+            args: {
+                "supplier_name": supplier_name
+            },
+            callback: function (response) {
+                let account_name = response.message
+                console.log(account_name)
+                if (account_name != undefined){
+                    frm.set_value("supplier_bank_account",account_name[0].name)
+                }
             }
         })
             
