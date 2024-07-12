@@ -202,6 +202,7 @@
    "label": "IFSC Code"
   },
   {
+   "allow_on_submit": 1,
    "depends_on": "eval:in_list(['Pending at Fin 1','Pending at Fin 2','Pending at PM','Rejected by PM','Rejected by Fin1','Rejected by Fin2'],doc.workflow_state)",
    "fieldname": "rejection_remark",
    "fieldtype": "Small Text",
@@ -245,7 +246,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-12 18:39:52.464375",
+ "modified": "2024-07-12 18:47:15.106656",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
