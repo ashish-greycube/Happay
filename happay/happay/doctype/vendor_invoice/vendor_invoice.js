@@ -85,6 +85,18 @@ frappe.ui.form.on("Vendor Invoice", {
             }
         })
             
+    },
+    before_save(frm){
+        if (frm.doc.cost_center){
+            if (frm.doc.project_manager==undefined || frm.doc.project_manager ==""){
+                frappe.throw(__("Project manager is missing, please set project manager in parent cost center"))
+            }
+        }
+        if (frm.doc.supplier){
+            if (frm.doc.supplier_bank_account==undefined || frm.doc.supplier_bank_account ==""){
+                frappe.throw(__("Please set bank account for supplier"))
+            }
+        }
     }
 });
 
