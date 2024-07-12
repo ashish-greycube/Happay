@@ -203,11 +203,11 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval:in_list(['Pending at Fin 1','Pending at Fin 2','Pending at PM','Rejected by PM','Rejected by Fin1','Rejected by Fin2'],doc.workflow_state)",
+   "depends_on": "eval:in_list(['Pending at Fin 1','Pending at Fin 2','Pending at PM','Rejected by PM','Rejected By Fin 1','Rejected By Fin 2'],doc.workflow_state)",
    "fieldname": "rejection_remark",
    "fieldtype": "Small Text",
    "label": "Rejection Remark",
-   "read_only_depends_on": "eval:in_list(['Rejected by PM','Rejected by Fin1','Rejected by Fin2'],doc.workflow_state)"
+   "read_only_depends_on": "eval:in_list(['Rejected by PM','Rejected By Fin 1','Rejected By Fin 2'],doc.workflow_state)"
   },
   {
    "depends_on": "eval:doc.company",
@@ -246,7 +246,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-12 18:47:15.106656",
+ "modified": "2024-07-12 18:52:48.226355",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
