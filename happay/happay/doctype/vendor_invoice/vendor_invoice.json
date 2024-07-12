@@ -24,6 +24,7 @@
   "section_break_qbxx",
   "expense_account",
   "tds_payable_account",
+  "tds_amount",
   "accounts_paid_from",
   "department",
   "column_break_icwf",
@@ -224,6 +225,12 @@
    "label": "Accounts Paid From",
    "mandatory_depends_on": "eval:(doc.company && doc.type==\"Advance\")",
    "options": "Account"
+  },
+  {
+   "depends_on": "eval:doc.tds_payable_account",
+   "fieldname": "tds_amount",
+   "fieldtype": "Currency",
+   "label": "TDS Amount"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -238,7 +245,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-12 13:21:15.605005",
+ "modified": "2024-07-12 14:23:13.779396",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
