@@ -34,6 +34,17 @@ class VendorInvoice(Document):
 			if tds_amount > bill_amount:
 				frappe.throw(_("TDS amount cannot be greater than bill amount"))
 
+	def on_update(self):
+		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:
+			if self.rejection_remark==None or self.rejection_remark=="":
+				frappe.throw(_("Please provide rejection remark"))
+
+	def on_cancel(self):
+		print("self.workflow_state",self.workflow_state)
+		if self.workflow_state =="Rejected By Fin 2":
+			if self.rejection_remark==None or self.rejection_remark=="":
+				frappe.throw(_("Please provide rejection remark"))		
+
 	def on_update_after_submit(self):
 		if self.workflow_state=="To Pay":
 			if self.type=='Invoice':
