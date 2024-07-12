@@ -24,11 +24,11 @@ frappe.ui.form.on("Vendor Invoice", {
             }
         })
 
-        frm.set_query("expense_account", function(doc){
+        frm.set_query("tds_payable_account", function(doc){
             return {
                 filters: {
                     "company": doc.company,
-                    "root_type":"Expense",
+                    "root_type":"Liability",
                     "is_group":0
                 },
             }
@@ -51,6 +51,17 @@ frappe.ui.form.on("Vendor Invoice", {
                 },
             }
         })
+
+        frm.set_query("tds_payable_account", function(doc) {
+            var account_type = ["Tax", "Chargeable", "Income Account"];
+            return {
+                query: "erpnext.controllers.queries.tax_account_query",
+                filters: {
+                    "account_type": account_type,
+                    "company": doc.company,
+                }
+            }
+        });
 	},
 
     cost_center(frm){
@@ -97,6 +108,9 @@ frappe.ui.form.on("Vendor Invoice", {
                 frappe.throw(__("Please set bank account for supplier"))
             }
         }
+    },
+    before_workflow_action(frm){
+
     }
 });
 

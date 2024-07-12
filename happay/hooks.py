@@ -123,11 +123,11 @@ app_license = "mit"
 # Hook on document methods and events
 
 doc_events = {
-	"Purchase Invoice": {
-		"on_submit": "happay.api.change_status_of_vendor_invoice_on_submit_of_purchase_invoice"
-	},
+	# "Purchase Invoice": {
+	# 	"on_submit": "happay.api.change_status_of_vendor_invoice_on_submit_of_purchase_invoice"
+	# },
     "Payment Entry": {
-        "after_insert": "happay.api.change_status_of_vendor_invoice",
+        # "after_insert": "happay.api.change_status_of_vendor_invoice",
 		"on_submit": "happay.api.change_status_of_vendor_invoice"
 	},
     "Cost Center": {
