@@ -6,8 +6,8 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "company",
   "vendor_invoice_attachment",
+  "company",
   "supplier",
   "posting_date",
   "supplier_bank_account",
@@ -17,17 +17,19 @@
   "supplier_invoice_date",
   "supplier_email",
   "type",
-  "mode_of_payment",
   "purpose",
   "bill_amount",
   "bank_account_no",
   "branch_code",
   "section_break_qbxx",
   "expense_account",
+  "tds_payable_account",
+  "accounts_paid_from",
   "department",
   "column_break_icwf",
   "cost_center",
   "project_manager",
+  "rejection_remark",
   "amended_from"
  ],
  "fields": [
@@ -85,17 +87,17 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
-   "options": "Company",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.vendor_invoice_attachment",
+   "options": "Company"
   },
   {
-   "depends_on": "eval:doc.company",
+   "depends_on": "eval:(doc.company && doc.invoice_type==\"Invoice\") ",
    "description": "filtered based on company & root type expense ,is_group = 0",
    "fieldname": "expense_account",
    "fieldtype": "Link",
    "label": "Expense Account",
-   "options": "Account",
-   "reqd": 1
+   "mandatory_depends_on": "eval:(doc.company && doc.invoice_type==\"Invoice\") ",
+   "options": "Account"
   },
   {
    "fieldname": "column_break_icwf",
@@ -173,6 +175,7 @@
    "fieldname": "supplier_bank_account",
    "fieldtype": "Link",
    "label": "Supplier Bank Account",
+   "mandatory_depends_on": "eval:doc.supplier",
    "options": "Bank Account"
   },
   {
@@ -198,18 +201,44 @@
    "label": "IFSC Code"
   },
   {
-   "depends_on": "eval:doc.type==\"Advance\"",
-   "fieldname": "mode_of_payment",
+   "depends_on": "eval:in_list(['Rejected','Rejected by Fin1','Rejected by Fin2'],doc.workflow_state) ",
+   "fieldname": "rejection_remark",
+   "fieldtype": "Small Text",
+   "label": "Rejection Remark",
+   "mandatory_depends_on": "eval:in_list(['Rejected','Rejected by Fin1','Rejected by Fin2'],doc.workflow_state) "
+  },
+  {
+   "depends_on": "eval:doc.company",
+   "description": "filtered based on company & root type Liability ,is_group = 0",
+   "fieldname": "tds_payable_account",
    "fieldtype": "Link",
-   "label": "Mode of Payment",
-   "mandatory_depends_on": "eval:doc.type==\"Advance\"",
-   "options": "Mode of Payment"
+   "label": "TDS Payable Account",
+   "mandatory_depends_on": "eval:(doc.company && doc.workflow_status == \"Pending at Fin 2\")",
+   "options": "Account"
+  },
+  {
+   "depends_on": "eval:(doc.company && doc.type==\"Advance\")",
+   "description": "filtered based on company & root type Asset ,is_group = 0",
+   "fieldname": "accounts_paid_from",
+   "fieldtype": "Link",
+   "label": "Accounts Paid From",
+   "mandatory_depends_on": "eval:(doc.company && doc.type==\"Advance\")",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-07-11 12:01:12.390718",
+ "links": [
+  {
+   "link_doctype": "Purchase Invoice",
+   "link_fieldname": "custom_vendor_invoice"
+  },
+  {
+   "link_doctype": "Payment Entry",
+   "link_fieldname": "custom_vendor_invoice"
+  }
+ ],
+ "modified": "2024-07-12 13:21:15.605005",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
