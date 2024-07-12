@@ -92,12 +92,12 @@
    "options": "Company"
   },
   {
-   "depends_on": "eval:(doc.company && doc.invoice_type==\"Invoice\") ",
+   "depends_on": "eval:(doc.company && doc.type==\"Invoice\") ",
    "description": "filtered based on company & root type expense ,is_group = 0",
    "fieldname": "expense_account",
    "fieldtype": "Link",
    "label": "Expense Account",
-   "mandatory_depends_on": "eval:(doc.company && doc.invoice_type==\"Invoice\") ",
+   "mandatory_depends_on": "eval:(doc.company && doc.type==\"Invoice\") ",
    "options": "Account"
   },
   {
@@ -245,7 +245,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-12 14:23:13.779396",
+ "modified": "2024-07-12 15:46:44.662324",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
