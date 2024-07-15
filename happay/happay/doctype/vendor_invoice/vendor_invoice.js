@@ -2,9 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Vendor Invoice", {
-    refresh(frm){
-        frm.trigger("vendon_invoice_on_refresh_load")
-    },
+    // refresh(frm){
+    //     frm.trigger("vendon_invoice_on_refresh_load")
+    // },
     vendon_invoice_on_refresh_load : function(frm){
         if (frm.doc.docstatus == 1 && frm.doc.workflow_state == "To Account" && frappe.user.has_role(["Accounts Manager", "Accounts User"])) {
             if (frm.doc.type == "Invoice"){
