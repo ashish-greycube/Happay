@@ -16,10 +16,10 @@ class VendorInvoice(Document):
 		self.validate_tds_amount()
 	
 	def validate_bill_amount(self):
-		if not self.bill_amount:
-			frappe.throw(_("Please set bill amount"))
-		elif self.bill_amount <= 0:
-			frappe.throw(_("Bill amount cannot be zero or negative"))
+		if self.workflow_state !="Draft":
+			old_doc = self.get_doc_before_save()
+			if self.bill_amount > old_doc.bill_amount:
+				frappe.throw(_("Bill amount entered is {0}. It cannot be greater than {1}".format(self.bill_amount ,old_doc.bill_amount)))
 	
 	def validate_posting_date(self):
 		posting_date = self.posting_date

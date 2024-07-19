@@ -16,6 +16,15 @@ frappe.ui.form.on("Vendor Invoice", {
         }
     },
 	setup(frm) {
+        frm.set_query("expense_account", function(doc){
+            return {
+                filters: {
+                    "company": doc.company,
+                    "root_type":"Expense",
+                    "is_group":0
+                },
+            }
+        })        
         frm.set_query("supplier", function(doc){
             return {
                 filters: {
@@ -24,15 +33,7 @@ frappe.ui.form.on("Vendor Invoice", {
             }
         })
 
-        frm.set_query("tds_payable_account", function(doc){
-            return {
-                filters: {
-                    "company": doc.company,
-                    "root_type":"Liability",
-                    "is_group":0
-                },
-            }
-        })
+
 
         frm.set_query("department", function(doc){
             return {
