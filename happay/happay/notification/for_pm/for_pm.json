@@ -13,7 +13,7 @@
  "is_standard": 1,
  "message": "<p>Hello {% set u = frappe.get_doc(\"User\", doc.project_manager) %} {{u.first_name}} {{u.last_name or ''}}, <br></p>\n\n<p>The vendor invoice {{doc.name}} for {{(doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}} uploaded by {% set u = frappe.get_doc(\"User\", doc.owner) %} {{u.first_name}} {{u.last_name or ''}}  is Pending for your approval.<br><br>\nPlease review.<br><br>\nClick on the below link to take the necessary action:<br>\n<a href=\"{{ frappe.utils.get_url_to_form('Vendor Invoice', doc.name) }}\">{{ doc.name }}</a>.<br></p></p>\n",
  "message_type": "Markdown",
- "modified": "2024-07-09 17:57:21.713507",
+ "modified": "2024-07-19 15:38:21.980098",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "For PM",
@@ -21,6 +21,9 @@
  "recipients": [
   {
    "receiver_by_document_field": "project_manager"
+  },
+  {
+   "receiver_by_document_field": "owner"
   }
  ],
  "send_system_notification": 0,

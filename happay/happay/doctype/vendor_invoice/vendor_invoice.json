@@ -169,7 +169,10 @@
   {
    "fieldname": "bill_amount",
    "fieldtype": "Currency",
-   "label": "Bill Amount"
+   "label": "Bill Amount",
+   "no_copy": 1,
+   "non_negative": 1,
+   "reqd": 1
   },
   {
    "description": "fetch supplier default or top 1 linkedbank account",
@@ -211,11 +214,12 @@
   },
   {
    "depends_on": "eval:doc.company",
-   "description": "filtered based on company & root type Liability ,is_group = 0",
+   "description": "filter based on company & acct type Tax,Chargeable,Income Account",
    "fieldname": "tds_payable_account",
    "fieldtype": "Link",
    "label": "TDS Payable Account",
    "mandatory_depends_on": "eval:(doc.company && doc.workflow_status == \"Pending at Fin 2\")",
+   "no_copy": 1,
    "options": "Account"
   },
   {
@@ -231,7 +235,9 @@
    "depends_on": "eval:doc.tds_payable_account",
    "fieldname": "tds_amount",
    "fieldtype": "Currency",
-   "label": "TDS Amount"
+   "label": "TDS Amount",
+   "no_copy": 1,
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -246,7 +252,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-12 18:52:48.226355",
+ "modified": "2024-07-19 15:32:23.396255",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
