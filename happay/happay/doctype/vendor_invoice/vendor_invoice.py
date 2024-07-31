@@ -113,6 +113,8 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		tds_row.account_head = vi_doc.tds_payable_account
 		tds_row.tax_amount = vi_doc.tds_amount
 		tds_row.description = vi_doc.tds_payable_account
+		tds_row.cost_center = vi_doc.cost_center
+		tds_row.department = vi_doc.department
 
 		pi_doc.run_method("set_missing_values")
 		pi_doc.run_method("calculate_taxes_and_totals")
