@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "format:VIH-{#}",
  "creation": "2024-07-07 05:48:28.342865",
  "doctype": "DocType",
@@ -28,6 +27,7 @@
   "tds_amount",
   "accounts_paid_from",
   "department",
+  "advance_account",
   "column_break_icwf",
   "cost_center",
   "project_manager",
@@ -256,6 +256,13 @@
    "fieldtype": "Data",
    "label": "Project Manager",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.type==\"Advance\" ",
+   "fieldname": "advance_account",
+   "fieldtype": "Link",
+   "label": "Advance Account",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -270,7 +277,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-31 15:59:26.291070",
+ "modified": "2024-07-31 18:06:19.720211",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
@@ -279,7 +286,6 @@
  "permissions": [
   {
    "cancel": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -292,7 +298,6 @@
   },
   {
    "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -305,7 +310,6 @@
   {
    "cancel": 1,
    "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -318,7 +322,6 @@
   },
   {
    "cancel": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
