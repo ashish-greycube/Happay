@@ -31,6 +31,7 @@
   "column_break_icwf",
   "cost_center",
   "project_manager",
+  "project_manager_name",
   "rejection_remark",
   "amended_from"
  ],
@@ -154,7 +155,7 @@
    "description": "fetch from the parent of cost_center",
    "fieldname": "project_manager",
    "fieldtype": "Link",
-   "label": "Project Manager",
+   "label": "Project Manager ID",
    "options": "User",
    "read_only": 1,
    "reqd": 1
@@ -249,6 +250,12 @@
    "fieldname": "tax_id",
    "fieldtype": "Data",
    "label": "Supplier Tax ID (PAN)"
+  },
+  {
+   "fieldname": "project_manager_name",
+   "fieldtype": "Data",
+   "label": "Project Manager",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -263,7 +270,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-31 15:23:15.880635",
+ "modified": "2024-07-31 15:59:26.291070",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
