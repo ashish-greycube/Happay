@@ -5,7 +5,13 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "vendor_invoice_attachment",
+  "details_section",
+  "vendor_invoice_attachment_1",
+  "column_break_weqg",
+  "vendor_invoice_attachment_2",
+  "column_break_3gzi",
+  "vendor_invoice_attachment_3",
+  "section_break_5aii",
   "company",
   "supplier",
   "posting_date",
@@ -36,12 +42,6 @@
   "amended_from"
  ],
  "fields": [
-  {
-   "fieldname": "vendor_invoice_attachment",
-   "fieldtype": "Attach",
-   "label": "Vendor Invoice Attachment",
-   "reqd": 1
-  },
   {
    "description": "Fetch Supplier based on the company selected",
    "fieldname": "supplier",
@@ -263,6 +263,39 @@
    "fieldtype": "Link",
    "label": "Advance Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "vendor_invoice_attachment_1",
+   "fieldtype": "Attach",
+   "label": "Vendor Invoice Attachment 1",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_weqg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vendor_invoice_attachment_2",
+   "fieldtype": "Attach",
+   "label": "Vendor Invoice Attachment 2"
+  },
+  {
+   "fieldname": "column_break_3gzi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vendor_invoice_attachment_3",
+   "fieldtype": "Attach",
+   "label": "Vendor Invoice Attachment 3"
+  },
+  {
+   "fieldname": "section_break_5aii",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -277,7 +310,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-07-31 18:06:19.720211",
+ "modified": "2024-08-01 10:02:14.130859",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
