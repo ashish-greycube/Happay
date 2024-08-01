@@ -78,13 +78,13 @@ class VendorInvoice(Document):
 						frappe.throw(_("Purchase invoice {0} is in draft state, hence you cannot complete vendor invoice.").format(get_link_to_form("Purchase Invoice", check_pi_exists)))
 
 			elif self.type=='Advance':
-				check_pe_exists = frappe.db.exists("Payment Entry", {"custom_vendor_invoice": self.name})
+				check_pe_exists = frappe.db.exists("Journal Entry", {"custom_vendor_invoice": self.name})
 				if check_pe_exists == None:
-					frappe.throw(_("Payment entry is not created, hence you cannot complete vendor invoice."))
+					frappe.throw(_("Journal entry is not created, hence you cannot complete vendor invoice."))
 				elif check_pe_exists:
-					pi_status = frappe.db.get_value("Payment Entry",check_pe_exists,"docstatus")
+					pi_status = frappe.db.get_value("Journal Entry",check_pe_exists,"docstatus")
 					if pi_status == 0:
-						frappe.throw(_("Payment Entry {0} is in draft state, hence you cannot complete vendor invoice.").format(get_link_to_form("Payment Entry", check_pe_exists)))
+						frappe.throw(_("Journal Entry {0} is in draft state, hence you cannot complete vendor invoice.").format(get_link_to_form("Payment Entry", check_pe_exists)))
 
 
 @frappe.whitelist()
@@ -141,6 +141,7 @@ def create_journal_entry_from_vendor_invoice(docname,target_doc=None):
 	je.cheque_no = vi_doc.supplier_invoice_number
 	je.cheque_date = vi_doc.supplier_invoice_date
 	je.pay_to_recd_from = vi_doc.supplier
+	je.custom_vendor_invoice = vi_doc.name
 	
 	accounts = []
 	accounts.append({

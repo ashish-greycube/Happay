@@ -64,6 +64,17 @@ frappe.ui.form.on("Vendor Invoice", {
                 }
             }
         });
+
+        frm.set_query("advance_account", function(doc){
+            return {
+                filters: {
+                    "company": doc.company,
+                    "root_type":"Asset",
+                    "is_group":0,
+                    "account_name":["like", "Advance%"]
+                },
+            }
+        })
 	},
 
     cost_center(frm){
@@ -82,6 +93,17 @@ frappe.ui.form.on("Vendor Invoice", {
                             }
                         )
                         
+                    }
+                )
+            }
+        )
+        frm.set_value("accounts_paid_from","")
+        frappe.db.get_value("Cost Center",cost_center,"parent_cost_center").then(
+            r => {
+                frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_bank_ledger").then(
+                    value => {
+                        let bank_ledger = value.message.custom_bank_ledger
+                        frm.set_value("accounts_paid_from",bank_ledger)
                     }
                 )
             }
@@ -110,6 +132,11 @@ frappe.ui.form.on("Vendor Invoice", {
         if (frm.doc.cost_center){
             if (frm.doc.project_manager==undefined || frm.doc.project_manager ==""){
                 frappe.throw(__("Project manager is missing, please set project manager in parent cost center"))
+            }
+            if (frm.doc.type == "Advance"){
+                if (frm.doc.accounts_paid_from==undefined || frm.doc.accounts_paid_from ==""){
+                    frappe.throw(__("Bank ledger is missing, please set bank ledger in parent cost center"))
+                }
             }
         }
         if (frm.doc.supplier){
