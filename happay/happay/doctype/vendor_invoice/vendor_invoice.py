@@ -2,12 +2,14 @@
 # For license information, please see license.txt
 
 import frappe
+import erpnext
 from frappe import _
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 from frappe.utils import today,get_link_to_form,nowdate
 from erpnext.accounts.party import get_party_account
 from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
+from frappe.desk.reportview import get_filters_cond, get_match_cond
 
 class VendorInvoice(Document):
 	def validate(self):
@@ -16,6 +18,8 @@ class VendorInvoice(Document):
 		self.validate_tds_amount()
 	
 	def validate_bill_amount(self):
+		if self.bill_amount <= 0:
+			frappe.throw(_("Bill amount cannot be zero or negative"))
 		if self.workflow_state !="Draft":
 			old_doc = self.get_doc_before_save()
 			if self.bill_amount > old_doc.bill_amount:
@@ -58,10 +62,10 @@ class VendorInvoice(Document):
 			elif self.type=='Advance':
 				user_roles = frappe.get_roles(frappe.session.user)
 				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
-					pe=make_payment_from_vendor_invoice(docname=self.name)
-					frappe.msgprint(_("Payment Entry {0} is created.").format(get_link_to_form("Payment Entry", pe)))
+					je=create_journal_entry_from_vendor_invoice(docname=self.name)
+					frappe.msgprint(_("Journal Entry {0} is created.").format(get_link_to_form("Journal Entry", je)))
 				else:
-					frappe.msgprint(_("You donot have required account roles to auto create Payment Entry from vendor invoice"))	
+					frappe.msgprint(_("You donot have required account roles to auto create Journal Entry from vendor invoice"))	
 
 		if self.workflow_state=="Paid":
 			if self.type=='Invoice':
@@ -96,6 +100,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		pi_doc.department = vi_doc.department
 		pi_doc.bill_no = vi_doc.supplier_invoice_number
 		pi_doc.bill_date = vi_doc.supplier_invoice_date
+		pi_doc.remarks = vi_doc.purpose
 
 		row = pi_doc.append("items",{})
 		row.item_name = vi_doc.purpose
@@ -125,51 +130,49 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		frappe.msgprint(_("Purchase Invoice {0} is already exists for vendor invoice {1}").format(get_link_to_form("Purchase Invoice", check_pi_exists),docname))
 
 @frappe.whitelist()
-def make_payment_from_vendor_invoice(docname,target_doc=None):
-	check_pe_exists = frappe.db.exists("Payment Entry", {"custom_vendor_invoice": docname})
-	if check_pe_exists == None:
-		vi_doc = frappe.get_doc("Vendor Invoice",docname)
-		pe = frappe.new_doc("Payment Entry")
-		pe.payment_type = "Pay"
-		pe.company = vi_doc.company
-		pe.cost_center = vi_doc.cost_center
-		pe.posting_date = nowdate()
-		pe.reference_date = nowdate()
-		pe.paid_from = vi_doc.accounts_paid_from
-		pe.party_type = "Supplier"
-		pe.supplier = vi_doc.supplier
-		pe.party = vi_doc.supplier
-		pe.department = vi_doc.department
-		pe.cost_center = vi_doc.cost_center
-		pe.reference_no = vi_doc.supplier_invoice_number
-		pe.party_account = get_party_account(pe.party_type ,pe.party,pe.company)
-
-		company_default_payable_account = frappe.db.get_value("Company",vi_doc.company,"default_payable_account")
-		default_company_currency = frappe.db.get_value("Company",vi_doc.company,"default_currency")
-		if company_default_payable_account:
-			pe.paid_to = company_default_payable_account
-		if default_company_currency:
-			pe.paid_to_account_currency = default_company_currency
-		pe.custom_vendor_invoice = vi_doc.name
-		pe.paid_amount = vi_doc.bill_amount
-		pe.received_amount = vi_doc.bill_amount
-		pe.party_bank_account = vi_doc.supplier_bank_account
-
-
-		pe.run_method("setup_party_account_field")
-		pe.run_method("set_missing_values")
-		pe.run_method("set_missing_ref_details")
-		pe.run_method("set_liability_account")
-		pe.run_method("set_exchange_rate")
-		pe.run_method("set_tax_withholding")
-		pe.run_method("set_amounts")
-		pe.run_method("set_status")
-		pe.run_method("set_total_in_words")
-
-		pe.save(ignore_permissions=True)
-		return pe.name
-	else :
-		frappe.msgprint(_("Payment Entry {0} is already exists for vendor invoice {1}").format(get_link_to_form("Payment Entry", check_pe_exists),docname))
+def create_journal_entry_from_vendor_invoice(docname,target_doc=None):
+	
+	vi_doc = frappe.get_doc("Vendor Invoice",docname)
+	je = frappe.new_doc("Journal Entry")
+	je.voucher_type = "Journal Entry"
+	je.company = vi_doc.company
+	je.posting_date = vi_doc.posting_date
+	je.user_remark = vi_doc.purpose
+	je.cheque_no = vi_doc.supplier_invoice_number
+	je.cheque_date = vi_doc.supplier_invoice_date
+	je.pay_to_recd_from = vi_doc.supplier
+	
+	accounts = []
+	accounts.append({
+		"account":vi_doc.advance_account,
+		"cost_center":vi_doc.cost_center,
+		"department":vi_doc.department,
+		"supplier":vi_doc.supplier,
+		"debit_in_account_currency":vi_doc.bill_amount,
+		"is_advance": "Yes"
+	})
+	accounts.append({
+		"account":vi_doc.tds_payable_account,
+		"cost_center":vi_doc.cost_center,
+		"department":vi_doc.department,
+		"supplier":vi_doc.supplier,
+		"credit_in_account_currency":vi_doc.tds_amount
+	})
+	company_default_payable_account = frappe.db.get_value("Company",vi_doc.company,"default_payable_account")
+	accounts.append({
+		"account":company_default_payable_account,
+		"cost_center":vi_doc.cost_center,
+		"department":vi_doc.department,
+		"supplier":vi_doc.supplier,
+		"party_type": "Supplier",
+		"party": vi_doc.supplier,
+		"credit_in_account_currency":vi_doc.bill_amount - vi_doc.tds_amount
+	})
+	je_row = je.set("accounts",accounts)
+	je.run_method('set_missing_values')
+	je.save()
+	je.add_comment("Comment", "Journal Entry is created for Vendor Invoice {0}".format(get_link_to_form("Vendor Invoice", vi_doc.name)))
+	return je.name
 
 @frappe.whitelist()
 def get_supplier_bank_account(supplier_name):
@@ -186,4 +189,52 @@ def get_supplier_bank_account(supplier_name):
 	elif len(supplier_bank_account)>0:
 		return supplier_bank_account
 
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def tds_account_query(doctype, txt, searchfield, start, page_len, filters):
+	doctype = "Account"
+	company_currency = erpnext.get_company_currency(filters.get("company"))
+
+	def get_accounts(with_account_type_filter):
+		account_type_condition = ""
+		if with_account_type_filter:
+			account_type_condition = "AND account_type in %(account_types)s"
+
+		accounts = frappe.db.sql(
+			f"""
+			SELECT name, parent_account
+			FROM `tabAccount`
+			WHERE `tabAccount`.docstatus!=2
+				{account_type_condition}
+				AND is_group = 0
+				AND company = %(company)s
+				AND disabled = %(disabled)s
+				AND (account_currency = %(currency)s or ifnull(account_currency, '') = '')
+				AND account_name LIKE %(account_name)s
+				AND `{searchfield}` LIKE %(txt)s
+				{get_match_cond(doctype)}
+			ORDER BY idx DESC, name
+			LIMIT %(limit)s offset %(offset)s
+		""",
+			dict(
+				account_types=filters.get("account_type"),
+				company=filters.get("company"),
+				disabled=filters.get("disabled", 0),
+				currency=company_currency,
+				account_name=filters.get("account_name"),
+				txt=f"%{txt}%",
+				offset=start,
+				limit=page_len,
+			),debug = 1
+		)
+
+		return accounts
+
+	tax_accounts = get_accounts(True)
+
+	if not tax_accounts:
+		tax_accounts = get_accounts(False)
+
+	return tax_accounts
 	

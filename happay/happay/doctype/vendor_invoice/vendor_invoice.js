@@ -56,10 +56,11 @@ frappe.ui.form.on("Vendor Invoice", {
         frm.set_query("tds_payable_account", function(doc) {
             var account_type = ["Tax", "Chargeable", "Income Account"];
             return {
-                query: "erpnext.controllers.queries.tax_account_query",
+                query: "happay.happay.doctype.vendor_invoice.vendor_invoice.tds_account_query",
                 filters: {
                     "account_type": account_type,
                     "company": doc.company,
+                    "account_name": "%TDS%"
                 }
             }
         });
@@ -72,7 +73,14 @@ frappe.ui.form.on("Vendor Invoice", {
             r => {
                 frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_project_manager").then(
                     value => {
-                            frm.set_value("project_manager",value.message.custom_project_manager)
+                        let project_manager_id = value.message.custom_project_manager
+                        frm.set_value("project_manager",project_manager_id)
+                        frappe.db.get_value("User",project_manager_id,"full_name").then(
+                            records => {
+                                console.log(records)
+                                frm.set_value("project_manager_name",records.message.full_name)
+                            }
+                        )
                         
                     }
                 )
