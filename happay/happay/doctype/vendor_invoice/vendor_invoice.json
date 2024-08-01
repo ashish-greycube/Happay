@@ -29,6 +29,7 @@
   "branch_code",
   "section_break_qbxx",
   "expense_account",
+  "is_tds_applicable",
   "tds_payable_account",
   "tds_amount",
   "accounts_paid_from",
@@ -219,7 +220,7 @@
    "read_only_depends_on": "eval:in_list(['Rejected by PM','Rejected By Fin 1','Rejected By Fin 2'],doc.workflow_state)"
   },
   {
-   "depends_on": "eval:doc.company",
+   "depends_on": "eval:(doc.company && doc.is_tds_applicable==\"1\")",
    "description": "filter based on company & acct type Tax,Chargeable,Income Account",
    "fieldname": "tds_payable_account",
    "fieldtype": "Link",
@@ -238,7 +239,7 @@
    "options": "Account"
   },
   {
-   "depends_on": "eval:doc.tds_payable_account",
+   "depends_on": "eval:(doc.company && doc.is_tds_applicable==\"1\" && doc.tds_payable_account)",
    "fieldname": "tds_amount",
    "fieldtype": "Currency",
    "label": "TDS Amount",
@@ -259,6 +260,7 @@
   },
   {
    "depends_on": "eval:doc.type==\"Advance\" ",
+   "description": "filtered based on company & root type Asset ,is_group = 0, like 'Advance%'",
    "fieldname": "advance_account",
    "fieldtype": "Link",
    "label": "Advance Account",
@@ -296,6 +298,12 @@
   {
    "fieldname": "section_break_5aii",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_tds_applicable",
+   "fieldtype": "Check",
+   "label": "Is TDS Applicable?"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -310,7 +318,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-01 10:02:14.130859",
+ "modified": "2024-08-01 12:57:21.012486",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
