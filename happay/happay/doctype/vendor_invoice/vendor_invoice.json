@@ -306,6 +306,7 @@
    "fieldname": "is_tds_applicable",
    "fieldtype": "Check",
    "label": "Is TDS Applicable?",
+   "no_copy": 1,
    "permlevel": 1
   }
  ],
@@ -325,7 +326,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-02 13:19:33.681066",
+ "modified": "2024-08-02 13:48:36.453649",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
