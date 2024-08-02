@@ -59,6 +59,7 @@ frappe.ui.form.on("Vendor Invoice", {
                 query: "happay.happay.doctype.vendor_invoice.vendor_invoice.tds_account_query",
                 filters: {
                     "account_type": account_type,
+                    "root_type":"Liability",
                     "company": doc.company,
                     "account_name": "%TDS%"
                 }

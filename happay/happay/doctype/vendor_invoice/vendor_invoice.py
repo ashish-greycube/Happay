@@ -6,7 +6,7 @@ import erpnext
 from frappe import _
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
-from frappe.utils import today,get_link_to_form,nowdate
+from frappe.utils import today,get_link_to_form,nowdate,formatdate
 from erpnext.accounts.party import get_party_account
 from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 from frappe.desk.reportview import get_filters_cond, get_match_cond
@@ -100,7 +100,10 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		pi_doc.department = vi_doc.department
 		pi_doc.bill_no = vi_doc.supplier_invoice_number
 		pi_doc.bill_date = vi_doc.supplier_invoice_date
-		pi_doc.remarks = vi_doc.purpose
+		pi_original_remarks = _("Against Supplier Invoice {0} dated {1}").format(pi_doc.bill_no, formatdate(pi_doc.bill_date))		
+		pi_doc.remarks = pi_original_remarks+'\n'+vi_doc.purpose
+		pi_doc.posting_date=vi_doc.posting_date
+		pi_doc.set_posting_time=1
 
 		row = pi_doc.append("items",{})
 		row.item_name = vi_doc.purpose
@@ -112,14 +115,15 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		row.department = vi_doc.department
 		row.description = vi_doc.purpose
 
-		tds_row = pi_doc.append("taxes",{})
-		tds_row.add_deduct_tax = "Deduct"
-		tds_row.charge_type = "Actual"
-		tds_row.account_head = vi_doc.tds_payable_account
-		tds_row.tax_amount = vi_doc.tds_amount
-		tds_row.description = vi_doc.tds_payable_account
-		tds_row.cost_center = vi_doc.cost_center
-		tds_row.department = vi_doc.department
+		if pi_doc.is_tds_applicable==1:
+			tds_row = pi_doc.append("taxes",{})
+			tds_row.add_deduct_tax = "Deduct"
+			tds_row.charge_type = "Actual"
+			tds_row.account_head = vi_doc.tds_payable_account
+			tds_row.tax_amount = vi_doc.tds_amount
+			tds_row.description = vi_doc.tds_payable_account
+			tds_row.cost_center = vi_doc.cost_center
+			tds_row.department = vi_doc.department
 
 		pi_doc.run_method("set_missing_values")
 		pi_doc.run_method("calculate_taxes_and_totals")
