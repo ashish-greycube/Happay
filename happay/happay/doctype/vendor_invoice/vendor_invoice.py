@@ -115,7 +115,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		row.department = vi_doc.department
 		row.description = vi_doc.purpose
 
-		if pi_doc.is_tds_applicable==1:
+		if vi_doc.is_tds_applicable==1:
 			tds_row = pi_doc.append("taxes",{})
 			tds_row.add_deduct_tax = "Deduct"
 			tds_row.charge_type = "Actual"
