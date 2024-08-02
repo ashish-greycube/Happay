@@ -2,9 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Vendor Invoice", {
-    // refresh(frm){
-    //     frm.trigger("vendon_invoice_on_refresh_load")
-    // },
+    refresh(frm) {
+        if (frm.is_new() == undefined && frappe.user.has_role('Projects Approver')) {
+            let make_field_read_only = cint(1)
+            for (const field of frm.meta.fields) {
+                if (field.fieldname !== "bill_amount") {
+                    frm.set_df_property(field.fieldname, "read_only", make_field_read_only ? 1 : 0);
+                }
+            }
+        }
+    },
     vendon_invoice_on_refresh_load : function(frm){
         if (frm.doc.docstatus == 1 && frm.doc.workflow_state == "To Account" && frappe.user.has_role(["Accounts Manager", "Accounts User"])) {
             if (frm.doc.type == "Invoice"){
