@@ -6,7 +6,7 @@ frappe.ui.form.on("Vendor Invoice", {
         if (frm.is_new() == undefined && frappe.user.has_role('Projects Approver')) {
             let make_field_read_only = cint(1)
             for (const field of frm.meta.fields) {
-                if (field.fieldname !== "bill_amount" || field.fieldname !=="rejection_remark") {
+                if (field.fieldname === "bill_amount" || field.fieldname ==="rejection_remark") {
                     frm.set_df_property(field.fieldname, "read_only", make_field_read_only ? 1 : 0);
                 }else{
                     frm.set_df_property(field.fieldname, "read_only", make_field_read_only ? 0 : 1);
