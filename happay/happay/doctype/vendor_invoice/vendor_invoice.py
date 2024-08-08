@@ -254,12 +254,12 @@ def tds_account_query(doctype, txt, searchfield, start, page_len, filters):
 
 @frappe.whitelist()
 def get_supplier_bank_details(supplier_bank_account):
-	bank_details =  frappe.db.get_value('Bank Account', supplier_bank_account, ["bank","branch_code","bank_account_no"])
+	bank_details =  frappe.db.get_value('Bank Account', supplier_bank_account, ["bank","branch_code","bank_account_no"], as_dict=1)
 	return bank_details
 
 @frappe.whitelist()
 def get_supplier_details(supplier_name):
-	supplier_details =  frappe.db.get_value("Supplier", supplier_name, ["tax_id","email_id"])
+	supplier_details =  frappe.db.get_value("Supplier", supplier_name, ["tax_id","email_id"], as_dict=1)
 	return supplier_details
 
 @frappe.whitelist()
