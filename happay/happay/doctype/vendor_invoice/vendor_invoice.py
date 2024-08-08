@@ -16,6 +16,7 @@ class VendorInvoice(Document):
 		self.validate_bill_amount()
 		self.validate_posting_date()
 		self.validate_tds_amount()
+		self.validate_duplicate_entry_of_vi()
 	
 	def validate_bill_amount(self):
 		if self.bill_amount <= 0:
@@ -37,6 +38,12 @@ class VendorInvoice(Document):
 			tds_amount = self.tds_amount
 			if tds_amount > bill_amount:
 				frappe.throw(_("TDS amount cannot be greater than bill amount"))
+	
+	def validate_duplicate_entry_of_vi(self):
+		exists_vi = frappe.db.exists("Vendor Invoice", {"company": self.company,"supplier": self.supplier,"supplier_invoice_number": self.supplier_invoice_number})
+		print(exists_vi,self.company,self.supplier,self.supplier_invoice_number,self.name,"--------------------")
+		if exists_vi != None and exists_vi != self.name:
+			frappe.throw(_("You cannot create vendor invoice for same company, supplier and supplier invoice number."))
 
 	def on_update(self):
 		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:
@@ -115,13 +122,14 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		row.department = vi_doc.department
 		row.description = vi_doc.purpose
 
+		tax_description = (_("TDS Payable Account : {0} \nTDS Applicable On Amount : {1} \nTDS Rate : {2} \nTDS Computed Amount : {3}").format(vi_doc.tds_payable_account,vi_doc.tds_amount,vi_doc.tds_rate,vi_doc.tds_computed_amount))
 		if vi_doc.is_tds_applicable==1:
 			tds_row = pi_doc.append("taxes",{})
 			tds_row.add_deduct_tax = "Deduct"
 			tds_row.charge_type = "Actual"
 			tds_row.account_head = vi_doc.tds_payable_account
-			tds_row.tax_amount = vi_doc.tds_amount
-			tds_row.description = vi_doc.tds_payable_account
+			tds_row.tax_amount = vi_doc.tds_computed_amount
+			tds_row.description = tax_description
 			tds_row.cost_center = vi_doc.cost_center
 			tds_row.department = vi_doc.department
 
@@ -243,3 +251,13 @@ def tds_account_query(doctype, txt, searchfield, start, page_len, filters):
 
 	return tax_accounts
 	
+
+@frappe.whitelist()
+def get_supplier_bank_details(supplier_bank_account):
+	bank_details = frappe.db.get_all("Bank Account",filters={"name":supplier_bank_account},fields=["bank","branch_code","bank_account_no"])
+	return bank_details
+
+@frappe.whitelist()
+def get_supplier_details(supplier_name):
+	supplier_details = frappe.db.get_all("Supplier",filters={"name":supplier_name},fields=["tax_id","email_id"])
+	return supplier_details
