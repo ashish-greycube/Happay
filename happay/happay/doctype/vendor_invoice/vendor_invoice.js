@@ -90,47 +90,22 @@ frappe.ui.form.on("Vendor Invoice", {
     cost_center(frm){
         let cost_center = frm.doc.cost_center
         frm.set_value("project_manager","")
-        frappe.db.get_value("Cost Center",cost_center,"parent_cost_center").then(
-            r => {
-                frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_project_manager").then(
-                    value => {
-                        let project_manager_id = value.message.custom_project_manager
-                        frm.set_value("project_manager",project_manager_id)
-                        frappe.db.get_value("User",project_manager_id,"full_name").then(
-                            records => {
-                                console.log(records)
-                                frm.set_value("project_manager_name",records.message.full_name)
-                            }
-                        )
-                        
-                    }
-                )
-            }
-        )
+        frm.set_value("project_manager_name","")
         frm.set_value("accounts_paid_from","")
-        frappe.db.get_value("Cost Center",cost_center,"parent_cost_center").then(
-            r => {
-                frappe.db.get_value("Cost Center",r.message.parent_cost_center,"custom_bank_ledger").then(
-                    value => {
-                        let bank_ledger = value.message.custom_bank_ledger
-                        frm.set_value("accounts_paid_from",bank_ledger)
-                    }
-                )
+        frappe.call({
+            method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_pm_and_account_from_cost_center",
+            args: {
+                "cost_center": frm.doc.cost_center
+            },
+            callback: function (response) {
+                let cc_detials = response.message
+                if (cc_detials){
+                    frm.set_value("project_manager",cc_detials.custom_project_manager)
+                    frm.set_value("project_manager_name",cc_detials.project_manager_name)
+                    frm.set_value("accounts_paid_from",cc_detials.custom_bank_ledger)
+                }
             }
-        )
-
-        // frappe.call({
-        //     method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_pm_and_account_from_cost_center",
-        //     args: {
-        //         "supplier_name": supplier_name
-        //     },
-        //     callback: function (response) {
-        //         let account_name = response.message
-        //         if (account_name.length > 0){
-        //             frm.set_value("supplier_bank_account",account_name[0].name)
-        //         }
-        //     }
-        // })
+        })
     },
 
     supplier(frm){
@@ -159,10 +134,10 @@ frappe.ui.form.on("Vendor Invoice", {
                 "supplier_bank_account": supplier_bank_account
             },
             callback: function (response) {
-                if (response.message.length > 0){
-                    frm.set_value("bank",response.message[0].bank)
-                    frm.set_value("bank_account_no",response.message[0].bank_account_no)
-                    frm.set_value("branch_code",response.message[0].branch_code)
+                if (response.message){
+                    frm.set_value("bank",response.message.bank)
+                    frm.set_value("bank_account_no",response.message.bank_account_no)
+                    frm.set_value("branch_code",response.message.branch_code)
                 }
             }
         })
@@ -173,9 +148,9 @@ frappe.ui.form.on("Vendor Invoice", {
                 "supplier_name": supplier_name
             },
             callback: function (response) {
-                if (response.message.length > 0){
-                    frm.set_value("tax_id",response.message[0].tax_id)
-                    frm.set_value("supplier_email",response.message[0].email_id)
+                if (response.message){
+                    frm.set_value("tax_id",response.message.tax_id)
+                    frm.set_value("supplier_email",response.message.email_id)
                 }
             }
         })

@@ -254,10 +254,21 @@ def tds_account_query(doctype, txt, searchfield, start, page_len, filters):
 
 @frappe.whitelist()
 def get_supplier_bank_details(supplier_bank_account):
-	bank_details = frappe.db.get_all("Bank Account",filters={"name":supplier_bank_account},fields=["bank","branch_code","bank_account_no"])
+	bank_details =  frappe.db.get_value('Bank Account', supplier_bank_account, ["bank","branch_code","bank_account_no"])
 	return bank_details
 
 @frappe.whitelist()
 def get_supplier_details(supplier_name):
-	supplier_details = frappe.db.get_all("Supplier",filters={"name":supplier_name},fields=["tax_id","email_id"])
+	supplier_details =  frappe.db.get_value("Supplier", supplier_name, ["tax_id","email_id"])
 	return supplier_details
+
+@frappe.whitelist()
+def get_pm_and_account_from_cost_center(cost_center):
+	parent_cost_center = frappe.db.get_value('Cost Center', cost_center, 'parent_cost_center')
+	if parent_cost_center:
+		cc_detials = frappe.db.get_value('Cost Center', parent_cost_center, ['custom_project_manager', 'custom_bank_ledger'], as_dict=1)	
+		if cc_detials:
+			project_manager_name=frappe.db.get_value("User", cc_detials.custom_project_manager, 'full_name')
+			cc_detials['project_manager_name']=project_manager_name
+		return cc_detials
+
