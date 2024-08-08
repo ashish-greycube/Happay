@@ -167,7 +167,6 @@
    "reqd": 1
   },
   {
-   "fetch_from": "supplier.email_id",
    "fetch_if_empty": 1,
    "fieldname": "supplier_email",
    "fieldtype": "Data",
@@ -192,7 +191,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "supplier_bank_account.bank",
    "fetch_if_empty": 1,
    "fieldname": "bank",
    "fieldtype": "Data",
@@ -200,7 +198,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "supplier_bank_account.bank_account_no",
    "fetch_if_empty": 1,
    "fieldname": "bank_account_no",
    "fieldtype": "Data",
@@ -208,7 +205,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "supplier_bank_account.branch_code",
    "fetch_if_empty": 1,
    "fieldname": "branch_code",
    "fieldtype": "Data",
@@ -251,7 +247,7 @@
    "non_negative": 1
   },
   {
-   "fetch_from": "supplier.tax_id",
+   "depends_on": "eval:doc.supplier",
    "fieldname": "tax_id",
    "fieldtype": "Data",
    "label": "Supplier Tax ID (PAN)",
@@ -343,7 +339,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-08 13:20:55.171872",
+ "modified": "2024-08-08 15:42:20.893799",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
