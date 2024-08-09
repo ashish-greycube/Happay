@@ -6,7 +6,7 @@ import erpnext
 from frappe import _
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
-from frappe.utils import today,get_link_to_form,nowdate,formatdate
+from frappe.utils import today,get_link_to_form,nowdate,formatdate,getdate
 from erpnext.accounts.party import get_party_account
 from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 from frappe.desk.reportview import get_filters_cond, get_match_cond
@@ -28,7 +28,7 @@ class VendorInvoice(Document):
 	
 	def validate_posting_date(self):
 		posting_date = self.posting_date
-		supplier_invoice_date = self.supplier_invoice_date
+		supplier_invoice_date = getdate(self.supplier_invoice_date)
 		if supplier_invoice_date > posting_date:
 			frappe.throw(_("Supplier invoice date cannot be greater than posting date"))
 
