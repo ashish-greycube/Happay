@@ -168,7 +168,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 
 # @frappe.whitelist()
 def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,vendor_invoice_type):
-	
+	tds_computed=0
 	vi_doc = frappe.get_doc("Vendor Invoice",docname)
 	je = frappe.new_doc("Journal Entry")
 	je.voucher_type = "Journal Entry"
@@ -182,7 +182,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	
 	accounts = []
 	# row 1 of accounts table
-	if vendor_invoice_asset_type == 'Yes':
+	if vendor_invoice_asset_type == 'Yes' and (vendor_invoice_type == 'Invoice' or vendor_invoice_type == 'Invoice against Advance'):
 		accounts.append({
 			"account":vi_doc.asset_account,
 			"cost_center":vi_doc.cost_center,
@@ -192,7 +192,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 			"is_advance": "Yes"
 		})
 
-	elif vendor_invoice_asset_type == 'No':
+	elif vendor_invoice_asset_type == 'No' and (vendor_invoice_type == 'Invoice against Advance' or vendor_invoice_type == 'Invoice'):
 		accounts.append({
 			"account":vi_doc.expense_account,
 			"cost_center":vi_doc.cost_center,
@@ -202,7 +202,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 			"is_advance": "Yes"
 		})
 
-	else :
+	elif vendor_invoice_type == 'Advance' and vendor_invoice_asset_type == None:
 		accounts.append({
 			"account":vi_doc.advance_account,
 			"cost_center":vi_doc.cost_center,
@@ -213,16 +213,18 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 		})
 
 	# row 2 of accounts table
-	accounts.append({
-		"account":vi_doc.tds_payable_account,
-		"cost_center":vi_doc.cost_center,
-		"department":vi_doc.department,
-		"supplier":vi_doc.supplier,
-		"credit_in_account_currency":vi_doc.tds_amount
-	})
+	if vi_doc.is_tds_applicable == 1:
+		tds_computed = vi_doc.tds_computed_amount
+		accounts.append({
+			"account":vi_doc.tds_payable_account,
+			"cost_center":vi_doc.cost_center,
+			"department":vi_doc.department,
+			"supplier":vi_doc.supplier,
+			"credit_in_account_currency":tds_computed
+		})
 
 	# row 3 of accounts table
-	if vendor_invoice_type == 'Invoice' or vendor_invoice_type == 'Advance':
+	if (vendor_invoice_type == 'Invoice' and vendor_invoice_asset_type == 'Yes') or (vendor_invoice_type == 'Advance' and vendor_invoice_asset_type == None):
 		accounts.append({
 			"account":vi_doc.accounts_payable,
 			"cost_center":vi_doc.cost_center,
@@ -230,10 +232,10 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 			"supplier":vi_doc.supplier,
 			"party_type": "Supplier",
 			"party": vi_doc.supplier,
-			"credit_in_account_currency":vi_doc.bill_amount - vi_doc.tds_amount
+			"credit_in_account_currency":vi_doc.bill_amount - tds_computed
 		})
 
-	elif vendor_invoice_type == 'Invoice against Advance' :
+	elif ((vendor_invoice_type == 'Invoice against Advance') and (vendor_invoice_asset_type == 'Yes' or vendor_invoice_asset_type == 'No')):
 		accounts.append({
 			"account":vi_doc.advance_account,
 			"cost_center":vi_doc.cost_center,
@@ -241,7 +243,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 			"supplier":vi_doc.supplier,
 			"party_type": "Supplier",
 			"party": vi_doc.supplier,
-			"credit_in_account_currency":vi_doc.bill_amount - vi_doc.tds_amount
+			"credit_in_account_currency":vi_doc.bill_amount - tds_computed
 		})
 
 	je_row = je.set("accounts",accounts)
