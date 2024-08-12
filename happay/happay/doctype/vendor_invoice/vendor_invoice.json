@@ -263,7 +263,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:(doc.company && doc.type==\"Invoice against Advance\" && (doc.is_asset==\"No\" || doc.is_asset==\"Yes\"))",
+   "depends_on": "eval:(doc.company && doc.type==\"Invoice against Advance\" && doc.is_asset==\"Yes\") ||(doc.company && doc.type==\"Advance\")",
    "description": "filtered based on company & root type Asset ,is_group = 0, like 'Advance%'",
    "fieldname": "advance_account",
    "fieldtype": "Link",
@@ -368,7 +368,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-09 18:18:16.579620",
+ "modified": "2024-08-12 11:07:47.697950",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
