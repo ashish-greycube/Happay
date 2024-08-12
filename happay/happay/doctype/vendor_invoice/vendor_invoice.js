@@ -85,7 +85,33 @@ frappe.ui.form.on("Vendor Invoice", {
                 },
             }
         })
+
+        frm.set_query("asset_account", function(doc){
+            return {
+                filters: {
+                    "company": doc.company,
+                    "root_type":"Asset",
+                },
+            }
+        })
 	},
+
+    company(frm){
+        let company = frm.doc.company
+        frm.set_value("accounts_payable","")
+        frappe.call({
+            method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_payable_account_from_company",
+            args: {
+                "company": frm.doc.company
+            },
+            callback: function (response) {
+                let payable_account = response.message
+                if (payable_account){
+                    frm.set_value("accounts_payable",payable_account.default_payable_account)
+                }
+            }
+        })
+    },
 
     cost_center(frm){
         let cost_center = frm.doc.cost_center

@@ -58,21 +58,45 @@ class VendorInvoice(Document):
 
 	def on_update_after_submit(self):
 		if self.workflow_state=="To Pay":
-			if self.type=='Invoice':
+			if self.type=='Invoice' and self.is_asset=='No':
 				user_roles = frappe.get_roles(frappe.session.user)
 				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
 					pi=create_purchase_invoice_from_vendor_invoice(docname=self.name)
 					frappe.msgprint(_("Purchase Invoice {0} is created.").format(get_link_to_form("Purchase Invoice", pi)))	
 				else:
 					frappe.msgprint(_("You donot have required account roles to auto create Purchase Invoice from vendor invoice"))
+
+			elif self.type=='Invoice' and self.is_asset=='Yes':
+				user_roles = frappe.get_roles(frappe.session.user)
+				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
+					je=create_journal_entry_from_vendor_invoice(docname=self.name,vendor_invoice_asset_type=self.is_asset,vendor_invoice_type=self.type)
+					frappe.msgprint(_("Journal Entry {0} is created.").format(get_link_to_form("Journal Entry", je)))	
+				else:
+					frappe.msgprint(_("You donot have required account roles to auto create Purchase Invoice from vendor invoice"))
 				
 			elif self.type=='Advance':
 				user_roles = frappe.get_roles(frappe.session.user)
 				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
-					je=create_journal_entry_from_vendor_invoice(docname=self.name)
+					je=create_journal_entry_from_vendor_invoice(docname=self.name,vendor_invoice_asset_type=None,vendor_invoice_type=self.type)
 					frappe.msgprint(_("Journal Entry {0} is created.").format(get_link_to_form("Journal Entry", je)))
 				else:
 					frappe.msgprint(_("You donot have required account roles to auto create Journal Entry from vendor invoice"))	
+
+			elif self.type=='Invoice against Advance' and self.is_asset=='Yes':
+				user_roles = frappe.get_roles(frappe.session.user)
+				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
+					je=create_journal_entry_from_vendor_invoice(docname=self.name,vendor_invoice_asset_type=self.is_asset,vendor_invoice_type=self.type)
+					frappe.msgprint(_("Journal Entry {0} is created.").format(get_link_to_form("Journal Entry", je)))
+				else:
+					frappe.msgprint(_("You donot have required account roles to auto create Journal Entry from vendor invoice"))
+
+			elif self.type=='Invoice against Advance' and self.is_asset=='No':
+				user_roles = frappe.get_roles(frappe.session.user)
+				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
+					je=create_journal_entry_from_vendor_invoice(docname=self.name,vendor_invoice_asset_type=self.is_asset,vendor_invoice_type=self.type)
+					frappe.msgprint(_("Journal Entry {0} is created.").format(get_link_to_form("Journal Entry", je)))
+				else:
+					frappe.msgprint(_("You donot have required account roles to auto create Journal Entry from vendor invoice"))
 
 		if self.workflow_state=="Paid":
 			if self.type=='Invoice':
@@ -141,8 +165,8 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 	else :
 		frappe.msgprint(_("Purchase Invoice {0} is already exists for vendor invoice {1}").format(get_link_to_form("Purchase Invoice", check_pi_exists),docname))
 
-@frappe.whitelist()
-def create_journal_entry_from_vendor_invoice(docname,target_doc=None):
+# @frappe.whitelist()
+def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,vendor_invoice_type):
 	
 	vi_doc = frappe.get_doc("Vendor Invoice",docname)
 	je = frappe.new_doc("Journal Entry")
@@ -156,14 +180,38 @@ def create_journal_entry_from_vendor_invoice(docname,target_doc=None):
 	je.custom_vendor_invoice = vi_doc.name
 	
 	accounts = []
-	accounts.append({
-		"account":vi_doc.advance_account,
-		"cost_center":vi_doc.cost_center,
-		"department":vi_doc.department,
-		"supplier":vi_doc.supplier,
-		"debit_in_account_currency":vi_doc.bill_amount,
-		"is_advance": "Yes"
-	})
+	# row 1 of accounts table
+	if vendor_invoice_asset_type == 'Yes':
+		accounts.append({
+			"account":vi_doc.asset_account,
+			"cost_center":vi_doc.cost_center,
+			"department":vi_doc.department,
+			"supplier":vi_doc.supplier,
+			"debit_in_account_currency":vi_doc.bill_amount,
+			"is_advance": "Yes"
+		})
+
+	elif vendor_invoice_asset_type == 'No':
+		accounts.append({
+			"account":vi_doc.expense_account,
+			"cost_center":vi_doc.cost_center,
+			"department":vi_doc.department,
+			"supplier":vi_doc.supplier,
+			"debit_in_account_currency":vi_doc.bill_amount,
+			"is_advance": "Yes"
+		})
+
+	else :
+		accounts.append({
+			"account":vi_doc.advance_account,
+			"cost_center":vi_doc.cost_center,
+			"department":vi_doc.department,
+			"supplier":vi_doc.supplier,
+			"debit_in_account_currency":vi_doc.bill_amount,
+			"is_advance": "Yes"
+		})
+
+	# row 2 of accounts table
 	accounts.append({
 		"account":vi_doc.tds_payable_account,
 		"cost_center":vi_doc.cost_center,
@@ -171,16 +219,30 @@ def create_journal_entry_from_vendor_invoice(docname,target_doc=None):
 		"supplier":vi_doc.supplier,
 		"credit_in_account_currency":vi_doc.tds_amount
 	})
-	company_default_payable_account = frappe.db.get_value("Company",vi_doc.company,"default_payable_account")
-	accounts.append({
-		"account":company_default_payable_account,
-		"cost_center":vi_doc.cost_center,
-		"department":vi_doc.department,
-		"supplier":vi_doc.supplier,
-		"party_type": "Supplier",
-		"party": vi_doc.supplier,
-		"credit_in_account_currency":vi_doc.bill_amount - vi_doc.tds_amount
-	})
+
+	# row 3 of accounts table
+	if vendor_invoice_type == 'Invoice' or vendor_invoice_type == 'Advance':
+		accounts.append({
+			"account":vi_doc.accounts_payable,
+			"cost_center":vi_doc.cost_center,
+			"department":vi_doc.department,
+			"supplier":vi_doc.supplier,
+			"party_type": "Supplier",
+			"party": vi_doc.supplier,
+			"credit_in_account_currency":vi_doc.bill_amount - vi_doc.tds_amount
+		})
+
+	elif vendor_invoice_type == 'Invoice against Advance' :
+		accounts.append({
+			"account":vi_doc.advance_account,
+			"cost_center":vi_doc.cost_center,
+			"department":vi_doc.department,
+			"supplier":vi_doc.supplier,
+			"party_type": "Supplier",
+			"party": vi_doc.supplier,
+			"credit_in_account_currency":vi_doc.bill_amount - vi_doc.tds_amount
+		})
+
 	je_row = je.set("accounts",accounts)
 	je.run_method('set_missing_values')
 	je.save()
@@ -272,3 +334,7 @@ def get_pm_and_account_from_cost_center(cost_center):
 			cc_detials['project_manager_name']=project_manager_name
 		return cc_detials
 
+@frappe.whitelist()
+def get_payable_account_from_company(company):
+	company_payable_account = frappe.db.get_value("Company",company,"default_payable_account",as_dict=1)
+	return company_payable_account
