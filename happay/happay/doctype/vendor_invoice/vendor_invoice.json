@@ -345,7 +345,6 @@
   },
   {
    "depends_on": "eval:doc.type==\"Advance\"",
-   "fetch_from": "company.default_payable_account",
    "fieldname": "accounts_payable",
    "fieldtype": "Link",
    "label": "Accounts Payable",
@@ -368,7 +367,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-12 11:07:47.697950",
+ "modified": "2024-08-12 13:39:38.753063",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
