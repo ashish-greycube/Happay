@@ -286,6 +286,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.vendor_invoice_attachment_1",
    "fieldname": "vendor_invoice_attachment_2",
    "fieldtype": "Attach",
    "label": "Vendor Invoice Attachment 2"
@@ -295,6 +296,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.vendor_invoice_attachment_2",
    "fieldname": "vendor_invoice_attachment_3",
    "fieldtype": "Attach",
    "label": "Vendor Invoice Attachment 3"
@@ -366,7 +368,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-09 17:53:13.935609",
+ "modified": "2024-08-09 18:18:16.579620",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
