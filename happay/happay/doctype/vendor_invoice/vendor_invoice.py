@@ -156,6 +156,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 			tds_row.description = tax_description
 			tds_row.cost_center = vi_doc.cost_center
 			tds_row.department = vi_doc.department
+			tds_row.supplier = vi_doc.supplier
 
 		pi_doc.run_method("set_missing_values")
 		pi_doc.run_method("calculate_taxes_and_totals")
