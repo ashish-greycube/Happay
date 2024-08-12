@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Vendor Invoice", {
     refresh(frm) {
-        if (frm.is_new() == undefined && frappe.user.has_role('Projects Approver')) {
+        if (frm.is_new() == undefined && frappe.user.has_role('Projects Approver') && (frm.doc.workflow_state == "Pending at PM" || frm.doc.workflow_state =="Rejected by PM")) {
             let make_field_read_only = cint(1)
             for (const field of frm.meta.fields) {
                 if (field.fieldname === "bill_amount" || field.fieldname ==="rejection_remark") {

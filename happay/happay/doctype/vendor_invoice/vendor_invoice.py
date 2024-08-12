@@ -27,7 +27,7 @@ class VendorInvoice(Document):
 				frappe.throw(_("Bill amount entered is {0}. It cannot be greater than {1}".format(self.bill_amount ,old_doc.bill_amount)))
 	
 	def validate_posting_date(self):
-		posting_date = self.posting_date
+		posting_date = getdate(self.posting_date)
 		supplier_invoice_date = getdate(self.supplier_invoice_date)
 		if supplier_invoice_date > posting_date:
 			frappe.throw(_("Supplier invoice date cannot be greater than posting date"))
