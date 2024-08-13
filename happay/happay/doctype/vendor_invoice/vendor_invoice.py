@@ -188,70 +188,109 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	accounts = []
 	# row 1 of accounts table
 	if vendor_invoice_asset_type == 'Yes' and (vendor_invoice_type == 'Invoice' or vendor_invoice_type == 'Invoice against Advance'):
-		accounts.append({
+		accounts_row1 = {
 			"account":vi_doc.asset_account,
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
 			"debit_in_account_currency":vi_doc.bill_amount,
 			"is_advance": "Yes"
-		})
+		}
+		# if account type is Payable/Receivable --> set party and party type
+		account_type = frappe.db.get_value('Account',vi_doc.asset_account, 'account_type')
+		if account_type and ( account_type=='Payable' or account_type=='Receivable'):
+			accounts_row1['party_type']="Supplier"
+			accounts_row1['party']= vi_doc.supplier
+		else:
+			pass
+		accounts.append(accounts_row1)
 
 	elif vendor_invoice_asset_type == 'No' and (vendor_invoice_type == 'Invoice against Advance' or vendor_invoice_type == 'Invoice'):
-		accounts.append({
+		accounts_row1 = {
 			"account":vi_doc.expense_account,
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
 			"debit_in_account_currency":vi_doc.bill_amount,
 			"is_advance": "Yes"
-		})
+		}
+		account_type = frappe.db.get_value('Account',vi_doc.expense_account, 'account_type')
+		if account_type and ( account_type=='Payable' or account_type=='Receivable'):
+			accounts_row1['party_type']="Supplier"
+			accounts_row1['party']= vi_doc.supplier
+		else:
+			pass
+		accounts.append(accounts_row1)
 
 	elif vendor_invoice_type == 'Advance' and vendor_invoice_asset_type == None:
-		accounts.append({
+		accounts_row1 = {
 			"account":vi_doc.advance_account,
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
 			"debit_in_account_currency":vi_doc.bill_amount,
 			"is_advance": "Yes"
-		})
+		}
+		account_type = frappe.db.get_value('Account',vi_doc.advance_account, 'account_type')
+		if account_type and ( account_type=='Payable' or account_type=='Receivable'):
+			accounts_row1['party_type']="Supplier"
+			accounts_row1['party']= vi_doc.supplier
+		else:
+			pass
+		accounts.append(accounts_row1)
 
 	# row 2 of accounts table
 	tds_description = (_("TDS Payable Account : {0} \nTDS Applicable On Amount : {1} \nTDS Rate : {2} \nTDS Computed Amount : {3}").format(vi_doc.tds_payable_account,vi_doc.tds_amount,vi_doc.tds_rate,vi_doc.tds_computed_amount))
 	if vi_doc.is_tds_applicable == 1:
 		tds_computed = vi_doc.tds_computed_amount
-		accounts.append({
+		accounts_row2 = {
 			"account":vi_doc.tds_payable_account,
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
 			"credit_in_account_currency":tds_computed,
 			"user_remark":tds_description
-		})
+		}
+		account_type = frappe.db.get_value('Account',vi_doc.tds_payable_account, 'account_type')
+		if account_type and ( account_type=='Payable' or account_type=='Receivable'):
+			accounts_row2['party_type']="Supplier"
+			accounts_row2['party']= vi_doc.supplier
+		else:
+			pass
+		accounts.append(accounts_row2)
 
 	# row 3 of accounts table
 	if (vendor_invoice_type == 'Invoice' and vendor_invoice_asset_type == 'Yes') or (vendor_invoice_type == 'Advance' and vendor_invoice_asset_type == None):
-		accounts.append({
+		accounts_row3 = {
 			"account":vi_doc.accounts_payable,
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
-			"party_type": "Supplier",
-			"party": vi_doc.supplier,
 			"credit_in_account_currency":vi_doc.bill_amount - tds_computed
-		})
+		}
+		account_type = frappe.db.get_value('Account',vi_doc.accounts_payable, 'account_type')
+		if account_type and ( account_type=='Payable' or account_type=='Receivable'):
+			accounts_row3['party_type']="Supplier"
+			accounts_row3['party']= vi_doc.supplier
+		else:
+			pass
+		accounts.append(accounts_row3)
 
 	elif ((vendor_invoice_type == 'Invoice against Advance') and (vendor_invoice_asset_type == 'Yes' or vendor_invoice_asset_type == 'No')):
-		accounts.append({
+		accounts_row3 = {
 			"account":vi_doc.advance_account,
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
-			"party_type": "Supplier",
-			"party": vi_doc.supplier,
 			"credit_in_account_currency":vi_doc.bill_amount - tds_computed
-		})
+		}
+		account_type = frappe.db.get_value('Account',vi_doc.advance_account, 'account_type')
+		if account_type and ( account_type=='Payable' or account_type=='Receivable'):
+			accounts_row3['party_type']="Supplier"
+			accounts_row3['party']= vi_doc.supplier
+		else:
+			pass
+		accounts.append(accounts_row3)
 
 	je_row = je.set("accounts",accounts)
 	je.run_method('set_missing_values')

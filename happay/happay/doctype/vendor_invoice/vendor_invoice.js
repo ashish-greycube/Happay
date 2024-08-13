@@ -91,6 +91,7 @@ frappe.ui.form.on("Vendor Invoice", {
                 filters: {
                     "company": doc.company,
                     "root_type":"Asset",
+                    "is_group":0
                 },
             }
         })
