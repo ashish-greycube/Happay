@@ -72,7 +72,7 @@ class VendorInvoice(Document):
 					je=create_journal_entry_from_vendor_invoice(docname=self.name,vendor_invoice_asset_type=self.is_asset,vendor_invoice_type=self.type)
 					frappe.msgprint(_("Journal Entry {0} is created.").format(get_link_to_form("Journal Entry", je)))	
 				else:
-					frappe.msgprint(_("You donot have required account roles to auto create Purchase Invoice from vendor invoice"))
+					frappe.msgprint(_("You donot have required account roles to auto create Journal Entry from vendor invoice"))
 				
 			elif self.type=='Advance':
 				user_roles = frappe.get_roles(frappe.session.user)
@@ -177,7 +177,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	if vendor_invoice_type == 'Advance':
 		remark=(_("Purpose :{0}. Type :{1}. TDS Applicable :{2}").format(vi_doc.purpose,vendor_invoice_type,"Yes" if  (vi_doc.is_tds_applicable==1) else "No"))
 	else:
-		remark=(_("Purpose :{0}. Type :{1}. Is Asset :{2}. TDS Applicable :{3}")
+		remark=(_("Purpose :{0}. Type :{1}. \nIs Asset :{2}. TDS Applicable :{3}")
 		  .format(vi_doc.purpose,vendor_invoice_type,vendor_invoice_asset_type,"Yes" if  (vi_doc.is_tds_applicable==1) else "No"))
 	je.user_remark = remark
 	je.cheque_no = vi_doc.supplier_invoice_number
@@ -218,6 +218,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 		})
 
 	# row 2 of accounts table
+	tds_description = (_("TDS Payable Account : {0} \nTDS Applicable On Amount : {1} \nTDS Rate : {2} \nTDS Computed Amount : {3}").format(vi_doc.tds_payable_account,vi_doc.tds_amount,vi_doc.tds_rate,vi_doc.tds_computed_amount))
 	if vi_doc.is_tds_applicable == 1:
 		tds_computed = vi_doc.tds_computed_amount
 		accounts.append({
@@ -225,7 +226,8 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 			"cost_center":vi_doc.cost_center,
 			"department":vi_doc.department,
 			"supplier":vi_doc.supplier,
-			"credit_in_account_currency":tds_computed
+			"credit_in_account_currency":tds_computed,
+			"user_remark":tds_description
 		})
 
 	# row 3 of accounts table
