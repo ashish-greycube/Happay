@@ -174,7 +174,12 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	je.voucher_type = "Journal Entry"
 	je.company = vi_doc.company
 	je.posting_date = vi_doc.posting_date
-	je.user_remark = vi_doc.purpose
+	if vendor_invoice_type == 'Advance':
+		remark=(_("Purpose :{0}. Type :{1}. TDS Applicable :{2}").format(vi_doc.purpose,vendor_invoice_type,"Yes" if  (vi_doc.is_tds_applicable==1) else "No"))
+	else:
+		remark=(_("Purpose :{0}. Type :{1}. Is Asset :{2}. TDS Applicable :{3}")
+		  .format(vi_doc.purpose,vendor_invoice_type,vendor_invoice_asset_type,"Yes" if  (vi_doc.is_tds_applicable==1) else "No"))
+	je.user_remark = remark
 	je.cheque_no = vi_doc.supplier_invoice_number
 	je.cheque_date = vi_doc.supplier_invoice_date
 	je.pay_to_recd_from = vi_doc.supplier
@@ -331,7 +336,7 @@ def get_supplier_details(supplier_name):
 def get_pm_and_account_from_cost_center(cost_center):
 	parent_cost_center = frappe.db.get_value('Cost Center', cost_center, 'parent_cost_center')
 	if parent_cost_center:
-		cc_detials = frappe.db.get_value('Cost Center', parent_cost_center, ['custom_project_manager', 'custom_bank_ledger'], as_dict=1)	
+		cc_detials = frappe.db.get_value('Cost Center', parent_cost_center, ['custom_project_manager'], as_dict=1)	
 		if cc_detials:
 			project_manager_name=frappe.db.get_value("User", cc_detials.custom_project_manager, 'full_name')
 			cc_detials['project_manager_name']=project_manager_name

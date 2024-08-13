@@ -117,7 +117,6 @@ frappe.ui.form.on("Vendor Invoice", {
         let cost_center = frm.doc.cost_center
         frm.set_value("project_manager","")
         frm.set_value("project_manager_name","")
-        frm.set_value("accounts_paid_from","")
         frappe.call({
             method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_pm_and_account_from_cost_center",
             args: {
@@ -128,7 +127,6 @@ frappe.ui.form.on("Vendor Invoice", {
                 if (cc_detials){
                     frm.set_value("project_manager",cc_detials.custom_project_manager)
                     frm.set_value("project_manager_name",cc_detials.project_manager_name)
-                    frm.set_value("accounts_paid_from",cc_detials.custom_bank_ledger)
                 }
             }
         })
@@ -193,11 +191,6 @@ frappe.ui.form.on("Vendor Invoice", {
         if (frm.doc.cost_center){
             if (frm.doc.project_manager==undefined || frm.doc.project_manager ==""){
                 frappe.throw(__("Project manager is missing, please set project manager in parent cost center"))
-            }
-            if (frm.doc.type == "Advance"){
-                if (frm.doc.accounts_paid_from==undefined || frm.doc.accounts_paid_from ==""){
-                    frappe.throw(__("Bank ledger is missing, please set bank ledger in parent cost center"))
-                }
             }
         }
         if (frm.doc.supplier){
