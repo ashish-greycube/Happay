@@ -33,7 +33,6 @@
   "asset_account",
   "department",
   "accounts_payable",
-  "accounts_paid_from",
   "advance_account",
   "is_tds_applicable",
   "tds_payable_account",
@@ -106,7 +105,7 @@
    "fieldname": "expense_account",
    "fieldtype": "Link",
    "label": "Expense Account",
-   "mandatory_depends_on": "eval:(doc.company && doc.type==\"Invoice\") ",
+   "mandatory_depends_on": "eval:(doc.company && doc.type==\"Invoice\" && (doc.is_asset=='No')) ",
    "options": "Account"
   },
   {
@@ -230,15 +229,6 @@
    "label": "TDS Payable Account",
    "mandatory_depends_on": "eval:(doc.company && doc.workflow_status == \"Pending at Fin 2\")",
    "no_copy": 1,
-   "options": "Account"
-  },
-  {
-   "depends_on": "eval:(doc.company && doc.type==\"Advance\")",
-   "description": "filtered based on company & root type Asset ,is_group = 0",
-   "fieldname": "accounts_paid_from",
-   "fieldtype": "Link",
-   "label": "Accounts Paid From",
-   "mandatory_depends_on": "eval:(doc.company && doc.type==\"Advance\")",
    "options": "Account"
   },
   {
@@ -367,7 +357,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-12 13:39:38.753063",
+ "modified": "2024-08-13 09:56:00.073565",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
