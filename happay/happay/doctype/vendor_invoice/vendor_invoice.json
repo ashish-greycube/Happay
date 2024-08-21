@@ -367,7 +367,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-21 17:59:40.934680",
+ "modified": "2024-08-21 18:10:31.958129",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
@@ -387,9 +387,15 @@
    "write": 1
   },
   {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Projects Approver"
+  },
+  {
    "create": 1,
    "email": 1,
    "export": 1,
+   "if_owner": 1,
    "print": 1,
    "read": 1,
    "report": 1,
@@ -421,6 +427,42 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "PoC"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Fin 1",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Fin 1"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Fin 2",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Fin 2"
   }
  ],
  "search_fields": "supplier,supplier_invoice_number,supplier_invoice_date",
