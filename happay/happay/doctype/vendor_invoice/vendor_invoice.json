@@ -20,6 +20,7 @@
   "supplier_bank_account",
   "bank",
   "bank_account_no",
+  "branch_code",
   "column_break_usbi",
   "supplier_invoice_number",
   "supplier_invoice_date",
@@ -28,7 +29,6 @@
   "is_asset",
   "purpose",
   "bill_amount",
-  "branch_code",
   "section_break_qbxx",
   "expense_account",
   "asset_account",
@@ -367,7 +367,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-21 18:10:31.958129",
+ "modified": "2024-08-21 18:15:25.162144",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
