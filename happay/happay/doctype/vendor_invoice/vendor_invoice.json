@@ -19,6 +19,7 @@
   "tax_id",
   "supplier_bank_account",
   "bank",
+  "bank_account_no",
   "column_break_usbi",
   "supplier_invoice_number",
   "supplier_invoice_date",
@@ -27,7 +28,6 @@
   "is_asset",
   "purpose",
   "bill_amount",
-  "bank_account_no",
   "branch_code",
   "section_break_qbxx",
   "expense_account",
@@ -87,6 +87,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.company",
    "fieldname": "section_break_qbxx",
    "fieldtype": "Section Break",
    "label": "Company Account Info"
@@ -262,6 +263,7 @@
    "options": "Account"
   },
   {
+   "depends_on": "eval:doc.company",
    "fieldname": "details_section",
    "fieldtype": "Section Break",
    "label": "Attachment"
@@ -293,6 +295,7 @@
    "label": "Vendor Invoice Attachment 3"
   },
   {
+   "depends_on": "eval:doc.company",
    "fieldname": "section_break_5aii",
    "fieldtype": "Section Break",
    "label": "Supplier Detail"
@@ -364,7 +367,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-21 17:49:08.111857",
+ "modified": "2024-08-21 17:59:40.934680",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
