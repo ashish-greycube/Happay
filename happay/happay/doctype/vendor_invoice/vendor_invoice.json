@@ -5,6 +5,8 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "company_section",
+  "company",
   "details_section",
   "vendor_invoice_attachment_1",
   "column_break_weqg",
@@ -12,7 +14,6 @@
   "column_break_3gzi",
   "vendor_invoice_attachment_3",
   "section_break_5aii",
-  "company",
   "supplier",
   "posting_date",
   "tax_id",
@@ -96,8 +97,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
-   "mandatory_depends_on": "eval:doc.vendor_invoice_attachment",
-   "options": "Company"
+   "options": "Company",
+   "reqd": 1
   },
   {
    "depends_on": "eval:(doc.company && (doc.type=='Invoice' || doc.type=='Invoice against Advance') && (doc.is_asset=='No'))",
@@ -263,7 +264,7 @@
   {
    "fieldname": "details_section",
    "fieldtype": "Section Break",
-   "label": "Details"
+   "label": "Attachment"
   },
   {
    "fieldname": "vendor_invoice_attachment_1",
@@ -293,7 +294,8 @@
   },
   {
    "fieldname": "section_break_5aii",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Supplier Detail"
   },
   {
    "default": "0",
@@ -339,6 +341,11 @@
    "fieldtype": "Link",
    "label": "Accounts Payable",
    "options": "Account"
+  },
+  {
+   "fieldname": "company_section",
+   "fieldtype": "Section Break",
+   "label": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -357,7 +364,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-13 13:48:00.729144",
+ "modified": "2024-08-21 17:41:50.059531",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
