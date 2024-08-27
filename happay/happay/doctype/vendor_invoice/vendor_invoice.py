@@ -15,9 +15,17 @@ class VendorInvoice(Document):
 	def validate(self):
 		self.validate_bill_amount()
 		self.validate_posting_date()
+		self.validate_tds_rate()
 		self.validate_tds_amount()
 		self.validate_duplicate_entry_of_vi()
 	
+	def validate_tds_rate(self):
+		if self.is_tds_applicable==1 and self.tds_rate:
+			if self.tds_rate < 0 :
+				frappe.throw(_("TDS entered is {0}. It cannot be -ve".format(self.tds_rate)))
+			if self.tds_rate > 100:
+				frappe.throw(_("TDS entered is {0}. It cannot be greater than 100".format(self.tds_rate)))
+
 	def validate_bill_amount(self):
 		if self.bill_amount <= 0:
 			frappe.throw(_("Bill amount cannot be zero or negative"))
