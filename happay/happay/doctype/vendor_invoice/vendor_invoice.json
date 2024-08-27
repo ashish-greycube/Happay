@@ -320,7 +320,8 @@
    "fieldname": "tds_computed_amount",
    "fieldtype": "Currency",
    "label": "TDS Computed Amount",
-   "no_copy": 1
+   "no_copy": 1,
+   "read_only": 1
   },
   {
    "depends_on": "eval: doc.type!=\"Advance\"",
@@ -367,7 +368,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-21 18:15:25.162144",
+ "modified": "2024-08-27 13:25:24.573115",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",

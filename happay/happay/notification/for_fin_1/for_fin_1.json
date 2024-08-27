@@ -13,7 +13,7 @@
  "is_standard": 1,
  "message": "<p>Hello,<br>\n\n<p>The vendor invoice {{doc.name}} for {{(doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}} uploaded by {% set u = frappe.get_doc(\"User\", doc.owner) %} {{u.first_name}} {{u.last_name or ''}} is Pending for FIN 1 approval.<br><br>\nPlease review.<br><br>\nClick on the below link to take the necessary action:<br>\n<a href=\"{{ frappe.utils.get_url_to_form('Vendor Invoice', doc.name) }}\">{{ doc.name }}</a>.<br></p></p>\n",
  "message_type": "Markdown",
- "modified": "2024-07-19 15:38:08.408816",
+ "modified": "2024-08-27 14:47:34.271751",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "For Fin 1",
