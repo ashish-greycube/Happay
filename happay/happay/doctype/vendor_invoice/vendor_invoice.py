@@ -6,7 +6,7 @@ import erpnext
 from frappe import _
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
-from frappe.utils import today,get_link_to_form,nowdate,formatdate,getdate
+from frappe.utils import today,get_link_to_form,nowdate,formatdate,getdate,cint
 from erpnext.accounts.party import get_party_account
 from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 from frappe.desk.reportview import get_filters_cond, get_match_cond
@@ -143,7 +143,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		pi_doc.remarks = pi_original_remarks+'\n'+vi_doc.purpose
 		pi_doc.posting_date=vi_doc.posting_date
 		pi_doc.set_posting_time=1
-
+		pi_doc.disable_rounded_total=1
 		row = pi_doc.append("items",{})
 		row.item_name = vi_doc.purpose
 		row.qty = 1
@@ -170,9 +170,33 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		pi_doc.run_method("calculate_taxes_and_totals")
 		pi_doc.save()
 
+		copy_attachments_from_vendor_invoice(vi_doc,pi_doc.doctype,pi_doc.name)
 		return pi_doc.name
 	else :
 		frappe.msgprint(_("Purchase Invoice {0} is already exists for vendor invoice {1}").format(get_link_to_form("Purchase Invoice", check_pi_exists),docname))
+
+
+
+def copy_attachments_from_vendor_invoice(vendor_invoice,attached_to_doctype,attached_to_name):
+	"""Copy attachments from `amended_from`"""
+	from frappe.desk.form.load import get_attachments
+
+	# loop through attachments
+	for attach_item in get_attachments(vendor_invoice.doctype, vendor_invoice.name):
+		# save attachments to new doc
+		_file = frappe.get_doc(
+			{
+				"doctype": "File",
+				"file_url": attach_item.file_url,
+				"file_name": attach_item.file_name,
+				"attached_to_name": attached_to_name,
+				"attached_to_doctype": attached_to_doctype,
+				"folder": "Home/Attachments",
+				"is_private": attach_item.is_private,
+			}
+		)
+		_file.save()
+
 
 # @frappe.whitelist()
 def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,vendor_invoice_type):
@@ -303,6 +327,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	je_row = je.set("accounts",accounts)
 	je.run_method('set_missing_values')
 	je.save()
+	copy_attachments_from_vendor_invoice(vi_doc,je.doctype,je.name)
 	je.add_comment("Comment", "Journal Entry is created for Vendor Invoice {0}".format(get_link_to_form("Vendor Invoice", vi_doc.name)))
 	return je.name
 
