@@ -175,29 +175,6 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 	else :
 		frappe.msgprint(_("Purchase Invoice {0} is already exists for vendor invoice {1}").format(get_link_to_form("Purchase Invoice", check_pi_exists),docname))
 
-
-
-def copy_attachments_from_vendor_invoice(vendor_invoice,attached_to_doctype,attached_to_name):
-	"""Copy attachments from `amended_from`"""
-	from frappe.desk.form.load import get_attachments
-
-	# loop through attachments
-	for attach_item in get_attachments(vendor_invoice.doctype, vendor_invoice.name):
-		# save attachments to new doc
-		_file = frappe.get_doc(
-			{
-				"doctype": "File",
-				"file_url": attach_item.file_url,
-				"file_name": attach_item.file_name,
-				"attached_to_name": attached_to_name,
-				"attached_to_doctype": attached_to_doctype,
-				"folder": "Home/Attachments",
-				"is_private": attach_item.is_private,
-			}
-		)
-		_file.save()
-
-
 # @frappe.whitelist()
 def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,vendor_invoice_type):
 	tds_computed=0
@@ -330,6 +307,26 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	copy_attachments_from_vendor_invoice(vi_doc,je.doctype,je.name)
 	je.add_comment("Comment", "Journal Entry is created for Vendor Invoice {0}".format(get_link_to_form("Vendor Invoice", vi_doc.name)))
 	return je.name
+
+def copy_attachments_from_vendor_invoice(vendor_invoice,attached_to_doctype,attached_to_name):
+	"""Copy attachments from `amended_from`"""
+	from frappe.desk.form.load import get_attachments
+
+	# loop through attachments
+	for attach_item in get_attachments(vendor_invoice.doctype, vendor_invoice.name):
+		# save attachments to new doc
+		_file = frappe.get_doc(
+			{
+				"doctype": "File",
+				"file_url": attach_item.file_url,
+				"file_name": attach_item.file_name,
+				"attached_to_name": attached_to_name,
+				"attached_to_doctype": attached_to_doctype,
+				"folder": "Home/Attachments",
+				"is_private": attach_item.is_private,
+			}
+		)
+		_file.save()
 
 @frappe.whitelist()
 def get_supplier_bank_account(supplier_name):
