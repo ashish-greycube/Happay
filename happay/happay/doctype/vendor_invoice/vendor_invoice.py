@@ -66,8 +66,8 @@ class VendorInvoice(Document):
 			if self.rejection_remark==None or self.rejection_remark=="":
 				frappe.throw(_("Please provide rejection remark"))		
 
-	def on_update_after_submit(self):
-		if self.workflow_state=="To Pay":
+	def before_submit(self):
+		if self.workflow_state and self.workflow_state=="To Pay":
 			if self.type=='Invoice' and self.is_asset=='No':
 				user_roles = frappe.get_roles(frappe.session.user)
 				if (("Accounts Manager" in user_roles) or ("Accounts User" in user_roles)):
@@ -170,7 +170,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 
 		pi_doc.run_method("set_missing_values")
 		pi_doc.run_method("calculate_taxes_and_totals")
-		pi_doc.save()
+		pi_doc.save(ignore_permissions=True)
 
 		copy_attachments_from_vendor_invoice(vi_doc,pi_doc.doctype,pi_doc.name)
 		return pi_doc.name
@@ -305,7 +305,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 
 	je_row = je.set("accounts",accounts)
 	je.run_method('set_missing_values')
-	je.save()
+	je.save(ignore_permissions=True)
 	copy_attachments_from_vendor_invoice(vi_doc,je.doctype,je.name)
 	je.add_comment("Comment", "Journal Entry is created for Vendor Invoice {0}".format(get_link_to_form("Vendor Invoice", vi_doc.name)))
 	return je.name
@@ -328,7 +328,7 @@ def copy_attachments_from_vendor_invoice(vendor_invoice,attached_to_doctype,atta
 				"is_private": attach_item.is_private,
 			}
 		)
-		_file.save()
+		_file.save(ignore_permissions=True)
 
 @frappe.whitelist()
 def get_supplier_bank_account(supplier_name):
