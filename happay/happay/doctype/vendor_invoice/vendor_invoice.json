@@ -99,7 +99,8 @@
    "in_standard_filter": 1,
    "label": "Company",
    "options": "Company",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "depends_on": "eval:(doc.company && (doc.type=='Invoice' || doc.type=='Invoice against Advance') && (doc.is_asset=='No'))",
@@ -272,6 +273,7 @@
    "fieldname": "vendor_invoice_attachment_1",
    "fieldtype": "Attach",
    "label": "Vendor Invoice Attachment 1",
+   "no_copy": 1,
    "reqd": 1
   },
   {
@@ -282,7 +284,8 @@
    "depends_on": "eval:doc.vendor_invoice_attachment_1",
    "fieldname": "vendor_invoice_attachment_2",
    "fieldtype": "Attach",
-   "label": "Vendor Invoice Attachment 2"
+   "label": "Vendor Invoice Attachment 2",
+   "no_copy": 1
   },
   {
    "fieldname": "column_break_3gzi",
@@ -292,7 +295,8 @@
    "depends_on": "eval:doc.vendor_invoice_attachment_2",
    "fieldname": "vendor_invoice_attachment_3",
    "fieldtype": "Attach",
-   "label": "Vendor Invoice Attachment 3"
+   "label": "Vendor Invoice Attachment 3",
+   "no_copy": 1
   },
   {
    "depends_on": "eval:doc.company",
@@ -368,7 +372,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-27 13:25:24.573115",
+ "modified": "2024-08-29 17:31:07.520267",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
