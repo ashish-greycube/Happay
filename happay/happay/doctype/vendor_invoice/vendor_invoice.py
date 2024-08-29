@@ -23,8 +23,8 @@ class VendorInvoice(Document):
 		if self.is_tds_applicable==1 and self.tds_rate:
 			if self.tds_rate < 0 :
 				frappe.throw(_("TDS entered is {0}. It cannot be -ve".format(self.tds_rate)))
-			if self.tds_rate > 100:
-				frappe.throw(_("TDS entered is {0}. It cannot be greater than 100".format(self.tds_rate)))
+			if self.tds_rate >= 100:
+				frappe.throw(_("TDS entered is {0}. It cannot be greater than or equal to 100".format(self.tds_rate)))
 
 	def validate_bill_amount(self):
 		if self.bill_amount <= 0:
@@ -46,6 +46,8 @@ class VendorInvoice(Document):
 			tds_amount = self.tds_amount
 			if tds_amount > bill_amount:
 				frappe.throw(_("TDS amount cannot be greater than bill amount"))
+			if tds_amount < 0:
+				frappe.throw(_("TDS amount cannot be negative"))
 	
 	def validate_duplicate_entry_of_vi(self):
 		exists_vi = frappe.db.exists("Vendor Invoice", {"company": self.company,"supplier": self.supplier,"supplier_invoice_number": self.supplier_invoice_number})
