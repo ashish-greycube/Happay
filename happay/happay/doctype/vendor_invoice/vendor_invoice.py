@@ -151,8 +151,9 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		pi_doc.department = vi_doc.department
 		pi_doc.bill_no = vi_doc.supplier_invoice_number
 		pi_doc.bill_date = vi_doc.supplier_invoice_date
-		pi_original_remarks = _("Against Supplier Invoice {0} dated {1}").format(pi_doc.bill_no, formatdate(pi_doc.bill_date))		
-		pi_doc.remarks = pi_original_remarks+'\n'+vi_doc.purpose
+		# pi_original_remarks = _("Against Supplier Invoice {0} dated {1}").format(pi_doc.bill_no, formatdate(pi_doc.bill_date))		
+		# pi_doc.remarks = pi_original_remarks+'\n'+vi_doc.purpose
+		pi_doc.remarks = vi_doc.purpose
 		pi_doc.posting_date=vi_doc.posting_date
 		pi_doc.set_posting_time=1
 		pi_doc.disable_rounded_total=1
