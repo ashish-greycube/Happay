@@ -40,6 +40,7 @@
   "tds_amount",
   "tds_rate",
   "tds_computed_amount",
+  "net_payable_amount",
   "column_break_icwf",
   "cost_center",
   "project_manager",
@@ -354,6 +355,13 @@
    "fieldname": "company_section",
    "fieldtype": "Section Break",
    "label": "Company"
+  },
+  {
+   "depends_on": "eval:(doc.company && doc.is_tds_applicable==\"1\" && doc.tds_payable_account)",
+   "fieldname": "net_payable_amount",
+   "fieldtype": "Currency",
+   "label": "Net Payable Amount",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -372,7 +380,7 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-29 17:31:07.520267",
+ "modified": "2024-08-30 14:04:48.372028",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
