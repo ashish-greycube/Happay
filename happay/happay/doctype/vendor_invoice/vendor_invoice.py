@@ -18,6 +18,8 @@ class VendorInvoice(Document):
 		self.validate_tds_rate()
 		self.validate_tds_amount()
 		self.validate_duplicate_entry_of_vi()
+		self.calculate_net_payable_amount()
+		self.calculate_tds_computed_amount()
 	
 	def validate_tds_rate(self):
 		if self.is_tds_applicable==1 and self.tds_rate:
@@ -54,6 +56,14 @@ class VendorInvoice(Document):
 		print(exists_vi,self.company,self.supplier,self.supplier_invoice_number,self.name,"--------------------")
 		if exists_vi != None and exists_vi != self.name:
 			frappe.throw(_("You cannot create vendor invoice for same company, supplier and supplier invoice number."))
+
+	def calculate_net_payable_amount(self):
+		self.net_payable_amount = (self.bill_amount or 0) - (self.tds_computed_amount or 0)
+
+	def calculate_tds_computed_amount(self):
+		if self.tds_amount and self.tds_rate:
+			computed_amount = (self.tds_amount * self.tds_rate) / 100
+			self.tds_computed_amount = computed_amount
 
 	def on_update(self):
 		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:

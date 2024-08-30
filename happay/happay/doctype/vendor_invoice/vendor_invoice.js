@@ -190,6 +190,15 @@ frappe.ui.form.on("Vendor Invoice", {
         frm.set_value("tds_computed_amount","")
         calculate_tds_computed_amount(frm)
     },
+
+    bill_amount(frm){
+        calculate_net_payable_amount(frm)
+    },
+
+    tds_computed_amount(frm){
+        calculate_net_payable_amount(frm)
+    },
+
     before_save(frm){
         if (frm.doc.cost_center){
             if (frm.doc.project_manager==undefined || frm.doc.project_manager ==""){
@@ -247,4 +256,9 @@ function calculate_tds_computed_amount(frm){
         let computed_amount = (frm.doc.tds_amount * frm.doc.tds_rate) / 100
         frm.set_value("tds_computed_amount",computed_amount)
     }
+}
+
+function calculate_net_payable_amount(frm){
+        let net_payable_amount = (frm.doc.bill_amount || 0) - (frm.doc.tds_computed_amount || 0)
+        frm.set_value("net_payable_amount",net_payable_amount)
 }
