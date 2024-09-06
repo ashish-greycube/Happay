@@ -14,7 +14,9 @@ HapPay
 
 ![](assets/20240711_114112_roles_add.jpeg)
 
+#### License
 
+mit
 
 <hr>
 
@@ -31,7 +33,3 @@ HapPay
  sales@greycube.in</a><br>
 <sub><img src="https://greycube.in/files/linkedin1.svg" width="20" height="18"> </sub> <a href="https://www.linkedin.com/company/greycube-technologies"> LinkedIn</a><br>
 <sub><img src="https://greycube.in/files/blog.svg" width="20" height="18"> </sub><a href="https://greycube.in/blog"> Blogs</a> </h5>
-
-#### License
-
-mit
