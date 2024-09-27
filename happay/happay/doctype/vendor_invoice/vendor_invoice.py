@@ -10,6 +10,7 @@ from frappe.utils import today,get_link_to_form,nowdate,formatdate,getdate,cint
 from erpnext.accounts.party import get_party_account
 from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 from frappe.desk.reportview import get_filters_cond, get_match_cond
+from frappe.utils.data import rounded
 
 class VendorInvoice(Document):
 	def validate(self):
@@ -18,8 +19,8 @@ class VendorInvoice(Document):
 		self.validate_tds_rate()
 		self.validate_tds_amount()
 		self.validate_duplicate_entry_of_vi()
-		self.calculate_net_payable_amount()
 		self.calculate_tds_computed_amount()
+		self.calculate_net_payable_amount()
 	
 	def validate_tds_rate(self):
 		if self.is_tds_applicable==1 and self.tds_rate:
@@ -63,7 +64,7 @@ class VendorInvoice(Document):
 	def calculate_tds_computed_amount(self):
 		if self.tds_amount and self.tds_rate:
 			computed_amount = (self.tds_amount * self.tds_rate) / 100
-			self.tds_computed_amount = computed_amount
+			self.tds_computed_amount = rounded(computed_amount)
 
 	def on_update(self):
 		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:

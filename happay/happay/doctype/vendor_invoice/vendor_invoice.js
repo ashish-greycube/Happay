@@ -254,7 +254,7 @@ function make_payment_from_vendor_invoice(frm){
 function calculate_tds_computed_amount(frm){
     if(frm.doc.tds_amount && frm.doc.tds_rate){
         let computed_amount = (frm.doc.tds_amount * frm.doc.tds_rate) / 100
-        frm.set_value("tds_computed_amount",computed_amount)
+        frm.set_value("tds_computed_amount",Math.round(computed_amount))
     }
 }
 
