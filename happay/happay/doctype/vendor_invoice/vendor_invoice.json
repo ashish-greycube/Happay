@@ -138,7 +138,7 @@
   },
   {
    "fieldname": "purpose",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Purpose",
    "reqd": 1
   },
@@ -380,7 +380,8 @@
    "link_fieldname": "custom_vendor_invoice"
   }
  ],
- "modified": "2024-08-30 14:04:48.372028",
+ "make_attachments_public": 1,
+ "modified": "2024-10-16 09:49:35.079144",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",

@@ -155,7 +155,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		# pi_original_remarks = _("Against Supplier Invoice {0} dated {1}").format(pi_doc.bill_no, formatdate(pi_doc.bill_date))		
 		# pi_doc.remarks = pi_original_remarks+'\n'+vi_doc.purpose
 		pi_doc.remarks = vi_doc.purpose
-		pi_doc.posting_date=vi_doc.posting_date
+		pi_doc.posting_date=today()
 		pi_doc.set_posting_time=1
 		pi_doc.disable_rounded_total=1
 		row = pi_doc.append("items",{})
@@ -196,7 +196,7 @@ def create_journal_entry_from_vendor_invoice(docname,vendor_invoice_asset_type,v
 	je = frappe.new_doc("Journal Entry")
 	je.voucher_type = "Journal Entry"
 	je.company = vi_doc.company
-	je.posting_date = vi_doc.posting_date
+	je.posting_date = today()
 	if vendor_invoice_type == 'Advance':
 		remark=(_("Purpose :{0}. Type :{1}. TDS Applicable :{2}").format(vi_doc.purpose,vendor_invoice_type,"Yes" if  (vi_doc.is_tds_applicable==1) else "No"))
 	else:
