@@ -159,7 +159,7 @@ def create_purchase_invoice_from_vendor_invoice(docname):
 		pi_doc.set_posting_time=1
 		pi_doc.disable_rounded_total=1
 		row = pi_doc.append("items",{})
-		row.item_name = vi_doc.purpose
+		row.item_name = (vi_doc.purpose[:137] + "...") if len(vi_doc.purpose) > 140 else vi_doc.purpose
 		row.qty = 1
 		row.uom = "Nos"
 		row.rate = vi_doc.bill_amount
