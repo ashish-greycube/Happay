@@ -12,6 +12,7 @@
   "description",
   "cost_center",
   "project_manager",
+  "project_manager_name",
   "column_break_wjuq",
   "department",
   "booking_for",
@@ -172,7 +173,7 @@
    "description": "Fetch from Cost Center",
    "fieldname": "project_manager",
    "fieldtype": "Link",
-   "label": "Project Manager",
+   "label": "Project Manager ID",
    "options": "User"
   },
   {
@@ -213,11 +214,18 @@
    "fieldtype": "Data",
    "label": "Passenger Gender",
    "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.cost_center",
+   "fieldname": "project_manager_name",
+   "fieldtype": "Data",
+   "label": "Project Manager",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-11-18 18:08:28.529923",
+ "modified": "2024-11-19 16:23:36.337771",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
