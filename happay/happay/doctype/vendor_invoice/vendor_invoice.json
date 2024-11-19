@@ -56,6 +56,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Supplier",
+   "no_copy": 1,
    "options": "Supplier",
    "reqd": 1
   },
@@ -99,6 +100,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
+   "no_copy": 1,
    "options": "Company",
    "reqd": 1,
    "set_only_once": 1
@@ -110,6 +112,7 @@
    "fieldtype": "Link",
    "label": "Expense Account",
    "mandatory_depends_on": "eval:(doc.company && doc.type==\"Invoice\" && (doc.is_asset=='No')) ",
+   "no_copy": 1,
    "options": "Account"
   },
   {
@@ -124,6 +127,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Cost Center",
+   "no_copy": 1,
    "options": "Cost Center",
    "reqd": 1
   },
@@ -133,6 +137,7 @@
    "fieldname": "department",
    "fieldtype": "Link",
    "label": "Department",
+   "no_copy": 1,
    "options": "Department",
    "reqd": 1
   },
@@ -193,6 +198,7 @@
    "fieldtype": "Link",
    "label": "Supplier Bank Account",
    "mandatory_depends_on": "eval:doc.supplier",
+   "no_copy": 1,
    "options": "Bank Account",
    "read_only": 1
   },
@@ -201,6 +207,7 @@
    "fieldname": "bank",
    "fieldtype": "Data",
    "label": "Bank",
+   "no_copy": 1,
    "read_only": 1
   },
   {
@@ -208,6 +215,7 @@
    "fieldname": "bank_account_no",
    "fieldtype": "Data",
    "label": "Bank Account",
+   "no_copy": 1,
    "read_only": 1
   },
   {
@@ -215,6 +223,7 @@
    "fieldname": "branch_code",
    "fieldtype": "Data",
    "label": "IFSC Code",
+   "no_copy": 1,
    "read_only": 1
   },
   {
@@ -262,6 +271,7 @@
    "fieldname": "advance_account",
    "fieldtype": "Link",
    "label": "Advance Account",
+   "no_copy": 1,
    "options": "Account"
   },
   {
@@ -342,6 +352,7 @@
    "fieldname": "asset_account",
    "fieldtype": "Link",
    "label": "Asset Account",
+   "no_copy": 1,
    "options": "Account"
   },
   {
@@ -349,6 +360,7 @@
    "fieldname": "accounts_payable",
    "fieldtype": "Link",
    "label": "Accounts Payable",
+   "no_copy": 1,
    "options": "Account"
   },
   {
@@ -381,7 +393,7 @@
   }
  ],
  "make_attachments_public": 1,
- "modified": "2024-10-16 09:49:35.079144",
+ "modified": "2024-11-15 12:42:55.386235",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",

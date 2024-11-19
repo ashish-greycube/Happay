@@ -1,0 +1,243 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:PTR-{#}",
+ "creation": "2024-11-18 12:12:14.292522",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "section_break_rbwa",
+  "title",
+  "description",
+  "cost_center",
+  "project_manager",
+  "column_break_wjuq",
+  "department",
+  "booking_for",
+  "passenger_first_name",
+  "passenger_last_name",
+  "passenger_gender",
+  "section_break_dhlv",
+  "from_date",
+  "source",
+  "round_trip",
+  "reason_of_travel",
+  "expected_outcome",
+  "time_onward",
+  "column_break_mzug",
+  "to_date",
+  "destination",
+  "ticket_booked_by",
+  "mode_of_travel",
+  "travel_agent",
+  "time_return"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "description": "is_group != \"1\"",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date",
+   "mandatory_depends_on": "eval:doc.round_trip==\"Yes\""
+  },
+  {
+   "fieldname": "column_break_mzug",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.company",
+   "fieldname": "section_break_dhlv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Source(From)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "destination",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Destination(To)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "round_trip",
+   "fieldtype": "Select",
+   "label": "Round Trip",
+   "options": "\nYes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reason_of_travel",
+   "fieldtype": "Data",
+   "label": "Reason Of Travel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_outcome",
+   "fieldtype": "Data",
+   "label": "Expected Outcome",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mode_of_travel",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Mode Of Travel",
+   "options": "\nCab\nFlight\nTrain",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ticket_booked_by",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Ticket Booked By",
+   "options": "\nInstitution\nSelf\nSponsored",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.ticket_booked_by==\"Institution\" && doc.mode_of_travel==\"Flight\"",
+   "fieldname": "travel_agent",
+   "fieldtype": "Link",
+   "label": "Travel Agent",
+   "link_filters": "[[\"Supplier\",\"supplier_group\",\"=\",\"Travel Agent\"]]",
+   "mandatory_depends_on": "eval:doc.ticket_booked_by==\"Institution\" && doc.mode_of_travel==\"Flight\"",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "time_onward",
+   "fieldtype": "Time",
+   "label": "Time - Onward",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time_return",
+   "fieldtype": "Time",
+   "label": "Time - Return",
+   "mandatory_depends_on": "eval:doc.round_trip==\"Yes\""
+  },
+  {
+   "depends_on": "eval:doc.company",
+   "fieldname": "section_break_rbwa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.cost_center",
+   "description": "Fetch from Cost Center",
+   "fieldname": "project_manager",
+   "fieldtype": "Link",
+   "label": "Project Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_wjuq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "fieldname": "booking_for",
+   "fieldtype": "Select",
+   "label": "Booking For",
+   "options": "\nGuest\nSelf",
+   "reqd": 1
+  },
+  {
+   "description": "fetch from logged in user if booking_for = Self, Otherwise blank",
+   "fieldname": "passenger_first_name",
+   "fieldtype": "Data",
+   "label": "Passenger First Name",
+   "reqd": 1
+  },
+  {
+   "description": "fetch from logged in user if booking_for = Self, Otherwise blank",
+   "fieldname": "passenger_last_name",
+   "fieldtype": "Data",
+   "label": "Passenger Last Name",
+   "reqd": 1
+  },
+  {
+   "description": "fetch from logged in user if booking_for = Self, Otherwise blank",
+   "fieldname": "passenger_gender",
+   "fieldtype": "Data",
+   "label": "Passenger Gender",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-11-18 18:08:28.529923",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Project Travel Request",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
