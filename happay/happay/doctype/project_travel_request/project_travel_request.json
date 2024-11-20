@@ -19,20 +19,26 @@
   "passenger_first_name",
   "passenger_last_name",
   "passenger_gender",
+  "passenger_details",
   "section_break_dhlv",
   "from_date",
+  "time_onward",
   "source",
   "round_trip",
   "reason_of_travel",
   "expected_outcome",
-  "time_onward",
+  "bill_amount",
+  "service_charge",
   "column_break_mzug",
   "to_date",
+  "time_return",
   "destination",
   "ticket_booked_by",
   "mode_of_travel",
+  "include_cab_booking",
   "travel_agent",
-  "time_return"
+  "amended_from",
+  "expense_account"
  ],
  "fields": [
   {
@@ -131,7 +137,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Mode Of Travel",
-   "options": "\nCab\nFlight\nTrain",
+   "options": "\nFlight\nTrain\nCab",
    "reqd": 1
   },
   {
@@ -143,12 +149,10 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.ticket_booked_by==\"Institution\" && doc.mode_of_travel==\"Flight\"",
    "fieldname": "travel_agent",
    "fieldtype": "Link",
    "label": "Travel Agent",
    "link_filters": "[[\"Supplier\",\"supplier_group\",\"=\",\"Travel Agent\"]]",
-   "mandatory_depends_on": "eval:doc.ticket_booked_by==\"Institution\" && doc.mode_of_travel==\"Flight\"",
    "options": "Supplier"
   },
   {
@@ -195,6 +199,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.booking_for==\"Self\"",
    "description": "fetch from logged in user if booking_for = Self, Otherwise blank",
    "fieldname": "passenger_first_name",
    "fieldtype": "Data",
@@ -202,6 +207,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.booking_for==\"Self\"",
    "description": "fetch from logged in user if booking_for = Self, Otherwise blank",
    "fieldname": "passenger_last_name",
    "fieldtype": "Data",
@@ -209,10 +215,12 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.booking_for==\"Self\"",
    "description": "fetch from logged in user if booking_for = Self, Otherwise blank",
    "fieldname": "passenger_gender",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Passenger Gender",
+   "options": "Gender",
    "reqd": 1
   },
   {
@@ -221,11 +229,55 @@
    "fieldtype": "Data",
    "label": "Project Manager",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "Inform Cab Vendor Directly",
+   "fieldname": "include_cab_booking",
+   "fieldtype": "Check",
+   "label": "Include Cab Booking"
+  },
+  {
+   "depends_on": "eval:doc.booking_for==\"Guest\"",
+   "fieldname": "passenger_details",
+   "fieldtype": "Table",
+   "label": "Passenger Details",
+   "mandatory_depends_on": "eval:doc.booking_for==\"Guest\"",
+   "options": "Passenger Details"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Travel Request",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "description": "TDS Applicable On Amount",
+   "fieldname": "service_charge",
+   "fieldtype": "Currency",
+   "label": "Service Charge"
+  },
+  {
+   "fieldname": "bill_amount",
+   "fieldtype": "Currency",
+   "label": "Bill Amount"
+  },
+  {
+   "description": "fetch from Company=Travel Expense Account",
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Expense Account",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-11-19 16:23:36.337771",
+ "modified": "2024-11-20 12:05:57.802642",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -233,6 +285,8 @@
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -242,6 +296,66 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "if_owner": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Projects Approver",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Fin 1"
+  },
+  {
+   "read": 1,
+   "role": "Fin 2"
+  },
+  {
+   "cancel": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
