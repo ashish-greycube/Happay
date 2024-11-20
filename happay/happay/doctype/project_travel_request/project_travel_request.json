@@ -27,7 +27,6 @@
   "round_trip",
   "reason_of_travel",
   "expected_outcome",
-  "bill_amount",
   "service_charge",
   "column_break_mzug",
   "to_date",
@@ -38,7 +37,14 @@
   "include_cab_booking",
   "travel_agent",
   "amended_from",
-  "expense_account"
+  "expense_account",
+  "section_break_eclq",
+  "supplier_invoice_number",
+  "supplier_invoice_date",
+  "column_break_vphs",
+  "bill_amount",
+  "ticket_attachment",
+  "invoice_attachment"
  ],
  "fields": [
   {
@@ -256,12 +262,14 @@
    "search_index": 1
   },
   {
+   "allow_on_submit": 1,
    "description": "TDS Applicable On Amount",
    "fieldname": "service_charge",
    "fieldtype": "Currency",
    "label": "Service Charge"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "bill_amount",
    "fieldtype": "Currency",
    "label": "Bill Amount"
@@ -272,12 +280,46 @@
    "fieldtype": "Link",
    "label": "Expense Account",
    "options": "Account"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "ticket_attachment",
+   "fieldtype": "Attach",
+   "label": "Ticket Attachment"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "invoice_attachment",
+   "fieldtype": "Attach",
+   "label": "Invoice Attachment"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "supplier_invoice_number",
+   "fieldtype": "Data",
+   "label": "Supplier Invoice Number"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "supplier_invoice_date",
+   "fieldtype": "Date",
+   "label": "Supplier Invoice Date"
+  },
+  {
+   "depends_on": "eval:doc.company",
+   "fieldname": "section_break_eclq",
+   "fieldtype": "Section Break",
+   "label": "Ticket & Bill"
+  },
+  {
+   "fieldname": "column_break_vphs",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-20 12:05:57.802642",
+ "modified": "2024-11-20 18:13:05.353888",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
