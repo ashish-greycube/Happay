@@ -46,3 +46,9 @@ def create_custom_user_permission_for_project_manager(self,method):
         print(check_exist,"permission")
         if check_exist != None:
             frappe.msgprint(_("User Permission {0} is added ").format(get_link_to_form("User Permission", check_exist)))
+
+def set_cost_center_in_all_row(self, method):
+    if len(self.expenses)>0:
+        for row in self.expenses:
+            if not row.cost_center:
+                row.cost_center = self.cost_center

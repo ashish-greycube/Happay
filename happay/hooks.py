@@ -28,7 +28,7 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"Cost Center" : "public/js/cost_center.js"}
+doctype_js = {"Expense Claim" : "public/js/expense_claim.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -132,6 +132,9 @@ doc_events = {
 	},
     "Cost Center": {
         "validate":"happay.api.create_custom_user_permission_for_project_manager"
+	},
+    "Expenxe Claim": {
+        "validate":"happay.api.set_cost_center_in_all_row"
 	}
 }
 
