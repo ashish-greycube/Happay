@@ -27,8 +27,11 @@
   "round_trip",
   "reason_of_travel",
   "expected_outcome",
+  "supplier_invoice_number",
+  "supplier_invoice_date",
+  "bill_amount",
   "service_charge",
-  "column_break_mzug",
+  "cb_1",
   "to_date",
   "time_return",
   "destination",
@@ -38,11 +41,6 @@
   "travel_agent",
   "amended_from",
   "expense_account",
-  "section_break_eclq",
-  "supplier_invoice_number",
-  "supplier_invoice_date",
-  "column_break_vphs",
-  "bill_amount",
   "ticket_attachment",
   "invoice_attachment"
  ],
@@ -83,10 +81,6 @@
    "in_list_view": 1,
    "label": "To Date",
    "mandatory_depends_on": "eval:doc.round_trip==\"Yes\""
-  },
-  {
-   "fieldname": "column_break_mzug",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "company",
@@ -306,20 +300,19 @@
    "label": "Supplier Invoice Date"
   },
   {
-   "depends_on": "eval:doc.company",
-   "fieldname": "section_break_eclq",
-   "fieldtype": "Section Break",
-   "label": "Ticket & Bill"
-  },
-  {
-   "fieldname": "column_break_vphs",
+   "fieldname": "cb_1",
    "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-11-20 18:13:05.353888",
+ "links": [
+  {
+   "link_doctype": "Vendor Invoice",
+   "link_fieldname": "project_travel_request"
+  }
+ ],
+ "modified": "2024-11-21 09:20:09.273762",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",

@@ -46,7 +46,8 @@
   "project_manager",
   "project_manager_name",
   "rejection_remark",
-  "amended_from"
+  "amended_from",
+  "project_travel_request"
  ],
  "fields": [
   {
@@ -374,6 +375,12 @@
    "fieldtype": "Currency",
    "label": "Net Payable Amount",
    "read_only": 1
+  },
+  {
+   "fieldname": "project_travel_request",
+   "fieldtype": "Link",
+   "label": "Project Travel Request",
+   "options": "Project Travel Request"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -393,7 +400,7 @@
   }
  ],
  "make_attachments_public": 1,
- "modified": "2024-11-15 12:42:55.386235",
+ "modified": "2024-11-21 09:13:08.515226",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
