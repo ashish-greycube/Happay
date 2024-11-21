@@ -152,7 +152,6 @@
    "fieldname": "travel_agent",
    "fieldtype": "Link",
    "label": "Travel Agent",
-   "link_filters": "[[\"Supplier\",\"supplier_group\",\"=\",\"Travel Agent\"]]",
    "options": "Supplier"
   },
   {
@@ -312,7 +311,7 @@
    "link_fieldname": "project_travel_request"
   }
  ],
- "modified": "2024-11-21 09:20:09.273762",
+ "modified": "2024-11-21 17:30:01.800406",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
