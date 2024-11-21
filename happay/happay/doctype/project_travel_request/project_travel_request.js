@@ -23,6 +23,7 @@ frappe.ui.form.on("Project Travel Request", {
         frm.set_query("travel_agent", function(doc){
             return {
                 filters: {
+                    "supplier_group":"Travel Agent",
                     "company": doc.company
                 },
             }
