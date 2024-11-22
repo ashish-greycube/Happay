@@ -39,7 +39,7 @@ frappe.ui.form.on("Project Travel Request", {
     },
 
     refresh(frm){
-        if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && frm.doc.docstatus && frm.doc.service_charge) {
+        if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && frm.doc.bill_amount && frm.doc.service_charge) {
             frm.add_custom_button(__('Vendor Invoice'), () => create_vendor_invoice_from_project_travel_request(frm), __("Create"));
         }
     },

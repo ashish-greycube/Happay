@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "workflow_state",
   "company",
   "section_break_rbwa",
   "title",
@@ -27,10 +28,7 @@
   "round_trip",
   "reason_of_travel",
   "expected_outcome",
-  "supplier_invoice_number",
-  "supplier_invoice_date",
-  "bill_amount",
-  "service_charge",
+  "expense_account",
   "cb_1",
   "to_date",
   "time_return",
@@ -40,7 +38,12 @@
   "include_cab_booking",
   "travel_agent",
   "amended_from",
-  "expense_account",
+  "section_break_calh",
+  "bill_amount",
+  "service_charge",
+  "supplier_invoice_number",
+  "supplier_invoice_date",
+  "column_break_hivq",
   "ticket_attachment",
   "invoice_attachment"
  ],
@@ -301,6 +304,22 @@
   {
    "fieldname": "cb_1",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Workflow State",
+   "options": "Workflow State"
+  },
+  {
+   "fieldname": "section_break_calh",
+   "fieldtype": "Section Break",
+   "label": "Ticket & Bill"
+  },
+  {
+   "fieldname": "column_break_hivq",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -311,7 +330,7 @@
    "link_fieldname": "project_travel_request"
   }
  ],
- "modified": "2024-11-21 17:30:01.800406",
+ "modified": "2024-11-22 17:20:04.585646",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
