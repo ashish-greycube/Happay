@@ -38,7 +38,7 @@
  "is_hidden": 0,
  "label": "Happay",
  "links": [],
- "modified": "2024-11-18 17:33:41.346558",
+ "modified": "2024-11-26 11:14:17.668392",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Happay",
@@ -51,19 +51,11 @@
  "sequence_id": 1.0,
  "shortcuts": [
   {
-   "color": "Red",
+   "color": "Blue",
    "doc_view": "List",
-   "label": "To Pay Invoice",
+   "label": "Pending at PM Invoice",
    "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Pay\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
-   "type": "DocType"
-  },
-  {
-   "color": "Orange",
-   "doc_view": "List",
-   "label": "To Account Invoice",
-   "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Account\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at PM\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
    "type": "DocType"
   },
   {
@@ -75,19 +67,19 @@
    "type": "DocType"
   },
   {
-   "color": "Orange",
-   "doc_view": "List",
-   "label": "Draft Invoice",
-   "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Draft\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
-   "type": "DocType"
-  },
-  {
    "color": "Grey",
    "doc_view": "List",
    "label": "Project Travel Request",
    "link_to": "Project Travel Request",
    "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Draft Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Draft\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
    "type": "DocType"
   },
   {
@@ -115,27 +107,19 @@
    "type": "DocType"
   },
   {
-   "color": "Blue",
-   "doc_view": "List",
-   "label": "Pending at PM Invoice",
-   "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at PM\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
-   "type": "DocType"
-  },
-  {
-   "color": "Green",
-   "doc_view": "List",
-   "label": "Paid Invoice",
-   "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Paid\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
-   "type": "DocType"
-  },
-  {
    "color": "Orange",
    "doc_view": "List",
    "label": "To Account Advance",
    "link_to": "Vendor Invoice",
    "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Account\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Pending at FIN1 Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 1\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
    "type": "DocType"
   },
   {
@@ -155,14 +139,6 @@
    "type": "DocType"
   },
   {
-   "color": "Orange",
-   "doc_view": "List",
-   "label": "Pending at FIN1 Invoice",
-   "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 1\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
-   "type": "DocType"
-  },
-  {
    "color": "Red",
    "doc_view": "List",
    "label": "To Pay Advance",
@@ -175,7 +151,15 @@
    "doc_view": "List",
    "label": "Pending at FIN2 Invoice",
    "link_to": "Vendor Invoice",
-   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 2\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Invoice\",false]]",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 2\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "To Pay Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Pay\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
    "type": "DocType"
   },
   {
@@ -187,11 +171,27 @@
    "type": "DocType"
   },
   {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Paid Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Paid\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
    "color": "Blue",
    "doc_view": "List",
    "label": "Pending At PM Advance",
    "link_to": "Vendor Invoice",
    "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at PM\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "To Account Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Account\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
    "type": "DocType"
   },
   {

@@ -309,6 +309,7 @@
   {
    "fieldname": "workflow_state",
    "fieldtype": "Link",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Workflow State",
    "options": "Workflow State"
@@ -330,9 +331,13 @@
   {
    "link_doctype": "Vendor Invoice",
    "link_fieldname": "project_travel_request"
+  },
+  {
+   "link_doctype": "Expense Claim",
+   "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-11-22 17:38:12.543716",
+ "modified": "2024-11-25 12:46:30.658600",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
