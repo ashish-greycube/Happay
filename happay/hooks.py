@@ -128,12 +128,13 @@ doc_events = {
 	# },
     "Payment Entry": {
         # "after_insert": "happay.api.change_status_of_vendor_invoice",
-		"on_submit": "happay.api.change_status_of_vendor_invoice"
+		"on_submit": ["happay.api.change_status_of_vendor_invoice"]
+                # "happay.api.changes_status_of_expense_claim"]
 	},
     "Cost Center": {
         "validate":"happay.api.create_custom_user_permission_for_project_manager"
 	},
-    "Expenxe Claim": {
+    "Expense Claim": {
         "validate":"happay.api.set_cost_center_in_all_row"
 	}
 }

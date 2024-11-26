@@ -39,8 +39,11 @@ frappe.ui.form.on("Project Travel Request", {
     },
 
     refresh(frm){
-        if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && frm.doc.bill_amount && frm.doc.service_charge) {
+        if (frm.doc.docstatus == 1 && frm.doc.bill_amount && frm.doc.service_charge) {
             frm.add_custom_button(__('Vendor Invoice'), () => create_vendor_invoice_from_project_travel_request(frm), __("Create"));
+        }
+        if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && frm.doc.bill_amount && frm.doc.service_charge) {
+            frm.add_custom_button(__('Expense Claim'), () => create_expense_claim_from_project_travel_request(frm), __("Create"));
         }
     },
 
@@ -99,4 +102,11 @@ let create_vendor_invoice_from_project_travel_request = function(frm){
         frappe.set_route("Form", "Vendor Invoice", vendor_invoice);
        
     })
+}
+
+let create_expense_claim_from_project_travel_request = function(frm) {
+    frappe.model.open_mapped_doc({
+		method: "happay.happay.doctype.project_travel_request.project_travel_request.create_expense_claim",
+		frm: frm,
+	});
 }

@@ -4,6 +4,7 @@
 import frappe
 from frappe import _
 from frappe.utils import today,getdate,get_link_to_form
+from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 from happay.happay.doctype.vendor_invoice.vendor_invoice import get_supplier_bank_account,get_supplier_bank_details,get_supplier_details
 
@@ -65,6 +66,24 @@ class ProjectTravelRequest(Document):
 @frappe.whitelist()
 def get_employee_detail(session_user):
 	print(session_user,"frappe.session.user")
-	employee_detail = frappe.db.get_value("Employee", {"user_id":session_user}, ["first_name","last_name","gender"],as_dict=1)
+	employee_detail = frappe.db.get_value("User", {"email":session_user}, ["first_name","last_name","gender"],as_dict=1)
 	print(employee_detail,"==================")
 	return employee_detail
+
+@frappe.whitelist()
+def create_expense_claim(source_name, target_doc=None):
+
+	doc = get_mapped_doc(
+		"Project Travel Request",
+		source_name,
+		{
+			"Project Travel Request": {
+				"doctype": "Expense Claim",
+				"field_map": {"name": "custom_project_travel_request","project_manager":"expense_approver","department":"department"},
+			}
+		},
+		target_doc
+	)
+	
+	doc.run_method("set_missing_values")
+	return doc

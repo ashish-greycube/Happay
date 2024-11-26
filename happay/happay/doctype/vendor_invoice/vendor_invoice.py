@@ -421,10 +421,13 @@ def get_supplier_details(supplier_name):
 @frappe.whitelist()
 def get_pm_and_account_from_cost_center(cost_center):
 	parent_cost_center = frappe.db.get_value('Cost Center', cost_center, 'parent_cost_center')
+	print(parent_cost_center , "----parent_cost_center")
 	if parent_cost_center:
 		cc_detials = frappe.db.get_value('Cost Center', parent_cost_center, ['custom_project_manager'], as_dict=1)	
+		print(cc_detials,"-==-=-======cc_detials")
 		if cc_detials:
 			project_manager_name=frappe.db.get_value("User", cc_detials.custom_project_manager, 'full_name')
+			print(project_manager_name, "==-=-=-=-project_manager_name")
 			cc_detials['project_manager_name']=project_manager_name
 		return cc_detials
 
