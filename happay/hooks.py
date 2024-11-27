@@ -135,7 +135,8 @@ doc_events = {
         "validate":"happay.api.create_custom_user_permission_for_project_manager"
 	},
     "Expense Claim": {
-        "validate":"happay.api.set_cost_center_in_all_row"
+        "validate":"happay.api.set_cost_center_in_all_row",
+        "after_insert": "happay.api.share_expense_claim_to_employee"
 	}
 }
 

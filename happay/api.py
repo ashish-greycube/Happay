@@ -5,6 +5,7 @@ from frappe.utils import get_link_to_form
 from frappe.model.mapper import get_mapped_doc
 from frappe.desk.reportview import get_filters_cond, get_match_cond
 from frappe.utils import nowdate, unique
+from frappe.share import add
 
 def change_status_of_vendor_invoice_on_submit_of_purchase_invoice(self,method):
 	print("Ok")
@@ -67,3 +68,22 @@ def fetch_logged_in_user_employee(session_user):
 # 				ec_doc.workflow_state = "Paid"
 # 				ec_doc.save()
 # 				frappe.msgprint(_("Expense Claim {0} status changed to {1}").format(row.reference_name,ec_doc.workflow_state),alert=1)
+
+def share_expense_claim_to_employee(self,method):
+
+	user_list = frappe.db.get_all("User",
+							   filters={"enabled":1},
+							   fields=["name"])
+	required_user_list = []
+	for user in user_list:
+		user_roles = frappe.get_roles(user.name)
+		if (('Fin 1' in user_roles) or ('Fin 2' in user_roles)) and user.name != 'Administrator':
+			required_user_list.append(user.name)
+	
+	for user_id in required_user_list:
+		shared_with_user=add(self.doctype, self.name, user=user_id, read=1, write=1, submit=1)
+		if shared_with_user:
+				frappe.msgprint(
+					_("Expense Claim {0} is shared with {1} user").format(self.name,user_id),
+					alert=1,
+				)
