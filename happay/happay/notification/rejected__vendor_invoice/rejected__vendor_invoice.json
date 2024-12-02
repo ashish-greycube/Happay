@@ -1,0 +1,32 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state in ['Rejected by PM', 'Rejected By Fin 1', 'Rejected By Fin 2']",
+ "creation": "2024-11-15 13:44:04.837952",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Vendor Invoice",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p><p>Hello,<br></p>\n\n<p><p>The vendor invoice {{doc.name}} for {{(doc.supplier|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}} uploaded by {% set u = frappe.get_doc(\"User\", doc.owner) %} {{u.first_name}} {{u.last_name or ''}} is Rejected.<br><br>\nClick on the below link to see:<br>\n<a href=\"{{ frappe.utils.get_url_to_form('Vendor Invoice', doc.name) }}\">{{ doc.name }}</a>.<br></p></p>",
+ "message_type": "Markdown",
+ "modified": "2024-11-28 18:21:48.112812",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Rejected -Vendor Invoice",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "owner"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "CIIE Finance",
+ "sender_email": "ciie.finance@iima.ac.in",
+ "subject": "Vendor Invoice {{doc.name}} For the Supplier {{doc.supplier}} is Rejected",
+ "value_changed": "workflow_state"
+}

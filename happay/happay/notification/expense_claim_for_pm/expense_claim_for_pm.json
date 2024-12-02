@@ -1,0 +1,35 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state==\"Pending at PM\"",
+ "creation": "2024-11-28 18:09:20.886167",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Expense Claim",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Hello {% set u = frappe.get_doc(\"User\", doc.project_manager) %} {{u.first_name}} {{u.last_name or ''}}, <br></p>\n\n<p>The Expense Claim {{doc.name}} for {{doc.employee_name}} uploaded by {% set u = frappe.get_doc(\"User\", doc.owner) %} {{u.first_name}} {{u.last_name or ''}}  is Pending for your approval.<br><br>\nPlease review.<br><br>\nClick on the below link to take the necessary action:<br>\n<a href=\"{{ frappe.utils.get_url_to_form('Expense Claim', doc.name) }}\">{{ doc.name }}</a>.<br></p></p>\n",
+ "message_type": "Markdown",
+ "modified": "2024-11-28 18:12:27.848693",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Expense Claim For PM",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "project_manager"
+  },
+  {
+   "receiver_by_document_field": "owner"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "CIIE Finance",
+ "sender_email": "ciie.finance@iima.ac.in",
+ "subject": "Expense Claim: {{doc.name}} for the Employee {{doc.employee_name}} is Pending for PM Approval",
+ "value_changed": "workflow_state"
+}

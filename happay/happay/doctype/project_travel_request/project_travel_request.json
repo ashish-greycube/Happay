@@ -38,6 +38,7 @@
   "include_cab_booking",
   "travel_agent",
   "amended_from",
+  "agent_email",
   "section_break_calh",
   "bill_amount",
   "service_charge",
@@ -323,6 +324,13 @@
   {
    "fieldname": "column_break_hivq",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "travel_agent.email_id",
+   "fieldname": "agent_email",
+   "fieldtype": "Data",
+   "label": "Agent Email",
+   "options": "Email"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -337,7 +345,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-11-25 12:46:30.658600",
+ "modified": "2024-11-28 12:45:20.959650",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
