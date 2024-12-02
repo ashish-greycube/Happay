@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 from frappe.permissions import add_user_permission
-from frappe.utils import get_link_to_form
+from frappe.utils import get_link_to_form, add_to_date
 from frappe.model.mapper import get_mapped_doc
 from frappe.desk.reportview import get_filters_cond, get_match_cond
 from frappe.utils import nowdate, unique
@@ -87,3 +87,14 @@ def share_expense_claim_to_employee(self,method):
 					_("Expense Claim {0} is shared with {1} user").format(self.name,user_id),
 					alert=1,
 				)
+			
+def validate_posting_date_and_expense_date(self, method):
+	if self.custom_project_travel_request:
+		valide_date = add_to_date(nowdate(),days=-30)
+		print(valide_date,"---")
+		if self.posting_date and self.posting_date < valide_date:
+			frappe.throw(_("Posting cannot be less then {0}".format(valide_date)))
+		if len(self.expenses)>0:
+			for row in self.expenses:
+				if row.expense_date and row.expense_date < valide_date:
+					frappe.throw(_("#Row {0}: Expense date cannot be less then {1}".format(row.idx,valide_date)))

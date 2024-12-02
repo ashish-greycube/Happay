@@ -22,19 +22,20 @@ frappe.ui.form.on("Expense Claim", {
     },
 
     onload(frm){
-        frappe.call({
-            method: "happay.api.fetch_logged_in_user_employee",
-            args: {
-                "session_user": frappe.session.user
-            },
-            callback: function (response) {
-                let emp_detials = response.message
-                if (emp_detials) {
-                    frm.set_value("employee", emp_detials)
+        if (frm.is_new()){
+            frappe.call({
+                method: "happay.api.fetch_logged_in_user_employee",
+                args: {
+                    "session_user": frappe.session.user
+                },
+                callback: function (response) {
+                    let emp_detials = response.message
+                    if (emp_detials) {
+                        frm.set_value("employee", emp_detials)
+                    }
                 }
-            }
-        })
-
+            })
+        }
     },
 
     cost_center(frm) {
