@@ -1,0 +1,15 @@
+{
+  "name": "happay",
+  "version": "1.0.0",
+  "description": "HapPay",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd get-travel-request-docs && yarn install",
+    "dev": "cd get-travel-request-docs && yarn dev",
+    "build": "cd get-travel-request-docs && yarn build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

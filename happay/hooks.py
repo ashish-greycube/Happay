@@ -237,3 +237,4 @@ doc_events = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+website_route_rules = [{'from_route': '/get-travel-request-docs/<path:app_path>', 'to_route': 'get-travel-request-docs'},]
