@@ -35,6 +35,14 @@ frappe.ui.form.on("Expense Claim", {
                     }
                 }
             })
+
+            if (frappe.user.has_role('Projects Manager')) {
+                frappe.db.get_value("Employee",{user_id:frappe.session.user},["expense_approver"])
+                .then(r => {
+                    let expense_approver = r.message.expense_approver
+                    frm.set_value("expense_approver", expense_approver)
+                })
+            }
         }
     },
 
