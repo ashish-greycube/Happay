@@ -44,7 +44,13 @@ def get_columns(filters):
 			"label":_("Employee"),
 			"fieldtype": "Link",
 			"options":"Employee",
-			"width":"130"
+			"width":"150"
+		},
+		{
+			"fieldname": "employee_name",
+			"label":_("Employee Name"),
+			"fieldtype": "Data",
+			"width":"140"
 		},
 		{
 			"fieldname": "expense_claim",
@@ -90,6 +96,7 @@ def get_data(filters):
 					ptr.cost_center ,
 					ptr.title ,
 					ec.employee ,
+					ec.employee_name,
 					ec.name as expense_claim ,
 					ec.grand_total as expense_amount ,
 					ec.total_amount_reimbursed as paid_amount ,
@@ -114,10 +121,10 @@ def get_conditions(filters):
 		conditions += "ptr.company = %(company)s"
 
 	if filters.from_date:
-		conditions += "and ptr.creation >= %(from_date)s"
+		conditions += "and ptr.from_date >= %(from_date)s"
 	
 	if filters.to_date:
-		conditions += "and ptr.creation <= %(to_date)s"
+		conditions += "and ptr.from_date <= %(to_date)s"
 
 	if filters.project_travel_request:
 		conditions += "and ptr.name = %(project_travel_request)s"
