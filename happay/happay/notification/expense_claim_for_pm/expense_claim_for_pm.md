@@ -1,4 +1,4 @@
-<p>Hello {% set u = frappe.get_doc("User", doc.project_manager) %} {{u.first_name}} {{u.last_name or ''}}, <br></p>
+<p>Hello {% set u = frappe.get_doc("User", doc.expense_approver) %} {{u.first_name}} {{u.last_name or ''}}, <br></p>
 
 <p>The Expense Claim {{doc.name}} for {{doc.employee_name}} uploaded by {% set u = frappe.get_doc("User", doc.owner) %} {{u.first_name}} {{u.last_name or ''}}  is Pending for your approval.<br><br>
 Please review.<br><br>
