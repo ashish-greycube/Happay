@@ -208,7 +208,7 @@
    "fieldname": "passenger_first_name",
    "fieldtype": "Data",
    "label": "Passenger First Name",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.booking_for==\"Self\""
   },
   {
    "depends_on": "eval:doc.booking_for==\"Self\"",
@@ -216,7 +216,7 @@
    "fieldname": "passenger_last_name",
    "fieldtype": "Data",
    "label": "Passenger Last Name",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.booking_for==\"Self\""
   },
   {
    "depends_on": "eval:doc.booking_for==\"Self\"",
@@ -224,8 +224,8 @@
    "fieldname": "passenger_gender",
    "fieldtype": "Link",
    "label": "Passenger Gender",
-   "options": "Gender",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
+   "options": "Gender"
   },
   {
    "depends_on": "eval:doc.cost_center",
@@ -345,7 +345,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-11-28 12:45:20.959650",
+ "modified": "2024-12-03 16:42:02.848691",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",

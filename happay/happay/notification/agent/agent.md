@@ -14,12 +14,14 @@ Passenger Email: {{doc.owner}}<br>
 {% elif doc.booking_for == "Guest" %}
 <table border="1">
     <tr>
+        <td>No.</td>
         <td>Passenger First Name</td>
         <td>Passenger Last Name</td>
         <td>Passenger Gender</td>
     </tr>
     {% for row in doc.passenger_details %}
     <tr>
+        <td>{{loop.index}}</td>
         <td>{{row.passenger_first_name}}</td>
         <td>{{row.passenger_last_name}}</td>
         <td>{{row.passenger_gender}}</td>
