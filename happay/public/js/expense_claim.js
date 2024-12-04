@@ -6,7 +6,7 @@ frappe.ui.form.on("Expense Claim", {
 
     after_workflow_action(frm){
         let method = "hrms.overrides.employee_payment_entry.get_payment_entry_for_employee";
-        if (frm.doc.workflow_state == "Paid"){
+        if (frm.doc.workflow_state == "In Process"){
             return frappe.call({
                 method: method,
                 args: {

@@ -60,14 +60,14 @@ def fetch_logged_in_user_employee(session_user):
 	if employee_detail:
 		return employee_detail.name
 
-# def changes_status_of_expense_claim(self, method):
-# 	if len(self.references)>0 and method=="on_submit":
-# 		for row in self.references:
-# 			if row.reference_doctype == "Expense Claim":
-# 				ec_doc = frappe.get_doc("Expense Claim",row.reference_name)
-# 				ec_doc.workflow_state = "Paid"
-# 				ec_doc.save()
-# 				frappe.msgprint(_("Expense Claim {0} status changed to {1}").format(row.reference_name,ec_doc.workflow_state),alert=1)
+def changes_status_of_expense_claim(self, method):
+	if len(self.references)>0 and method=="on_submit":
+		for row in self.references:
+			if row.reference_doctype == "Expense Claim":
+				ec_doc = frappe.get_doc("Expense Claim",row.reference_name)
+				ec_doc.workflow_state = "Paid"
+				ec_doc.save()
+				frappe.msgprint(_("Expense Claim {0} status changed to {1}").format(row.reference_name,ec_doc.workflow_state),alert=1)
 
 def share_expense_claim_to_employee(self,method):
 

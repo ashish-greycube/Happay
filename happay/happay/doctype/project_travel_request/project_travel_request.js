@@ -39,12 +39,23 @@ frappe.ui.form.on("Project Travel Request", {
     },
 
     refresh(frm){
-        if (frm.doc.docstatus == 1 && frm.doc.bill_amount && frm.doc.service_charge) {
-            frm.add_custom_button(__('Vendor Invoice'), () => create_vendor_invoice_from_project_travel_request(frm), __("Create"));
-        }
-        if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && frm.doc.bill_amount && frm.doc.service_charge) {
-            frm.add_custom_button(__('Expense Claim'), () => create_expense_claim_from_project_travel_request(frm), __("Create"));
-        }
+        frappe.call({
+            method: "happay.happay.doctype.project_travel_request.project_travel_request.get_bill_amount",
+            args: {
+                "name": frm.doc.name
+            },
+            callback: function (response) {
+                let details = response.message
+
+                if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && details.bill_amount > 0 && details.service_charge > 0) {
+                    frm.add_custom_button(__('Expense Claim'), () => create_expense_claim_from_project_travel_request(frm), __("Create"));
+                }
+
+                if (frm.doc.docstatus == 1 && details.bill_amount > 0 && details.service_charge > 0) {
+                    frm.add_custom_button(__('Vendor Invoice'), () => create_vendor_invoice_from_project_travel_request(frm), __("Create"));
+                }
+            }
+        })
     },
 
     booking_for(frm) {
@@ -96,15 +107,21 @@ frappe.ui.form.on("Project Travel Request", {
 });
 
 let create_vendor_invoice_from_project_travel_request = function(frm){
-    frm.call("create_vendor_invoice_from_project_travel_request").then((r) => {
-        let vendor_invoice = r.message
-        frappe.open_in_new_tab = true;
-        frappe.set_route("Form", "Vendor Invoice", vendor_invoice);
-       
+    frappe.call({
+        method: "happay.happay.doctype.project_travel_request.project_travel_request.create_vendor_invoice_from_project_travel_request",
+        args: {
+            "name": frm.doc.name
+        },
+        callback: function (response) {
+            let vendor_invoice = response.message
+            frappe.open_in_new_tab = true;
+            frappe.set_route("Form", "Vendor Invoice", vendor_invoice);
+        }
     })
 }
 
 let create_expense_claim_from_project_travel_request = function(frm) {
+    console.log("----------")
     frappe.model.open_mapped_doc({
 		method: "happay.happay.doctype.project_travel_request.project_travel_request.create_expense_claim",
 		frm: frm,
