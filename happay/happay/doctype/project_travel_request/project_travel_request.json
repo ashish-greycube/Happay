@@ -68,6 +68,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Cost Center",
+   "no_copy": 1,
    "options": "Cost Center",
    "reqd": 1
   },
@@ -92,6 +93,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
+   "no_copy": 1,
    "options": "Company",
    "set_only_once": 1
   },
@@ -103,7 +105,6 @@
   {
    "fieldname": "source",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Source(From)",
    "reqd": 1
@@ -111,7 +112,6 @@
   {
    "fieldname": "destination",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Destination(To)",
    "reqd": 1
@@ -157,6 +157,7 @@
    "fieldtype": "Link",
    "label": "Travel Agent",
    "mandatory_depends_on": "eval:doc.ticket_booked_by == \"Institution\" && in_list(['Train', 'Flight'], doc.mode_of_travel)",
+   "no_copy": 1,
    "options": "Supplier"
   },
   {
@@ -182,6 +183,7 @@
    "fieldname": "project_manager",
    "fieldtype": "Link",
    "label": "Project Manager ID",
+   "no_copy": 1,
    "options": "User"
   },
   {
@@ -192,6 +194,7 @@
    "fieldname": "department",
    "fieldtype": "Link",
    "label": "Department",
+   "no_copy": 1,
    "options": "Department",
    "reqd": 1
   },
@@ -199,6 +202,7 @@
    "fieldname": "booking_for",
    "fieldtype": "Select",
    "label": "Booking For",
+   "no_copy": 1,
    "options": "\nGuest\nSelf",
    "reqd": 1
   },
@@ -208,7 +212,8 @@
    "fieldname": "passenger_first_name",
    "fieldtype": "Data",
    "label": "Passenger First Name",
-   "mandatory_depends_on": "eval:doc.booking_for==\"Self\""
+   "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
+   "no_copy": 1
   },
   {
    "depends_on": "eval:doc.booking_for==\"Self\"",
@@ -216,7 +221,8 @@
    "fieldname": "passenger_last_name",
    "fieldtype": "Data",
    "label": "Passenger Last Name",
-   "mandatory_depends_on": "eval:doc.booking_for==\"Self\""
+   "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
+   "no_copy": 1
   },
   {
    "depends_on": "eval:doc.booking_for==\"Self\"",
@@ -225,6 +231,7 @@
    "fieldtype": "Link",
    "label": "Passenger Gender",
    "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
+   "no_copy": 1,
    "options": "Gender"
   },
   {
@@ -232,6 +239,7 @@
    "fieldname": "project_manager_name",
    "fieldtype": "Data",
    "label": "Project Manager",
+   "no_copy": 1,
    "read_only": 1
   },
   {
@@ -264,44 +272,53 @@
    "description": "TDS Applicable On Amount",
    "fieldname": "service_charge",
    "fieldtype": "Currency",
-   "label": "Service Charge"
+   "label": "Service Charge",
+   "permlevel": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "bill_amount",
    "fieldtype": "Currency",
-   "label": "Bill Amount"
+   "label": "Bill Amount",
+   "permlevel": 1
   },
   {
    "description": "fetch from Company=Travel Expense Account",
    "fieldname": "expense_account",
    "fieldtype": "Link",
    "label": "Expense Account",
+   "no_copy": 1,
    "options": "Account"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "ticket_attachment",
    "fieldtype": "Attach",
-   "label": "Ticket Attachment"
+   "label": "Ticket Attachment",
+   "no_copy": 1,
+   "permlevel": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "invoice_attachment",
    "fieldtype": "Attach",
-   "label": "Invoice Attachment"
+   "label": "Invoice Attachment",
+   "no_copy": 1,
+   "permlevel": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "supplier_invoice_number",
    "fieldtype": "Data",
-   "label": "Supplier Invoice Number"
+   "label": "Supplier Invoice Number",
+   "permlevel": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "supplier_invoice_date",
    "fieldtype": "Date",
-   "label": "Supplier Invoice Date"
+   "label": "Supplier Invoice Date",
+   "permlevel": 1
   },
   {
    "fieldname": "cb_1",
@@ -330,6 +347,7 @@
    "fieldname": "agent_email",
    "fieldtype": "Data",
    "label": "Agent Email",
+   "no_copy": 1,
    "options": "Email"
   }
  ],
@@ -345,7 +363,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-03 16:42:02.848691",
+ "modified": "2024-12-04 12:46:53.157127",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -393,13 +411,38 @@
   },
   {
    "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Projects Approver",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
    "print": 1,
    "read": 1,
    "role": "Fin 1"
   },
   {
+   "email": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Fin 1",
+   "write": 1
+  },
+  {
    "read": 1,
    "role": "Fin 2"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Fin 2",
+   "write": 1
   },
   {
    "cancel": 1,
@@ -429,5 +472,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }
