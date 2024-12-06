@@ -54,9 +54,10 @@ def create_custom_user_permission_for_project_manager(self,method):
 			frappe.msgprint(_("User Permission {0} is added Project Travel Request").format(get_link_to_form("User Permission", check_exist_for_ptr)),alert=True)
 
 def set_cost_center_in_all_row(self, method):
-	if len(self.expenses)>0:
-		for row in self.expenses:
-			row.cost_center = self.cost_center
+	if self.custom_to_distribute_diff_cc == 1:
+		if len(self.expenses)>0:
+			for row in self.expenses:
+				row.cost_center = self.cost_center
 
 @frappe.whitelist()
 def fetch_logged_in_user_employee(session_user):
@@ -101,3 +102,16 @@ def validate_posting_date_and_expense_date(self, method):
 			for row in self.expenses:
 				if row.expense_date and getdate(row.expense_date) < getdate(valide_date):
 					frappe.throw(_("#Row {0}: Expense date cannot be less then {1}".format(row.idx,valide_date)))
+
+def create_user_permission(self, method):
+
+	if self.user_id:
+		employee_user_permission_exists = frappe.db.exists(
+				"User Permission", {"allow": "Employee", "for_value": self.name, "user": self.user_id}
+			)
+
+		if employee_user_permission_exists:
+			return
+
+		add_user_permission("Employee", self.name, self.user_id)
+		frappe.msgprint(_("User permissions for Employee is created"),alert=True)

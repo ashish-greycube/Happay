@@ -20,11 +20,11 @@ frappe.ui.form.on("Project Travel Request", {
                 },
             }
         })        
-        frm.set_query("travel_agent", function(doc){
+        frm.set_query("travel_agent", function () {
             return {
+                query: "happay.happay.doctype.project_travel_request.project_travel_request.get_travel_agent_group",
                 filters: {
-                    "supplier_group":"Travel Agent",
-                    "company": doc.company
+                    "company": frm.doc.company
                 },
             }
         })

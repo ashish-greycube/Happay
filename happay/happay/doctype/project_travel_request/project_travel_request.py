@@ -61,7 +61,7 @@ def create_vendor_invoice_from_project_travel_request(name):
 
 	vi_doc.run_method("set_missing_values")
 	vi_doc.save(ignore_permissions = True)
-	frappe.msgprint(_("Vendor Invoice is created {0}".format(get_link_to_form("Vendor Invoice",vi_doc.name))),alert=True)
+	frappe.msgprint(_("Vendor Invoice is created {0}".format(get_link_to_form("Vendor Invoice",vi_doc.name))))
 	return vi_doc.name
 	
 @frappe.whitelist()
@@ -84,6 +84,7 @@ def create_expense_claim(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		target.company = source.company
 		target.cost_center = source.cost_center
+		target.custom_to_distribute_diff_cc = 1
 
 	doc = get_mapped_doc(
 		"Project Travel Request",
@@ -100,3 +101,16 @@ def create_expense_claim(source_name, target_doc=None):
 
 	doc.run_method("set_missing_values")
 	return doc
+
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_travel_agent_group(doctype, txt, searchfield, start, page_len, filters):
+		
+		company = filters.get("company")
+		supplier_group = frappe.db.get_single_value('Happay Settings', 'default_travel_agent_supplier_group')
+		supplier_list = frappe.db.get_all("Supplier",
+									filters={"supplier_group":supplier_group,"company":company},
+									fields=["name","supplier_name","supplier_group"],as_list=1)
+
+		return supplier_list
