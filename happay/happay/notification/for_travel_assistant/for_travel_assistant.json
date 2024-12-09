@@ -1,0 +1,32 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state==\"Approved\"",
+ "creation": "2024-12-09 16:15:01.557461",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Project Travel Request",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Hi,<br></p>\n\n<p>Please fill in the information of Ticket<br></p>\n\n<p>Here is the link to fill in the Ticket information:<br></p>\n\n<p>{{frappe.get_url() + \"/get-travel-request-docs/?name=\" + doc.name}}</p>\n",
+ "message_type": "Markdown",
+ "modified": "2024-12-09 16:15:33.912943",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "For Travel Assistant",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "Travel Assistant"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "CIIE Finance",
+ "sender_email": "ciie.finance@iima.ac.in",
+ "subject": "Please fill in the Ticket Information",
+ "value_changed": "workflow_state"
+}
