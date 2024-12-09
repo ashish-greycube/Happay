@@ -23,7 +23,7 @@
             :label="('Project Travel Request')"
             :required="true"
             :filters="{
-              docstatus: 0,
+              docstatus: 1,
             }"
           />
         </div>
@@ -296,6 +296,7 @@ function updateAmount() {
         window.location.replace('/success-page')
         // window.open(url, "_self");
         console.log("Successs")
+        console.log(travelReq, "======travelReq")
         // toast({
         //   title: "Success",
         //   text: ("Set Data in {0} successfully!"),

@@ -363,7 +363,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-06 12:41:45.663773",
+ "modified": "2024-12-09 11:15:32.323639",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -467,6 +467,31 @@
    "role": "Accounts Manager",
    "share": 1,
    "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Travel Assistant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Travel Assistant",
+   "share": 1,
    "write": 1
   }
  ],
