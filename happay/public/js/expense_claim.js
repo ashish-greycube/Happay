@@ -48,7 +48,7 @@ frappe.ui.form.on("Expense Claim", {
 
     cost_center(frm) {
         let user_role_list = frappe.user_roles
-        if (frappe.user.has_role('Projects Manager')) {
+        if (frappe.user.has_role('Projects Approver')) {
             frappe.db.get_value("Employee",{user_id:frappe.session.user},["expense_approver"])
             .then(r => {
                 let expense_approver = r.message.expense_approver
