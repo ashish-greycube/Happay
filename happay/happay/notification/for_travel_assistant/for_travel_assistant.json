@@ -11,9 +11,9 @@
  "event": "Value Change",
  "idx": 0,
  "is_standard": 1,
- "message": "<p>Hi,<br></p>\n\n<p>Please fill in the information of Ticket<br></p>\n\n<p>Here is the link to fill in the Ticket information:<br></p>\n\n<p>{{frappe.get_url() + \"/get-travel-request-docs/?name=\" + doc.name}}</p>\n",
+ "message": "<p>Hi,<br></p>\n\n<p>Please fill in the <b>\"Ticket & Bill\"</b> information of Ticket<br></p>\n\n<p>Here is the link to fill in the Ticket information:<br></p>\n\n<p>{{frappe.get_url() + \"/get-travel-request-docs/?name=\" + doc.name}}</p>\n",
  "message_type": "Markdown",
- "modified": "2024-12-09 16:15:33.912943",
+ "modified": "2024-12-09 16:58:31.376876",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "For Travel Assistant",
@@ -27,6 +27,6 @@
  "send_to_all_assignees": 0,
  "sender": "CIIE Finance",
  "sender_email": "ciie.finance@iima.ac.in",
- "subject": "Please fill in the Ticket Information",
+ "subject": "Please fill in the \"Ticket & Bill\" Information",
  "value_changed": "workflow_state"
 }

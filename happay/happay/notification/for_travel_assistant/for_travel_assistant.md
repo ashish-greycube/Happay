@@ -1,6 +1,6 @@
 <p>Hi,<br></p>
 
-<p>Please fill in the information of Ticket<br></p>
+<p>Please fill in the <b>"Ticket & Bill"</b> information of Ticket<br></p>
 
 <p>Here is the link to fill in the Ticket information:<br></p>
 
