@@ -44,7 +44,7 @@ def create_vendor_invoice_from_project_travel_request(name):
 	vi_doc.supplier_invoice_date = ptr_doc.supplier_invoice_date
 	vi_doc.type = "Invoice"
 	vi_doc.is_asset = "No"
-	vi_doc.purpose = ""+ptr_doc.name+","+ptr_doc.title
+	vi_doc.purpose = ""+ptr_doc.name+","+ptr_doc.reason_of_travel
 	vi_doc.bill_amount = ptr_doc.bill_amount
 	vi_doc.expense_account = ptr_doc.expense_account
 	vi_doc.cost_center = ptr_doc.cost_center
