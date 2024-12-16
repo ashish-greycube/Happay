@@ -363,6 +363,7 @@
    "options": "PTR Travel Details"
   },
   {
+   "allow_on_submit": 1,
    "default": "Ticket Pending",
    "fieldname": "vendor_invoice_status",
    "fieldtype": "Select",
@@ -383,7 +384,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-13 17:22:56.704838",
+ "modified": "2024-12-16 10:33:31.292335",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
