@@ -24,6 +24,8 @@
             :required="true"
             :filters="{
               docstatus: 1,
+              vendor_invoice_status: 'Ticket Pending',
+              workflow_state: 'Approved'
             }"
           />
         </div>
@@ -36,7 +38,7 @@
           variant="subtle"
           placeholder="Supplier Invoice Date"
           :disabled="false"
-          :required="true"
+          :required="required"
           label="Supplier Invoice Date"
           v-model="invoiceDate"
         />
@@ -52,6 +54,7 @@
         :disabled="false"
         label="Supplier Invoice Number"
         v-model="invoiceNumber"
+        :class="required && 'reqd'"
       />
     </div>
 
@@ -196,6 +199,11 @@
           >
           Send Request
         </Button>
+      
+        <div class="text-center p-2">
+          <ErrorMessage :message="errorMessage" />
+        </div>
+        
       </div>
 
     </div>
@@ -208,7 +216,7 @@
 import { ref, reactive, inject } from 'vue'
 import { FileText, X } from 'lucide-vue-next'
 import Link from '@/Link.vue'
-import {Autocomplete, FileUploader, FormControl, createListResource, Dialog, toast} from "frappe-ui"
+import {FileUploader, FormControl, createListResource, Dialog, toast, ErrorMessage} from "frappe-ui"
 
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
@@ -222,6 +230,7 @@ const invoiceDate = ref("");
 const invoiceNumber = ref("");
 const billAmount = ref("");
 const serviceCharges = ref("");
+const errorMessage = ref("")
 
 const travel = reactive({
 	ticket_image: null,
@@ -254,6 +263,21 @@ function validateFile(file) {
   }
 }
 
+function validate_inputs() {
+  if (!travel.travelDoc) {
+    errorMessage.value = 'Please select Project Travel Request'
+    return false
+  }
+  if (!travel.ticket_image?.file_url) {
+    errorMessage.value = 'Ticket is Required.'
+    return false
+  }
+  if (!travel.invoice_image?.file_url) {
+    errorMessage.value = 'Invoice is Required.'
+    return false
+  }
+}
+
 const travelReq = createListResource({
   doctype: 'Project Travel Request',
   fields: ['name','bill_amount', 'service_charge', 'ticket_attachment', 'invoice_attachment', 'supplier_invoice_number', 'supplier_invoice_date'],
@@ -278,53 +302,59 @@ const travelReq = createListResource({
 
 
 function updateAmount() {
-  travelReq.setValue
-  travelReq.setValue.submit({
-    // id of the record
-    name: travel.travelDoc,
-    // field value pairs to set
-    supplier_invoice_date:invoiceDate.value,
-    supplier_invoice_number: invoiceNumber.value,
-    bill_amount: billAmount.value,
-    service_charge: serviceCharges.value,
-    ticket_attachment: travel.ticket_image?.file_url || '',
-    invoice_attachment: travel.invoice_image?.file_url || '',
-  },
-    {
-      onSuccess() {
-        // window.open('/success-page')
-        window.location.replace('/success-page')
-        // window.open(url, "_self");
-        console.log("Successs")
-        console.log(travelReq, "======travelReq")
-        // toast({
-        //   title: "Success",
-        //   text: ("Set Data in {0} successfully!"),
-        //   icon: "check-circle",
-        //   position: "bottom-center",
-        //   iconClasses: "text-green-500",
-        // })
-      },
-      onError() {
-        console.log("Error!!")
-        // toast({
-        //   title: "Error",
-        //   text: ("Some Issue to Set Data in {0}, Please try Again!"),
-        //   icon: "alert-circle",
-        //   position: "bottom-center",
-        //   iconClasses: "text-red-500",
-        // })
-      },
+  if (validate_inputs() == false) return
+  else{
+    travelReq.setValue
+    travelReq.setValue.submit({
+      // id of the record
+      name: travel.travelDoc,
+      // field value pairs to set
+      supplier_invoice_date:invoiceDate.value,
+      supplier_invoice_number: invoiceNumber.value,
+      bill_amount: billAmount.value,
+      service_charge: serviceCharges.value,
+      ticket_attachment: travel.ticket_image?.file_url || '',
+      invoice_attachment: travel.invoice_image?.file_url || '',
     },
+      {
+        onSuccess() {
+          // window.open('/success-page')
+          window.location.replace('/success-page')
+          // window.open(url, "_self");
+          console.log("Successs")
+          console.log(travelReq, "======travelReq")
+          // toast({
+          //   title: "Success",
+          //   text: ("Set Data in {0} successfully!"),
+          //   icon: "check-circle",
+          //   position: "bottom-center",
+          //   iconClasses: "text-green-500",
+          // })
+        },
+        onError() {
+          console.log("Error!!")
+          // toast({
+          //   title: "Error",
+          //   text: ("Some Issue to Set Data in {0}, Please try Again!"),
+          //   icon: "alert-circle",
+          //   position: "bottom-center",
+          //   iconClasses: "text-red-500",
+          // })
+        },
+        
+      },
+      
 
-    invoiceDate.value = "",
-    invoiceNumber.value = "",
-    travel.travelDoc = "",
-    billAmount.value = "",
-    serviceCharges.value = "",
-    travel.ticket_image = null,
-    travel.invoice_image = null,
-  )
+      invoiceDate.value = "",
+      invoiceNumber.value = "",
+      travel.travelDoc = "",
+      billAmount.value = "",
+      serviceCharges.value = "",
+      travel.ticket_image = null,
+      travel.invoice_image = null,
+    )
+
+}
 }
 
 
