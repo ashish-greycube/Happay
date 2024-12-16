@@ -4,6 +4,12 @@ frappe.ui.form.on("Expense Claim", {
         frm.remove_custom_button('Payment', 'Create');      
     },
 
+    onload_post_render(frm){
+        if (!frm.doc.employee){
+            frm.set_value("custom_project_travel_request","")
+        }
+    },
+
     after_workflow_action(frm){
         let method = "hrms.overrides.employee_payment_entry.get_payment_entry_for_employee";
         if (frm.doc.workflow_state == "In Process"){

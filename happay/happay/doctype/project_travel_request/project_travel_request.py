@@ -12,6 +12,9 @@ from happay.happay.doctype.vendor_invoice.vendor_invoice import get_supplier_ban
 class ProjectTravelRequest(Document):
 	def validate(self):
 		self.validate_dates()
+	
+	def on_update_after_submit(self):
+		self.changes_status_based_on_ticket_and_invoice()
 
 	def validate_dates(self):
 		if self.from_date:
@@ -21,6 +24,12 @@ class ProjectTravelRequest(Document):
 			if self.to_date:
 				if self.to_date < self.from_date:
 					frappe.throw(_("To date can not be less than From date"))
+				
+	def changes_status_based_on_ticket_and_invoice(self):
+		print("IN FUNC")
+		if self.ticket_attachment and self.invoice_attachment:
+			print("IN CONDITION")
+			frappe.db.set_value("Project Travel Request",self.name,"vendor_invoice_status","Pending For Vendor Invoice")
 
 @frappe.whitelist()
 def create_vendor_invoice_from_project_travel_request(name):
@@ -84,7 +93,7 @@ def create_expense_claim(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		target.company = source.company
 		target.cost_center = source.cost_center
-		target.custom_to_distribute_diff_cc = 1
+		target.custom_to_distribute_diff_cc = 0
 
 	doc = get_mapped_doc(
 		"Project Travel Request",

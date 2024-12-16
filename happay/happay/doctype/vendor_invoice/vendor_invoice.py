@@ -21,6 +21,7 @@ class VendorInvoice(Document):
 		self.validate_duplicate_entry_of_vi()
 		self.calculate_tds_computed_amount()
 		self.calculate_net_payable_amount()
+		self.change_status_of_ptr()
 	
 	def validate_tds_rate(self):
 		if self.is_tds_applicable==1 and self.tds_rate:
@@ -66,6 +67,10 @@ class VendorInvoice(Document):
 		if self.tds_amount and self.tds_rate:
 			computed_amount = (self.tds_amount * self.tds_rate) / 100
 			self.tds_computed_amount = rounded(computed_amount)
+		
+	def change_status_of_ptr(self):
+		if self.project_travel_request:
+			frappe.db.set_value("Project Travel Request",self.project_travel_request,"vendor_invoice_status","Billed")
 
 	def on_update(self):
 		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:

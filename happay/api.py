@@ -54,7 +54,7 @@ def create_custom_user_permission_for_project_manager(self,method):
 			frappe.msgprint(_("User Permission {0} is added Project Travel Request").format(get_link_to_form("User Permission", check_exist_for_ptr)),alert=True)
 
 def set_cost_center_in_all_row(self, method):
-	if self.custom_to_distribute_diff_cc == 1:
+	if self.custom_to_distribute_diff_cc == 0:
 		if len(self.expenses)>0:
 			for row in self.expenses:
 				row.cost_center = self.cost_center
