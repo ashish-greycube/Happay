@@ -25,7 +25,7 @@
    "label": "Sum of Bill Amount of  Vendor Invoices"
   }
  ],
- "content": "[{\"id\":\"67lR2qVSBs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Happay</span>\",\"col\":12}},{\"id\":\"PY_vY8i09p\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"k2arBhOM7g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Vendor Invoice\",\"col\":3}},{\"id\":\"BzlVnFCeL4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vendor Invoice\",\"col\":3}},{\"id\":\"nd0QZ5y206\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"id\":\"Gr0QvqLMpA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Entry\",\"col\":3}},{\"id\":\"CxHuc63yff\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Claim\",\"col\":3}},{\"id\":\"P6kvNxXRtL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project Travel Request\",\"col\":3}},{\"id\":\"dXIxBBBhXi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Travel Request Tracker Report\",\"col\":3}},{\"id\":\"B2yRPAeEJV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Aj_L3ZoloT\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Invoice</b></span>\",\"col\":12}},{\"id\":\"YoA4JlMv5P\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Invoice\",\"col\":3}},{\"id\":\"7lyZAhZ5jU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at PM Invoice\",\"col\":3}},{\"id\":\"2b9Qxs2qGx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN1 Invoice\",\"col\":3}},{\"id\":\"8y7INdPljk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN2 Invoice\",\"col\":3}},{\"id\":\"2PHwLNlXBu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Pay Invoice\",\"col\":3}},{\"id\":\"7xjL7NrhRx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paid Invoice\",\"col\":3}},{\"id\":\"bZ9GT7rk13\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Account Invoice\",\"col\":3}},{\"id\":\"IxNS3Lu3oB\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"zeLXT8Bpm_\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Advance</b></span>\",\"col\":12}},{\"id\":\"jSiDZFCvMl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Advance\",\"col\":3}},{\"id\":\"PqIgUEPOVW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending At PM Advance\",\"col\":3}},{\"id\":\"nig3RDtcHK\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN1 Advance\",\"col\":3}},{\"id\":\"PlnDtSHq2B\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN2 Advance\",\"col\":3}},{\"id\":\"ONd8k-4CW-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Pay Advance\",\"col\":3}},{\"id\":\"8-jc5Al7wE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paid Advance\",\"col\":3}},{\"id\":\"zxPhZpPTQu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Account Advance\",\"col\":3}},{\"id\":\"Y0a_kTK8hV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"EL7-HY8AK9\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Top Vendors\",\"col\":12}},{\"id\":\"PD04DnXTr2\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Sum of Bill Amount of  Vendor Invoices\",\"col\":12}},{\"id\":\"mCbPi32u_4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Project Manger wise Vendor Invoice Count\",\"col\":12}},{\"id\":\"WbQhfwEJSY\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Cost Center wise Bill Amount Breakup\",\"col\":12}},{\"id\":\"_b0W1sqH4u\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Department wise Bill Amount\",\"col\":12}},{\"id\":\"B57GK-XM8e\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Expense Account wise Bill Amount\",\"col\":12}},{\"id\":\"tkffT5Gv-h\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LN3KZ59ZKx\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "content": "[{\"id\":\"67lR2qVSBs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Happay</span>\",\"col\":12}},{\"id\":\"PY_vY8i09p\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"k2arBhOM7g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Vendor Invoice\",\"col\":3}},{\"id\":\"BzlVnFCeL4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vendor Invoice\",\"col\":3}},{\"id\":\"nd0QZ5y206\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"id\":\"Gr0QvqLMpA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Entry\",\"col\":3}},{\"id\":\"dXIxBBBhXi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Travel Request Tracker Report\",\"col\":3}},{\"id\":\"B2yRPAeEJV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"6s7tcN9O9T\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Project Travel Request</b></span>\",\"col\":12}},{\"id\":\"wZ6E689vfW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Project Travel Request\",\"col\":3}},{\"id\":\"P6kvNxXRtL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project Travel Request\",\"col\":3}},{\"id\":\"_6-hD9kRhm\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"PTR-Pending at PM\",\"col\":3}},{\"id\":\"Bax97P8-EE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"PTR-Approved\",\"col\":3}},{\"id\":\"3CTzjCyR-Z\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Rejected-PTR\",\"col\":3}},{\"id\":\"QPY9uLLy4M\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"xqv3lCBO1u\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Expense Claim</b></span>\",\"col\":12}},{\"id\":\"YNQqKK1B6n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Expense Claim\",\"col\":3}},{\"id\":\"CxHuc63yff\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Claim\",\"col\":3}},{\"id\":\"WoLJzRDXV0\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Aj_L3ZoloT\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Invoice</b></span>\",\"col\":12}},{\"id\":\"YoA4JlMv5P\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Invoice\",\"col\":3}},{\"id\":\"7lyZAhZ5jU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at PM Invoice\",\"col\":3}},{\"id\":\"2b9Qxs2qGx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN1 Invoice\",\"col\":3}},{\"id\":\"8y7INdPljk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN2 Invoice\",\"col\":3}},{\"id\":\"2PHwLNlXBu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Pay Invoice\",\"col\":3}},{\"id\":\"7xjL7NrhRx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paid Invoice\",\"col\":3}},{\"id\":\"bZ9GT7rk13\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Account Invoice\",\"col\":3}},{\"id\":\"IxNS3Lu3oB\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"zeLXT8Bpm_\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Advance</b></span>\",\"col\":12}},{\"id\":\"jSiDZFCvMl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Advance\",\"col\":3}},{\"id\":\"PqIgUEPOVW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending At PM Advance\",\"col\":3}},{\"id\":\"nig3RDtcHK\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN1 Advance\",\"col\":3}},{\"id\":\"PlnDtSHq2B\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN2 Advance\",\"col\":3}},{\"id\":\"ONd8k-4CW-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Pay Advance\",\"col\":3}},{\"id\":\"8-jc5Al7wE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paid Advance\",\"col\":3}},{\"id\":\"zxPhZpPTQu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Account Advance\",\"col\":3}},{\"id\":\"Y0a_kTK8hV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"EL7-HY8AK9\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Top Vendors\",\"col\":12}},{\"id\":\"PD04DnXTr2\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Sum of Bill Amount of  Vendor Invoices\",\"col\":12}},{\"id\":\"mCbPi32u_4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Project Manger wise Vendor Invoice Count\",\"col\":12}},{\"id\":\"WbQhfwEJSY\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Cost Center wise Bill Amount Breakup\",\"col\":12}},{\"id\":\"_b0W1sqH4u\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Department wise Bill Amount\",\"col\":12}},{\"id\":\"B57GK-XM8e\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Expense Account wise Bill Amount\",\"col\":12}},{\"id\":\"tkffT5Gv-h\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LN3KZ59ZKx\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
  "creation": "2024-07-08 12:38:15.323632",
  "custom_blocks": [],
  "docstatus": 0,
@@ -38,7 +38,7 @@
  "is_hidden": 0,
  "label": "Happay",
  "links": [],
- "modified": "2024-12-03 16:44:27.489137",
+ "modified": "2024-12-13 18:21:00.957205",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Happay",
@@ -50,6 +50,14 @@
  "roles": [],
  "sequence_id": 1.0,
  "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "PTR-Pending at PM",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Pending at PM\",false]]",
+   "type": "DocType"
+  },
   {
    "color": "Grey",
    "doc_view": "List",
@@ -82,11 +90,35 @@
    "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Rejected-PTR",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Rejected by PM\",false]]",
+   "type": "DocType"
+  },
+  {
    "color": "Orange",
    "doc_view": "List",
    "label": "Draft Invoice",
    "link_to": "Vendor Invoice",
    "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Draft\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "PTR-Approved",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Approved\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Project Travel Request",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[]",
    "type": "DocType"
   },
   {
@@ -109,6 +141,14 @@
    "color": "Grey",
    "doc_view": "List",
    "label": "Expense Claim",
+   "link_to": "Expense Claim",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Expense Claim",
    "link_to": "Expense Claim",
    "stats_filter": "[]",
    "type": "DocType"

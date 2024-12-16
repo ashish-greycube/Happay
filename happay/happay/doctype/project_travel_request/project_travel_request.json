@@ -10,10 +10,11 @@
   "company",
   "section_break_rbwa",
   "title",
-  "description",
+  "reason_of_travel",
   "cost_center",
   "project_manager",
   "project_manager_name",
+  "vendor_invoice_status",
   "column_break_wjuq",
   "department",
   "booking_for",
@@ -22,16 +23,14 @@
   "passenger_gender",
   "passenger_details",
   "section_break_dhlv",
-  "round_trip",
+  "trip_type",
+  "multi_stop_travel_details",
   "from_date",
   "time_onward",
   "source",
-  "expected_outcome",
   "expense_account",
-  "travel_agent",
-  "agent_email",
   "cb_1",
-  "reason_of_travel",
+  "expected_outcome",
   "to_date",
   "time_return",
   "destination",
@@ -39,6 +38,8 @@
   "mode_of_travel",
   "include_cab_booking",
   "amended_from",
+  "travel_agent",
+  "agent_email",
   "section_break_calh",
   "bill_amount",
   "service_charge",
@@ -53,13 +54,8 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "in_standard_filter": 1,
-   "label": "Title",
+   "label": "Travel Title",
    "reqd": 1
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Small Text",
-   "label": "Description"
   },
   {
    "description": "is_group != \"1\"",
@@ -73,19 +69,21 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")",
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "From Date",
-   "reqd": 1
+   "mandatory_depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")"
   },
   {
+   "depends_on": "eval:doc.trip_type==\"Round Trip\"",
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "To Date",
-   "mandatory_depends_on": "eval:doc.round_trip==\"Yes\""
+   "mandatory_depends_on": "eval:doc.trip_type==\"Round Trip\""
   },
   {
    "fieldname": "company",
@@ -103,29 +101,24 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")",
    "fieldname": "source",
    "fieldtype": "Data",
    "in_standard_filter": 1,
    "label": "Source(From)",
-   "reqd": 1
+   "mandatory_depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")"
   },
   {
+   "depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")",
    "fieldname": "destination",
    "fieldtype": "Data",
    "in_standard_filter": 1,
    "label": "Destination(To)",
-   "reqd": 1
-  },
-  {
-   "fieldname": "round_trip",
-   "fieldtype": "Select",
-   "label": "Round Trip",
-   "options": "\nYes\nNo",
-   "reqd": 1
+   "mandatory_depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")"
   },
   {
    "fieldname": "reason_of_travel",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Reason Of Travel",
    "reqd": 1
   },
@@ -161,16 +154,18 @@
    "options": "Supplier"
   },
   {
+   "depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")",
    "fieldname": "time_onward",
    "fieldtype": "Time",
    "label": "Time - Onward",
-   "reqd": 1
+   "mandatory_depends_on": "eval:(doc.trip_type==\"Round Trip\" || doc.trip_type==\"One Way\")"
   },
   {
+   "depends_on": "eval:doc.trip_type==\"Round Trip\"",
    "fieldname": "time_return",
    "fieldtype": "Time",
    "label": "Time - Return",
-   "mandatory_depends_on": "eval:doc.round_trip==\"Yes\""
+   "mandatory_depends_on": "eval:doc.trip_type==\"Round Trip\""
   },
   {
    "depends_on": "eval:doc.company",
@@ -288,7 +283,8 @@
    "fieldtype": "Link",
    "label": "Expense Account",
    "no_copy": 1,
-   "options": "Account"
+   "options": "Account",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -349,6 +345,30 @@
    "label": "Agent Email",
    "no_copy": 1,
    "options": "Email"
+  },
+  {
+   "default": "Round Trip",
+   "fieldname": "trip_type",
+   "fieldtype": "Select",
+   "label": "Trip Type",
+   "options": "\nOne Way\nRound Trip\nMulti Stop",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.trip_type==\"Multi Stop\"",
+   "fieldname": "multi_stop_travel_details",
+   "fieldtype": "Table",
+   "label": "Multi Stop Travel Details",
+   "mandatory_depends_on": "eval:doc.trip_type==\"Multi Stop\"",
+   "options": "PTR Travel Details"
+  },
+  {
+   "default": "Ticket Pending",
+   "fieldname": "vendor_invoice_status",
+   "fieldtype": "Select",
+   "label": "Vendor Invoice Status",
+   "options": "\nTicket Pending\nPending For Vendor Invoice\nBilled",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -363,7 +383,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-09 11:15:32.323639",
+ "modified": "2024-12-13 17:22:56.704838",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -445,7 +465,6 @@
    "write": 1
   },
   {
-   "cancel": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -457,7 +476,6 @@
    "write": 1
   },
   {
-   "cancel": 1,
    "create": 1,
    "email": 1,
    "export": 1,
