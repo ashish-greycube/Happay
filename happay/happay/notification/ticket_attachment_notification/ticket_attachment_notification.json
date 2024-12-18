@@ -1,0 +1,35 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.vendor_invoice_status==\"Pending For Vendor Invoice\"",
+ "creation": "2024-12-18 12:43:33.683482",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Project Travel Request",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "Hi,<br>\n\nThe ticket is attached by the Travel Agent in the Project Travel Request: {{doc.name}}.<br>\n\nPlease have a look at it.",
+ "message_type": "Markdown",
+ "modified": "2024-12-18 12:46:31.605440",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Ticket Attachment Notification",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "Fin 1"
+  },
+  {
+   "receiver_by_role": "Fin 2"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "CIIE Finance",
+ "sender_email": "ciie.finance@iima.ac.in",
+ "subject": "Ticket is attached by the Travel Agent in PTR: {{doc.name}}",
+ "value_changed": "vendor_invoice_status"
+}
