@@ -17,13 +17,19 @@ class ProjectTravelRequest(Document):
 		self.changes_status_based_on_ticket_and_invoice()
 
 	def validate_dates(self):
-		if self.from_date:
-			print(self.from_date,"self.from_date",type(self.from_date))
-			if getdate(self.from_date) < getdate(today()):
-				frappe.throw(_("You cannot select from date before today"))
-			if self.to_date:
-				if self.to_date < self.from_date:
-					frappe.throw(_("To date can not be less than From date"))
+		if self.trip_type in ["Round Trip","One Way"]:
+			if self.from_date:
+				if getdate(self.from_date) < getdate(today()):
+					frappe.throw(_("You cannot select from date before today"))
+			if self.trip_type == "Round Trip":
+				if self.to_date:
+					if self.to_date < self.from_date:
+						frappe.throw(_("To date can not be less than From date"))
+		if self.trip_type == "Multi Stop":
+			if len(self.multi_stop_travel_details)>0:
+				for row in self.multi_stop_travel_details:
+					if getdate(row.travel_date) < getdate(today()):
+						frappe.throw(_("Row #{0} :You cannot select travel date before today".format(row.idx)))
 				
 	def changes_status_based_on_ticket_and_invoice(self):
 		print("IN FUNC")
