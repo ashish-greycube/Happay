@@ -31,12 +31,43 @@ Passenger Email: {{doc.owner}}<br>
 {% endif %}
 <br>
 <!--please add coding if booking_for=Self than upar wala otherwise ye samne wala table{{doc.passenger_details}}-->
+
+{% if doc.trip_type == "One Way" %}
+Source: {{doc.source}}<br>
+Destination: {{doc.destination}}<br>
+Travel From Date: {{ doc.get_formatted("from_date")}}<br>
+Time (Onward): {{doc.time_onward}}<br>
+
+{% elif doc.trip_type == "Round Trip" %}
 Source: {{doc.source}}<br>
 Destination: {{doc.destination}}<br>
 Travel From Date: {{ doc.get_formatted("from_date")}}<br>
 Time (Onward): {{doc.time_onward}}<br>
 Travel To Date: {{ doc.get_formatted("to_date")}}<br>
 Time (Return): {{doc.time_return}}<br>
+
+{% elif doc.trip_type == "Multi Stop" %}
+<table border="1">
+    <tr>
+        <td><b>No.</b></td>
+        <td><b>Travel Date</b></td>
+        <td><b>Source</b></td>
+        <td><b>Destination</b></td>
+        <td><b>Time Onwards</b></td>
+    </tr>
+    {% for row in doc.multi_stop_travel_details %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td>{{row.travel_date}}</td>
+        <td>{{row.source}}</td>
+        <td>{{row.destination}}</td>
+        <td>{{row.time_onwards}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endif %}<br>
+
 Kindly process the booking at your earliest convenience and let me know if you require any further information.<br><br></p>
 
 <p>Thank you in advance for your assistance.</p>

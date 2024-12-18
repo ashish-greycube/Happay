@@ -1,12 +1,13 @@
 {
  "actions": [],
- "autoname": "format:VIH-{#}",
+ "autoname": "naming_series:naming_series",
  "creation": "2024-07-07 05:48:28.342865",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "company_section",
   "company",
+  "naming_series",
   "details_section",
   "vendor_invoice_attachment_1",
   "column_break_weqg",
@@ -382,6 +383,13 @@
    "label": "Project Travel Request",
    "options": "Project Travel Request",
    "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "VIH-.#"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -401,11 +409,11 @@
   }
  ],
  "make_attachments_public": 1,
- "modified": "2024-11-21 13:27:48.429753",
+ "modified": "2024-12-18 11:18:01.142167",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
- "naming_rule": "Expression",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
