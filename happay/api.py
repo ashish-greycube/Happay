@@ -120,3 +120,9 @@ def set_department_in_all_row(self, method):
 	if len(self.expenses)>0:
 		for row in self.expenses:
 			row.department = self.department
+
+def validate_tax_id_length(self, method):
+	if self.tax_id:
+		print(len(self.tax_id),"tax_id")
+		if len(self.tax_id) != 10:
+			frappe.throw(_("Tax ID must be of 10 digits"))

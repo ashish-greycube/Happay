@@ -142,6 +142,9 @@ doc_events = {
 	},
     "Employee": {
         "on_update":"happay.api.create_user_permission"
+    },
+    "Supplier": {
+        "validate":"happay.api.validate_tax_id_length"
     }
 }
 
