@@ -115,3 +115,8 @@ def create_user_permission(self, method):
 
 		add_user_permission("Employee", self.name, self.user_id)
 		frappe.msgprint(_("User permissions for Employee is created"),alert=True)
+
+def set_department_in_all_row(self, method):
+	if len(self.expenses)>0:
+		for row in self.expenses:
+			row.department = self.department
