@@ -199,6 +199,31 @@
           >
           Send Request
         </Button>
+
+        <!-- <Button @click="dialog1 = true">
+          Show Dialog
+        </Button>
+        <Dialog
+          :options="{
+            title: 'Confirm',
+            message: 'Are you sure you want to confirm this action?',
+            size: 'xl',
+            icon: {
+              name: 'alert-triangle',
+              appearance: 'warning',
+            },
+            actions: [
+              {
+                label: 'Confirm',
+                variant: 'solid',
+                onClick: () => {
+                              return createPromise();
+                            },
+              },
+            ],
+          }"
+          v-model="dialog1"
+        /> -->
       
         <div class="text-center p-2">
           <ErrorMessage :message="errorMessage" />
@@ -222,6 +247,8 @@ const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 let queryParams = Object.fromEntries(params);
 let travelDoc = queryParams.name
+
+// const dialog1 = ref(false)
 
 const __ = inject("$translate")
 
@@ -258,8 +285,8 @@ const removeInvoiceImage = () => {
 
 function validateFile(file) {
   let extn = file.name.split('.').pop().toLowerCase()
-  if (!['png', 'jpg', 'jpeg'].includes(extn)) {
-    return __('Only PNG and JPG images are allowed')
+  if (!['png', 'jpg', 'jpeg', 'pdf', 'xls', 'xlsx'].includes(extn)) {
+    return __('Only Images, Excel and Pdf are allowed')
   }
 }
 
