@@ -137,8 +137,10 @@ doc_events = {
     "Expense Claim": {
         "validate":["happay.api.set_cost_center_in_all_row",
                     "happay.api.set_department_in_all_row",
-                    "happay.api.validate_posting_date_and_expense_date"],
-        "after_insert": "happay.api.share_expense_claim_to_employee"
+                    "happay.api.validate_posting_date_and_expense_date",
+                    "happay.api.validate_amount_and_sanctioned_amount"],
+        "after_insert": "happay.api.share_expense_claim_to_employee",
+        "on_update":"happay.api.update_posting_date_based_on_approval"
 	},
     "Employee": {
         "on_update":"happay.api.create_user_permission"

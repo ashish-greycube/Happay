@@ -52,13 +52,13 @@ frappe.ui.form.on("Project Travel Request", {
             callback: function (response) {
                 let details = response.message
 
-                if (frm.doc.workflow_state == "Approved" && frm.doc.docstatus == 1 && details.bill_amount > 0 && details.service_charge > 0) {
+                if ((frm.doc.workflow_state == "Pending at Fin 1" || frm.doc.workflow_state == "Billed") && frm.doc.docstatus == 1 && details.bill_amount > 0 && details.service_charge > 0) {
                     frm.add_custom_button(__('Expense Claim'), () => create_expense_claim_from_project_travel_request(frm), __("Create"));
                 }
 
-                if (frm.doc.docstatus == 1 && details.bill_amount > 0 && details.service_charge > 0) {
-                    frm.add_custom_button(__('Vendor Invoice'), () => create_vendor_invoice_from_project_travel_request(frm), __("Create"));
-                }
+                // if (frm.doc.docstatus == 1 && details.bill_amount > 0 && details.service_charge > 0) {
+                //     frm.add_custom_button(__('Vendor Invoice'), () => create_vendor_invoice_from_project_travel_request(frm), __("Create"));
+                // }
             }
         })
     },

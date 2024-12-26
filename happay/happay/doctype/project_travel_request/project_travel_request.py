@@ -3,12 +3,15 @@
 
 import frappe
 from frappe import _
-from frappe.utils import today,getdate,get_link_to_form
+from frappe.utils import today,getdate,get_link_to_form, cint
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 from happay.happay.doctype.vendor_invoice.vendor_invoice import get_supplier_bank_account,get_supplier_bank_details,get_supplier_details
-from frappe.model.workflow import apply_workflow
-
+from frappe.model.workflow import get_workflow,has_approval_access,is_transition_condition_satisfied
+from frappe.model.docstatus import DocStatus
+from typing import TYPE_CHECKING, Union
+if TYPE_CHECKING:
+	from frappe.workflow.doctype.workflow.workflow import Workflow
 
 class ProjectTravelRequest(Document):
 	def validate(self):
@@ -89,11 +92,11 @@ def create_vendor_invoice_from_project_travel_request(name):
 	vi_doc.department = ptr_doc.department
 	vi_doc.tds_amount = ptr_doc.service_charge
 	vi_doc.project_travel_request = ptr_doc.name
-
+	# vi_doc.workflow_state = "Pending at Fin 1"
 	vi_doc.run_method("set_missing_values")
 	vi_doc.save(ignore_permissions = True)
-	apply_workflow(frappe.get_doc("Vendor Invoice", vi_doc.name), "Submit")
-	apply_workflow(frappe.get_doc("Vendor Invoice", vi_doc.name), "Approve")
+	# apply_workflow(frappe.get_doc("Vendor Invoice", vi_doc.name), "Submit")
+	# apply_workflow(frappe.get_doc("Vendor Invoice", vi_doc.name), "Approve")
 	frappe.msgprint(_("Vendor Invoice is created {0}".format(get_link_to_form("Vendor Invoice",vi_doc.name))))
 	return vi_doc.name
 	
@@ -147,3 +150,100 @@ def get_travel_agent_group(doctype, txt, searchfield, start, page_len, filters):
 									fields=["name","supplier_name","supplier_group"],as_list=1)
 
 		return supplier_list
+
+@frappe.whitelist()
+def apply_workflow(doc, action):
+	"""Allow workflow action on the current doc"""
+	doc = frappe.get_doc(frappe.parse_json(doc))
+	doc.load_from_db()
+	workflow = get_workflow(doc.doctype)
+	transitions = get_transitions(doc, workflow)
+	user = frappe.session.user
+
+	# find the transition
+	transition = None
+	for t in transitions:
+		if t.action == action:
+			transition = t
+
+	if not transition:
+		frappe.throw(_("Not a valid Workflow Action"), WorkflowTransitionError)
+
+	if not has_approval_access(user, doc, transition):
+		frappe.throw(_("Self approval is not allowed"))
+
+	# update workflow state field
+	doc.set(workflow.workflow_state_field, transition.next_state)
+
+	# find settings for the next state
+	next_state = next(d for d in workflow.states if d.state == transition.next_state)
+
+	# update any additional field
+	if next_state.update_field:
+		doc.set(next_state.update_field, next_state.update_value)
+
+	new_docstatus = cint(next_state.doc_status)
+	if doc.docstatus.is_draft() and new_docstatus == DocStatus.draft():
+		doc.save()
+	elif doc.docstatus.is_draft() and new_docstatus == DocStatus.submitted():
+		from frappe.core.doctype.submission_queue.submission_queue import queue_submission
+		from frappe.utils.scheduler import is_scheduler_inactive
+
+		if doc.meta.queue_in_background and not is_scheduler_inactive():
+			queue_submission(doc, "Submit")
+			return
+
+		doc.submit()
+	elif doc.docstatus.is_submitted() and new_docstatus == DocStatus.submitted():
+		doc.save()
+	elif doc.docstatus.is_submitted() and new_docstatus == DocStatus.cancelled():
+		doc.cancel()
+	else:
+		frappe.throw(_("Illegal Document Status for {0}").format(next_state.state))
+
+	doc.add_comment("Workflow", _(next_state.state))
+
+	return doc
+
+class WorkflowTransitionError(frappe.ValidationError):
+	pass
+
+
+@frappe.whitelist()
+def get_transitions(
+	doc: Union["Document", str, dict], workflow: "Workflow" = None, raise_exception: bool = False
+) -> list[dict]:
+	"""Return list of possible transitions for the given doc"""
+	from frappe.model.document import Document
+
+	if not isinstance(doc, Document):
+		doc = frappe.get_doc(frappe.parse_json(doc))
+		doc.load_from_db()
+
+	if doc.is_new():
+		return []
+
+	doc.check_permission("read")
+
+	workflow = workflow or get_workflow(doc.doctype)
+	current_state = doc.get(workflow.workflow_state_field)
+
+	if not current_state:
+		if raise_exception:
+			raise WorkflowStateError
+		else:
+			frappe.throw(_("Workflow State not set"), WorkflowStateError)
+
+	transitions = []
+	roles = frappe.get_roles()
+
+	for transition in workflow.transitions:
+		if transition.state == current_state :
+			if not is_transition_condition_satisfied(transition, doc):
+				continue
+			transitions.append(transition.as_dict())
+
+	return transitions
+
+class WorkflowStateError(frappe.ValidationError):
+	pass

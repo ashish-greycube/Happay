@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 from frappe.permissions import add_user_permission
-from frappe.utils import get_link_to_form, add_to_date, getdate
+from frappe.utils import get_link_to_form, add_to_date, getdate, today, flt
 from frappe.model.mapper import get_mapped_doc
 from frappe.desk.reportview import get_filters_cond, get_match_cond
 from frappe.utils import nowdate, unique
@@ -126,3 +126,26 @@ def validate_tax_id_length(self, method):
 		print(len(self.tax_id),"tax_id")
 		if len(self.tax_id) != 10:
 			frappe.throw(_("Tax ID must be of 10 digits"))
+
+def validate_amount_and_sanctioned_amount(self, method):
+	if len(self.expenses)>0:
+		for row in self.expenses:
+			print(row.amount,type(row.amount),flt(row.amount) < flt(1),flt(row.amount),flt(1))
+			if (flt(row.amount) < flt(1)):
+				frappe.throw(_("#Row {0}: Amount must be greater then zero".format(row.idx)))
+	
+	if self.workflow_state !="Draft":
+			old_doc = self.get_doc_before_save()
+			if old_doc:
+				if len(old_doc.expenses)>0:
+					for old_row in old_doc.expenses:
+						for new_row in self.expenses:
+							if new_row.name == old_row.name:
+								if new_row.sanctioned_amount > old_row.sanctioned_amount:
+									frappe.throw(_("#Row {0}: Sanctioned Amount entered is {1}. It cannot be greater than {2}".format(new_row.idx,new_row.sanctioned_amount ,old_row.sanctioned_amount)))
+
+def update_posting_date_based_on_approval(self,method):
+	user_roles = frappe.get_roles(frappe.session.user)
+	if (("Projects Approver" in user_roles) or ("Fin 1" in user_roles) or ("Fin 2" in user_roles)):
+		if self.workflow_state in ["Pending at Fin 1","Pending at Fin 2","To Pay"]:
+			frappe.db.set_value("Expense Claim",self.name,"posting_date",getdate(today()))
