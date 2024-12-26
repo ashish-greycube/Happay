@@ -135,7 +135,7 @@ let create_expense_claim_from_project_travel_request = function(frm) {
 
 let make_all_fields_read_only = function(frm) {
 
-    if (frappe.user.has_role('Projects Approver')) {
+    if (frappe.user.has_role('Projects Approver') && !frappe.user.has_role("Administrator")) {
         frappe.model.with_doctype("Project Travel Request", function () {
             let meta = frappe.get_meta("Project Travel Request");
             meta.fields.forEach((value) => {

@@ -112,36 +112,42 @@ frappe.ui.form.on("Expense Claim", {
 
 
 function set_child_fields_as_readonly_for_fin1_fin2_role(frm) {
-    if ((frappe.user.has_role("Projects Approver")) && !frappe.user.has_role("Administrator")){
-        frappe.model.with_doctype("Expense Claim Detail", function () {
-            let meta = frappe.get_meta("Expense Claim Detail");
-            meta.fields.forEach((value) => {
-                if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
-                    if (!["sanctioned_amount"].includes(value.fieldname)) {
-                        frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 1);
-                        frm.set_df_property(value.fieldname, 'read_only', 1)
+    if (frm.doc.workflow_state=="Pending at PM") {
+        if ((frappe.user.has_role("Projects Approver")) && !frappe.user.has_role("Administrator")){
+            frappe.model.with_doctype("Expense Claim Detail", function () {
+                let meta = frappe.get_meta("Expense Claim Detail");
+                meta.fields.forEach((value) => {
+                    if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
+                        if (!["sanctioned_amount"].includes(value.fieldname)) {
+                            frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 1);
+                            frm.set_df_property(value.fieldname, 'read_only', 1)
+                        }
+                        if (["sanctioned_amount"].includes(value.fieldname)) {
+                            frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 0);
+                            console.log(value.fieldname, "===========")
+                        }                        
                     }
-                    if (["sanctioned_amount"].includes(value.fieldname)) {
-                        frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 0);
-                        console.log(value.fieldname, "===========")
-                    }                        
-                }
+                });
             });
-        });
-    }    
+        }          
+    }
+  
 }
 
 function set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm) {
-    if ((frappe.user.has_role("Projects Approver")) && !frappe.user.has_role("Administrator")){
-        frappe.model.with_doctype("Expense Claim", function () {
-            let meta = frappe.get_meta("Expense Claim");
-            meta.fields.forEach((value) => {
-                if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
-                    if (!["expenses"].includes(value.fieldname)) {
-                        frm.set_df_property(value.fieldname, 'read_only', 1)
+    if (frm.doc.workflow_state=="Pending at PM") {
+        if ((frappe.user.has_role("Projects Approver")) && !frappe.user.has_role("Administrator")){
+            frappe.model.with_doctype("Expense Claim", function () {
+                let meta = frappe.get_meta("Expense Claim");
+                meta.fields.forEach((value) => {
+                    if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
+                        if (!["expenses"].includes(value.fieldname)) {
+                            frm.set_df_property(value.fieldname, 'read_only', 1)
+                        }
                     }
-                }
+                });
             });
-        });
-    }    
+        }   
+    }
+ 
 }
