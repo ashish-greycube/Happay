@@ -70,7 +70,7 @@ class VendorInvoice(Document):
 		
 	def change_status_of_ptr(self):
 		if self.project_travel_request:
-			frappe.db.set_value("Project Travel Request",self.project_travel_request,"vendor_invoice_status","Billed")
+			frappe.db.set_value("Project Travel Request",self.project_travel_request,"workflow_state","Billed")
 
 	def on_update(self):
 		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:

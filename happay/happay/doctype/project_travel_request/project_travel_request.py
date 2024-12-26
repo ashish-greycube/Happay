@@ -7,14 +7,18 @@ from frappe.utils import today,getdate,get_link_to_form
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 from happay.happay.doctype.vendor_invoice.vendor_invoice import get_supplier_bank_account,get_supplier_bank_details,get_supplier_details
+from frappe.model.workflow import apply_workflow
 
 
 class ProjectTravelRequest(Document):
 	def validate(self):
 		self.validate_dates()
+		self.validate_source_and_destination()
 	
 	def on_update_after_submit(self):
-		self.changes_status_based_on_ticket_and_invoice()
+		self.changes_workflow_status_based_on_ticket_and_invoice()
+		if self.workflow_state == "Billed":
+			create_vendor_invoice_from_project_travel_request(self.name)
 
 	def validate_dates(self):
 		if self.trip_type in ["Round Trip","One Way"]:
@@ -30,12 +34,24 @@ class ProjectTravelRequest(Document):
 				for row in self.multi_stop_travel_details:
 					if getdate(row.travel_date) < getdate(today()):
 						frappe.throw(_("Row #{0} :You cannot select travel date before today".format(row.idx)))
-				
-	def changes_status_based_on_ticket_and_invoice(self):
-		print("IN FUNC")
+	
+	def validate_source_and_destination(self):
+		if self.trip_type in ["Round Trip","One Way"]:
+			if self.source and self.destination:
+				if self.destination == self.source:
+					frappe.throw(_("Source and Destination can't be same"))
+		if self.trip_type == "Multi Stop":
+			if len(self.multi_stop_travel_details)>0:
+				for row in self.multi_stop_travel_details:
+					if row.source and row.destination:
+						if row.source == row.destination:
+							frappe.throw(_("# Row {0} : Source and Destination can't be same".format(row.idx)))
+			
+	def changes_workflow_status_based_on_ticket_and_invoice(self):
+		print("in fun")
 		if self.ticket_attachment and self.invoice_attachment:
-			print("IN CONDITION")
-			frappe.db.set_value("Project Travel Request",self.name,"vendor_invoice_status","Pending For Vendor Invoice")
+			print("in condition")
+			frappe.db.set_value(self.doctype,self.name,"workflow_state","Pending at Fin 1")
 
 @frappe.whitelist()
 def create_vendor_invoice_from_project_travel_request(name):
@@ -76,6 +92,8 @@ def create_vendor_invoice_from_project_travel_request(name):
 
 	vi_doc.run_method("set_missing_values")
 	vi_doc.save(ignore_permissions = True)
+	apply_workflow(frappe.get_doc("Vendor Invoice", vi_doc.name), "Submit")
+	apply_workflow(frappe.get_doc("Vendor Invoice", vi_doc.name), "Approve")
 	frappe.msgprint(_("Vendor Invoice is created {0}".format(get_link_to_form("Vendor Invoice",vi_doc.name))))
 	return vi_doc.name
 	

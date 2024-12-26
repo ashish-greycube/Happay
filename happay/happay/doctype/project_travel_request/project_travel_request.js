@@ -38,7 +38,12 @@ frappe.ui.form.on("Project Travel Request", {
         })
     },
 
+    onload_post_render(frm){
+        make_all_fields_read_only(frm)
+    },
+
     refresh(frm){
+        make_all_fields_read_only(frm)
         frappe.call({
             method: "happay.happay.doctype.project_travel_request.project_travel_request.get_bill_amount",
             args: {
@@ -126,4 +131,19 @@ let create_expense_claim_from_project_travel_request = function(frm) {
 		method: "happay.happay.doctype.project_travel_request.project_travel_request.create_expense_claim",
 		frm: frm,
 	});
+}
+
+let make_all_fields_read_only = function(frm) {
+
+    if (frappe.user.has_role('Projects Approver')) {
+        frappe.model.with_doctype("Project Travel Request", function () {
+            let meta = frappe.get_meta("Project Travel Request");
+            meta.fields.forEach((value) => {
+            console.log(value.fieldname)
+            if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
+                    frm.set_df_property(value.fieldname, 'read_only', 1)
+                }
+            });
+        });
+    }
 }
