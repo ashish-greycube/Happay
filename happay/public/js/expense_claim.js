@@ -116,11 +116,11 @@ function set_feilds_as_readonly_for_fin1_fin2_role(frm) {
             meta.fields.forEach((value) => {
                 if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
                     if (!["amount", "sanctioned_amount"].includes(value.fieldname)) {
-                        frm.fields_dict["expense_details"].grid.update_docfield_property(value.fieldname, read_only, 1);
+                        frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 1);
                         frm.set_df_property(value.fieldname, 'read_only', 1)
                     }
                     if (["amount", "sanctioned_amount"].includes(value.fieldname)) {
-                        frm.fields_dict["expense_details"].grid.update_docfield_property(value.fieldname, read_only, 0);
+                        frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 0);
                         console.log(value.fieldname, "===========")
                     }                        
                 }
