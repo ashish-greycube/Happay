@@ -2,13 +2,13 @@ frappe.ui.form.on("Expense Claim", {
 
     refresh(frm){
         frm.remove_custom_button('Payment', 'Create');  
-        set_feilds_as_readonly_for_fin1_fin2_role(frm)
+        // set_feilds_as_readonly_for_fin1_fin2_role(frm)
     },
     onload_post_render(frm){
         if (!frm.doc.employee){
             frm.set_value("custom_project_travel_request","")
         }
-        set_feilds_as_readonly_for_fin1_fin2_role(frm)
+        // set_feilds_as_readonly_for_fin1_fin2_role(frm)
     },
     after_workflow_action(frm){
         let method = "hrms.overrides.employee_payment_entry.get_payment_entry_for_employee";
