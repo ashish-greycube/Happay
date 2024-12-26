@@ -1,7 +1,7 @@
 {
  "attach_print": 0,
  "channel": "Email",
- "condition": "doc.workflow_state==\"Approved\"",
+ "condition": "doc.workflow_state==\"Pending at TA\"",
  "creation": "2024-11-28 12:40:27.033281",
  "days_in_advance": 0,
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_standard": 1,
  "message": "<p>Dear {{(doc.travel_agent|replace(\"- NFC\",\"\")|replace(\"- FC\", \"\")|replace(\"- CRIF\", \"\"))}},<br><br></p>\n\n<p>I hope this email finds you well.<br><br></p>\n\n<p>Please find the details required to book the ticket for the upcoming trip:<br><br></p>\n\n<p>Passenger Details:<br><br>\n{% if doc.booking_for == \"Self\"  %}\nPassenger First Name: {{doc.passenger_first_name}}<br>\nPassenger Last Name: {{doc.passenger_last_name}}<br>\nPassenger Gender: {{doc.passenger_gender}}<br>\nPassenger Email: {{doc.owner}}<br>\n\n{% elif doc.booking_for == \"Guest\" %}\n<table border=\"1\">\n    <tr>\n        <td>No.</td>\n        <td>Passenger First Name</td>\n        <td>Passenger Last Name</td>\n        <td>Passenger Gender</td>\n    </tr>\n    {% for row in doc.passenger_details %}\n    <tr>\n        <td>{{loop.index}}</td>\n        <td>{{row.passenger_first_name}}</td>\n        <td>{{row.passenger_last_name}}</td>\n        <td>{{row.passenger_gender}}</td>\n    </tr>\n    {% endfor %}\n</table>\n{% endif %}\n<br>\n<!--please add coding if booking_for=Self than upar wala otherwise ye samne wala table{{doc.passenger_details}}-->\n\n{% if doc.trip_type == \"One Way\" %}\nSource: {{doc.source}}<br>\nDestination: {{doc.destination}}<br>\nTravel From Date: {{ doc.get_formatted(\"from_date\")}}<br>\nTime (Onward): {{doc.time_onward}}<br>\n\n{% elif doc.trip_type == \"Round Trip\" %}\nSource: {{doc.source}}<br>\nDestination: {{doc.destination}}<br>\nTravel From Date: {{ doc.get_formatted(\"from_date\")}}<br>\nTime (Onward): {{doc.time_onward}}<br>\nTravel To Date: {{ doc.get_formatted(\"to_date\")}}<br>\nTime (Return): {{doc.time_return}}<br>\n\n{% elif doc.trip_type == \"Multi Stop\" %}\n<table border=\"1\">\n    <tr>\n        <td><b>No.</b></td>\n        <td><b>Travel Date</b></td>\n        <td><b>Source</b></td>\n        <td><b>Destination</b></td>\n        <td><b>Time Onwards</b></td>\n    </tr>\n    {% for row in doc.multi_stop_travel_details %}\n    <tr>\n        <td>{{loop.index}}</td>\n        <td>{{row.travel_date}}</td>\n        <td>{{row.source}}</td>\n        <td>{{row.destination}}</td>\n        <td>{{row.time_onwards}}</td>\n    </tr>\n    {% endfor %}\n</table>\n\n{% endif %}<br>\n\nKindly process the booking at your earliest convenience and let me know if you require any further information.<br><br></p>\n\n<p>Thank you in advance for your assistance.</p>\n",
  "message_type": "Markdown",
- "modified": "2024-12-18 12:14:50.192542",
+ "modified": "2024-12-26 14:48:44.102816",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Agent",

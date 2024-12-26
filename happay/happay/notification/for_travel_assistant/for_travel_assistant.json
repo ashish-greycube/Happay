@@ -1,7 +1,7 @@
 {
  "attach_print": 0,
  "channel": "Email",
- "condition": "doc.workflow_state==\"Approved\"",
+ "condition": "doc.workflow_state==\"Pending at TA\"",
  "creation": "2024-12-09 16:15:01.557461",
  "days_in_advance": 0,
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_standard": 1,
  "message": "<p>Hi,<br></p>\n\n<p>Please fill in the <b>\"Ticket & Bill\"</b> information of Ticket<br></p>\n\n<p>Here is the link to fill in the Ticket information:<br></p>\n\n<p>{{frappe.get_url() + \"/get-travel-request-docs/?name=\" + doc.name}}</p>\n",
  "message_type": "Markdown",
- "modified": "2024-12-09 16:58:31.376876",
+ "modified": "2024-12-26 14:48:23.374324",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "For Travel Assistant",

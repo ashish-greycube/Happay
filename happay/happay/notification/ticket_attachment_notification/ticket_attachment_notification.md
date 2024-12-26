@@ -1,5 +1,5 @@
-Hi,<br>
+<p>Hi,<br></p>
 
-The ticket is attached by the Travel Agent in the Project Travel Request: {{doc.name}}.<br>
+<p>The ticket is attached by the Travel Agent in the Project Travel Request: {{doc.name}}.<br></p>
 
-Please have a look at it.
+<p>Please have a look at it.</p>

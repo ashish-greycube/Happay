@@ -189,7 +189,8 @@
    "fieldtype": "Link",
    "label": "Project Manager ID",
    "no_copy": 1,
-   "options": "User"
+   "options": "User",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_wjuq",
@@ -337,6 +338,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "workflow_state",
    "fieldtype": "Link",
    "hidden": 1,
@@ -383,6 +385,8 @@
    "default": "Ticket Pending",
    "fieldname": "vendor_invoice_status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Vendor Invoice Status",
    "no_copy": 1,
    "options": "\nTicket Pending\nPending For Vendor Invoice\nBilled",
@@ -408,7 +412,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-18 12:20:07.640869",
+ "modified": "2024-12-26 14:55:40.787996",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -452,17 +456,6 @@
    "role": "Projects Approver",
    "share": 1,
    "submit": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Projects Approver",
-   "share": 1,
    "write": 1
   },
   {
