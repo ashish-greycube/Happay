@@ -2,44 +2,14 @@ frappe.ui.form.on("Expense Claim", {
 
     refresh(frm){
         frm.remove_custom_button('Payment', 'Create');  
-
-        if ((frappe.user.has_role("Fin 1") || frappe.user.has_role("'Fin 2")) && !frappe.user.has_role("Administrator")){
-            frappe.model.with_doctype("Expense Claim Detail", function () {
-                let meta = frappe.get_meta("Expense Claim Detail");
-                meta.fields.forEach((value) => {
-                    if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
-                        if (!["amount", "sanctioned_amount"].includes(value.fieldname)) {
-                            console.log(value.fieldname, "===========")
-                            frm.set_df_property(value.fieldname, 'read_only', 1)
-                        }
-                    }
-                });
-            });
-        }
-
+        set_feilds_as_readonly_for_fin1_fin2_role(frm)
     },
-
     onload_post_render(frm){
         if (!frm.doc.employee){
             frm.set_value("custom_project_travel_request","")
         }
-
-        if ((frappe.user.has_role("Fin 1") || frappe.user.has_role("'Fin 2")) && !frappe.user.has_role("Administrator")){
-            frappe.model.with_doctype("Expense Claim Detail", function () {
-                let meta = frappe.get_meta("Expense Claim Detail");
-                meta.fields.forEach((value) => {
-                    if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
-                        if (!["amount", "sanctioned_amount"].includes(value.fieldname)) {
-                            // console.log(value.fieldname, "===========")
-                            frm.set_df_property(value.fieldname, 'read_only', 1)
-                        }
-                    }
-                });
-            });
-        }
-
+        set_feilds_as_readonly_for_fin1_fin2_role(frm)
     },
-
     after_workflow_action(frm){
         let method = "hrms.overrides.employee_payment_entry.get_payment_entry_for_employee";
         if (frm.doc.workflow_state == "In Process"){
@@ -138,3 +108,23 @@ frappe.ui.form.on("Expense Claim", {
 	},
 })
 
+
+function set_feilds_as_readonly_for_fin1_fin2_role(frm) {
+    if ((frappe.user.has_role("Fin 1") || frappe.user.has_role("'Fin 2")) && !frappe.user.has_role("Administrator")){
+        frappe.model.with_doctype("Expense Claim Detail", function () {
+            let meta = frappe.get_meta("Expense Claim Detail");
+            meta.fields.forEach((value) => {
+                if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
+                    if (!["amount", "sanctioned_amount"].includes(value.fieldname)) {
+                        // console.log(value.fieldname, "===========")
+                        frm.set_df_property(value.fieldname, 'read_only', 1)
+                    }
+                    if (["amount", "sanctioned_amount"].includes(value.fieldname)) {
+                        console.log(value.fieldname, "===========")
+                        frm.set_df_property(value.fieldname, 'read_only', 0)
+                    }                        
+                }
+            });
+        });
+    }    
+}
