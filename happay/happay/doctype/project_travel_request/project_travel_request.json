@@ -399,7 +399,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-26 16:51:23.639880",
+ "modified": "2024-12-26 17:42:05.414293",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -521,5 +521,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "title"
+ "title_field": "title",
+ "track_changes": 1
 }
