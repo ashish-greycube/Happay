@@ -24,8 +24,7 @@
             :required="true"
             :filters="{
               docstatus: 1,
-              vendor_invoice_status: 'Ticket Pending',
-              workflow_state: 'Approved'
+              workflow_state: 'Pending at TA'
             }"
           />
         </div>
