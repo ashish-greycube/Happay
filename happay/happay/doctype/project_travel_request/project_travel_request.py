@@ -50,7 +50,7 @@ class ProjectTravelRequest(Document):
 			
 	def changes_workflow_status_based_on_ticket_and_invoice(self):
 		print("in fun")
-		if self.ticket_attachment and self.invoice_attachment:
+		if self.invoice_attachment:
 			print("in condition")
 			frappe.db.set_value(self.doctype,self.name,"workflow_state","Pending at Fin 1")
 
