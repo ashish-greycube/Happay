@@ -94,14 +94,14 @@ def share_expense_claim_to_employee(self,method):
 				)
 			
 def validate_posting_date_and_expense_date(self, method):
-	if self.custom_project_travel_request:
-		valide_date = add_to_date(nowdate(),days=-30)
-		if self.posting_date and getdate(self.posting_date) < getdate(valide_date):
-			frappe.throw(_("Posting cannot be less then {0}".format(valide_date)))
-		if len(self.expenses)>0:
-			for row in self.expenses:
-				if row.expense_date and getdate(row.expense_date) < getdate(valide_date):
-					frappe.throw(_("#Row {0}: Expense date cannot be less then {1}".format(row.idx,valide_date)))
+	
+	valide_date = add_to_date(nowdate(),days=-30)
+	if self.posting_date and getdate(self.posting_date) < getdate(valide_date):
+		frappe.throw(_("Posting cannot be less then {0}".format(valide_date)))
+	if len(self.expenses)>0:
+		for row in self.expenses:
+			if row.expense_date and getdate(row.expense_date) < getdate(valide_date):
+				frappe.throw(_("#Row {0}: Expense date cannot be less then {1}".format(row.idx,valide_date)))
 
 	minimum_expense_date = None
 	if len(self.expenses)>0:

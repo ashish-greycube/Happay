@@ -108,6 +108,11 @@ def get_employee_detail(session_user):
 	print(session_user,"frappe.session.user")
 	employee_detail = frappe.db.get_value("User", {"email":session_user}, ["first_name","last_name","gender"],as_dict=1)
 	print(employee_detail,"==================")
+	if employee_detail != None:
+		if not employee_detail.last_name:
+			frappe.throw(_("Please set last name in your profile"))
+		if not employee_detail.gender:
+			frappe.throw(_("Please set gender in your profile"))
 	return employee_detail
 
 @frappe.whitelist()

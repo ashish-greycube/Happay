@@ -130,6 +130,11 @@ function set_child_fields_as_readonly_for_fin1_fin2_role(frm) {
             });
         }          
     }
+    if (frm.doc.workflow_state!="Draft") {
+        frappe.model.with_doctype("Expense Claim Detail", function () {
+            frm.fields_dict["expenses"].grid.update_docfield_property("custom_bill_attachment", "read_only", 1);
+        });        
+    }
   
 }
 
