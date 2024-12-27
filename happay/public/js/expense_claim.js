@@ -120,7 +120,6 @@ function set_child_fields_as_readonly_for_fin1_fin2_role(frm) {
                     if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
                         if (!["sanctioned_amount"].includes(value.fieldname)) {
                             frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 1);
-                            frm.set_df_property(value.fieldname, 'read_only', 1)
                         }
                         if (["sanctioned_amount"].includes(value.fieldname)) {
                             frm.fields_dict["expenses"].grid.update_docfield_property(value.fieldname, "read_only", 0);
@@ -147,6 +146,11 @@ function set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm) {
                     }
                 });
             });
+        }   
+    }
+    if (frm.doc.workflow_state=="Pending at Fin 1" || frm.doc.workflow_state=="Pending at Fin 2") {
+        if ((frappe.user.has_role("Fin 1") || frappe.user.has_role("Fin 2")) && !frappe.user.has_role("Administrator")){
+            frm.set_df_property("posting_date", 'read_only', 1)
         }   
     }
  

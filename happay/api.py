@@ -103,6 +103,17 @@ def validate_posting_date_and_expense_date(self, method):
 				if row.expense_date and getdate(row.expense_date) < getdate(valide_date):
 					frappe.throw(_("#Row {0}: Expense date cannot be less then {1}".format(row.idx,valide_date)))
 
+	minimum_expense_date = None
+	if len(self.expenses)>0:
+		for row in self.expenses:
+			if minimum_expense_date==None:
+				minimum_expense_date = row.expense_date
+			if row.expense_date < minimum_expense_date:
+				minimum_expense_date = row.expense_date
+
+	if getdate(self.posting_date) < getdate(minimum_expense_date):
+		frappe.throw(_("Posting date cannot be less than minimum expense date {0}".format(minimum_expense_date)))
+
 def create_user_permission(self, method):
 
 	if self.user_id:
