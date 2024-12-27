@@ -1,6 +1,6 @@
 <template>
-  <div class="grid place-content-center">
-    <div class="flex-col w-96 pt-10">
+  <div class="grid place-content-center pt-10">
+    <div class="flex-col w-[35rem] p-2 my-2 shadow-md">
       <p class="text-3xl p-2 text-center">Project Travel Request</p>
 
       <div>
@@ -85,7 +85,7 @@
     />
     </div>
 
-    <div class="p-2 text-center" :required="true">
+    <!-- <div class="p-2 text-center" :required="true">
       <FileUploader
             v-if="!travel.ticket_image"
             :fileTypes="['image/*']"
@@ -116,9 +116,6 @@
             <span>
               {{ travel.ticket_image.file_name }}
             </span>
-            <!-- <span class="text-sm text-gray-500 mt-1">
-              {{ getFileSize(travel.ticket_image.file_size) }}
-            </span> -->
           </div>
           <X
             @click="removeTicketImage()"
@@ -127,16 +124,7 @@
         </div>
       </div>
 
-            <!-- <FileUploader
-              file-types="image/*"
-              @success="(file) => setTicketImage(file.file_url)"
-              :validateFile="validateFile"
-              v-model="ticketUp">
-              <template #default="{ openFileSelector }">
-                  <Button @click="openFileSelector">Ticket</Button>
-              </template>
-            </FileUploader> -->
-        </div>
+      </div> -->
 
         <div class="p-2 text-center" :required="true">
           <FileUploader
@@ -259,20 +247,20 @@ const serviceCharges = ref("");
 const errorMessage = ref("")
 
 const travel = reactive({
-	ticket_image: null,
+	// ticket_image: null,
   invoice_image: null,
   travelDoc: ""
 })
 
 travel.travelDoc = travelDoc
 
-const saveTicketImage = (file) => {
-	travel.ticket_image = file
-}
+// const saveTicketImage = (file) => {
+// 	travel.ticket_image = file
+// }
 
-const removeTicketImage = () => {
-	travel.ticket_image = null
-}
+// const removeTicketImage = () => {
+// 	travel.ticket_image = null
+// }
 
 const saveInvoiceImage = (file) => {
   travel.invoice_image = file
@@ -294,10 +282,10 @@ function validate_inputs() {
     errorMessage.value = 'Please select Project Travel Request'
     return false
   }
-  if (!travel.ticket_image?.file_url) {
-    errorMessage.value = 'Ticket is Required.'
-    return false
-  }
+  // if (!travel.ticket_image?.file_url) {
+  //   errorMessage.value = 'Ticket is Required.'
+  //   return false
+  // }
   if (!travel.invoice_image?.file_url) {
     errorMessage.value = 'Invoice is Required.'
     return false
@@ -339,7 +327,7 @@ function updateAmount() {
       supplier_invoice_number: invoiceNumber.value,
       bill_amount: billAmount.value,
       service_charge: serviceCharges.value,
-      ticket_attachment: travel.ticket_image?.file_url || '',
+      // ticket_attachment: travel.ticket_image?.file_url || '',
       invoice_attachment: travel.invoice_image?.file_url || '',
     },
       {
@@ -376,7 +364,7 @@ function updateAmount() {
       travel.travelDoc = "",
       billAmount.value = "",
       serviceCharges.value = "",
-      travel.ticket_image = null,
+      // travel.ticket_image = null,
       travel.invoice_image = null,
     )
 
