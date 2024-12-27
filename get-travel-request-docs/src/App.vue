@@ -215,6 +215,10 @@
         <div class="text-center p-2">
           <ErrorMessage :message="errorMessage" />
         </div>
+
+        <div class="text-center p-2">
+          <ErrorMessage :message="throwMessage" />
+        </div>
         
       </div>
 
@@ -245,6 +249,7 @@ const invoiceNumber = ref("");
 const billAmount = ref("");
 const serviceCharges = ref("");
 const errorMessage = ref("")
+const throwMessage = ref("")
 
 const travel = reactive({
 	// ticket_image: null,
@@ -347,6 +352,7 @@ function updateAmount() {
         },
         onError() {
           console.log("Error!!")
+          throwMessage.value = 'Something Went Wrong.'
           // toast({
           //   title: "Error",
           //   text: ("Some Issue to Set Data in {0}, Please try Again!"),
