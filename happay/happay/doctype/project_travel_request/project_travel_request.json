@@ -218,7 +218,8 @@
    "fieldtype": "Data",
    "label": "Passenger First Name",
    "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
-   "no_copy": 1
+   "no_copy": 1,
+   "read_only_depends_on": "eval:doc.booking_for==\"Self\""
   },
   {
    "depends_on": "eval:doc.booking_for==\"Self\"",
@@ -227,7 +228,8 @@
    "fieldtype": "Data",
    "label": "Passenger Last Name",
    "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
-   "no_copy": 1
+   "no_copy": 1,
+   "read_only_depends_on": "eval:doc.booking_for==\"Self\""
   },
   {
    "depends_on": "eval:doc.booking_for==\"Self\"",
@@ -237,7 +239,8 @@
    "label": "Passenger Gender",
    "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
    "no_copy": 1,
-   "options": "Gender"
+   "options": "Gender",
+   "read_only_depends_on": "eval:doc.booking_for==\"Self\""
   },
   {
    "depends_on": "eval:doc.cost_center",
@@ -400,7 +403,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-27 10:27:30.774472",
+ "modified": "2024-12-27 17:23:22.524237",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
