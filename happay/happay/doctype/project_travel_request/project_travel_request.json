@@ -304,6 +304,7 @@
    "allow_on_submit": 1,
    "fieldname": "ticket_attachment",
    "fieldtype": "Attach",
+   "hidden": 1,
    "label": "Ticket Attachment",
    "no_copy": 1,
    "permlevel": 1
@@ -399,7 +400,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2024-12-26 17:42:05.414293",
+ "modified": "2024-12-27 10:27:30.774472",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",

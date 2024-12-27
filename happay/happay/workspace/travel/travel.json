@@ -1,0 +1,78 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"-bvNG3lLHw\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Travel</span>\",\"col\":12}},{\"id\":\"tt6o1dKSJU\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"K0IydLJ5Nf\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Project Travel Request\",\"col\":3}},{\"id\":\"fbLFkuLk7y\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project Travel Request\",\"col\":3}},{\"id\":\"xNgItwkJh3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"PTR-Pending at PM\",\"col\":3}},{\"id\":\"RxPJLe99iq\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"PTR-Pending at TA\",\"col\":3}},{\"id\":\"7TdPFj6Kj-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"PTR-Pending at Fin 1\",\"col\":3}},{\"id\":\"D9kb5h1cP6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"PTR-Billed\",\"col\":3}}]",
+ "creation": "2024-12-26 14:51:30.112286",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "expand",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Travel",
+ "links": [],
+ "modified": "2024-12-27 10:42:48.325643",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Travel",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Happay",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 3.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "PTR-Pending at PM",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Pending at PM\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "PTR-Billed",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Billed\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Project Travel Request",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Project Travel Request",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "PTR-Pending at TA",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Pending at TA\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "PTR-Pending at Fin 1",
+   "link_to": "Project Travel Request",
+   "stats_filter": "[[\"Project Travel Request\",\"workflow_state\",\"=\",\"Pending at Fin 1\",false]]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Travel"
+}

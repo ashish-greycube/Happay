@@ -1,0 +1,102 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"NXedJoE_PI\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Expense</span>\",\"col\":12}},{\"id\":\"KXpAk42_cr\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"WqH8v8O9fz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Expense Claim\",\"col\":3}},{\"id\":\"uUp-KdVobE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Claim\",\"col\":3}},{\"id\":\"8h6eNT0a1d\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC-Draft\",\"col\":3}},{\"id\":\"QmCeVatQxc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC-Pending at PM\",\"col\":3}},{\"id\":\"SFMWqT0qjz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC- Pending at Fin 1\",\"col\":3}},{\"id\":\"907i1H6Cab\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC-Pending at Fin 2\",\"col\":3}},{\"id\":\"8ZSXj3gV-3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC-In Process\",\"col\":3}},{\"id\":\"iLBZy5gNAo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC-To Pay\",\"col\":3}},{\"id\":\"J8URE58sux\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EC-Paid\",\"col\":3}}]",
+ "creation": "2024-12-26 14:50:47.676582",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "share-people",
+ "idx": 0,
+ "indicator_color": "purple",
+ "is_hidden": 0,
+ "label": "Expense",
+ "links": [],
+ "modified": "2024-12-27 10:43:01.374174",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Expense",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Happay",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 4.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC-Draft",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"Draft\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC-In Process",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"In Process\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC-Pending at Fin 2",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"Pending at Fin 2\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Expense Claim",
+   "link_to": "Expense Claim",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC-Paid",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"Paid\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Expense Claim",
+   "link_to": "Expense Claim",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC-Pending at PM",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"Pending at PM\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC- Pending at Fin 1",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"Pending at Fin 1\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "EC-To Pay",
+   "link_to": "Expense Claim",
+   "stats_filter": "[[\"Expense Claim\",\"workflow_state\",\"=\",\"To Pay\",false]]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Expense"
+}
