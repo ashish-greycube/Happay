@@ -157,6 +157,6 @@ def validate_amount_and_sanctioned_amount(self, method):
 
 def update_posting_date_based_on_approval(self,method):
 	user_roles = frappe.get_roles(frappe.session.user)
-	if (("Projects Approver" in user_roles) or ("Fin 1" in user_roles) or ("Fin 2" in user_roles)):
-		if self.workflow_state in ["Pending at Fin 1","Pending at Fin 2","To Pay"]:
+	if ("Projects Approver" in user_roles):
+		if self.workflow_state in ["Pending at Fin 1"]:
 			frappe.db.set_value("Expense Claim",self.name,"posting_date",getdate(today()))

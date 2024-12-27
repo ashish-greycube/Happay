@@ -147,11 +147,5 @@ function set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm) {
                 });
             });
         }   
-    }
-    if (frm.doc.workflow_state=="Pending at Fin 1" || frm.doc.workflow_state=="Pending at Fin 2") {
-        if ((frappe.user.has_role("Fin 1") || frappe.user.has_role("Fin 2")) && !frappe.user.has_role("Administrator")){
-            frm.set_df_property("posting_date", 'read_only', 1)
-        }   
-    }
- 
+    } 
 }
