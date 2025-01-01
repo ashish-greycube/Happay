@@ -109,6 +109,23 @@ frappe.ui.form.on("Project Travel Request", {
             }
         })
     },
+
+    travel_agent(frm) {
+        let travel_agent = frm.doc.travel_agent
+        frappe.call({
+            method: "happay.happay.doctype.project_travel_request.project_travel_request.get_travel_agent_emails",
+            args: {
+                "travel_agent": travel_agent
+            },
+            callback: function (response) {
+                let agent_email = response.message
+                console.log(agent_email)
+                if (agent_email.length > 0) {
+                    frm.set_value("agent_email", agent_email[0].email_id)
+                }
+            }
+        })
+    }
 });
 
 let create_vendor_invoice_from_project_travel_request = function(frm){

@@ -153,3 +153,12 @@ def get_travel_agent_group(doctype, txt, searchfield, start, page_len, filters):
 									fields=["name","supplier_name","supplier_group"],as_list=1)
 
 		return supplier_list
+
+@frappe.whitelist()
+def get_travel_agent_emails(travel_agent):
+	travel_agent_emails = frappe.db.get_all("Supplier",
+										 filters={"name":travel_agent},
+										 fields=["email_id"])
+	
+	print(travel_agent_emails,'=============')
+	return travel_agent_emails

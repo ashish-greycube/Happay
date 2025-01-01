@@ -4,6 +4,15 @@ frappe.ui.form.on("Expense Claim", {
         frm.remove_custom_button('Payment', 'Create');  
         set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm)
         set_child_fields_as_readonly_for_fin1_fin2_role(frm)
+
+        frm.set_query("cost_center", function(doc){
+            return {
+                filters: {
+                    "company": doc.company,
+                    "is_group":0
+                },
+            }
+        })
     },
     onload_post_render(frm){
         if (!frm.doc.employee){
@@ -80,6 +89,8 @@ frappe.ui.form.on("Expense Claim", {
     },
 
     company(frm) {
+        frm.set_value("department", "")
+        frm.set_value("cost_center", "")
         console.log("accounnttt")
         frappe.db.get_value("Company",frm.doc.company,["default_expense_claim_payable_account"])
             .then(r => {
