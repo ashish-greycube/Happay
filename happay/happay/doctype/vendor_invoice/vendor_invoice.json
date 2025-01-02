@@ -409,7 +409,7 @@
   }
  ],
  "make_attachments_public": 1,
- "modified": "2025-01-02 10:32:50.664532",
+ "modified": "2025-01-02 10:49:20.880961",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
@@ -487,6 +487,11 @@
    "role": "PoC"
   },
   {
+   "read": 1,
+   "role": "Fin 1",
+   "write": 1
+  },
+  {
    "permlevel": 1,
    "read": 1,
    "role": "Fin 1",
@@ -494,18 +499,13 @@
   },
   {
    "read": 1,
-   "role": "Fin 1",
-   "write": 1
+   "role": "Fin 2"
   },
   {
    "permlevel": 1,
    "read": 1,
    "role": "Fin 2",
    "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Fin 2"
   }
  ],
  "search_fields": "supplier,supplier_invoice_number,supplier_invoice_date",
