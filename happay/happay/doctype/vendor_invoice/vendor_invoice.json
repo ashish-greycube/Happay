@@ -409,7 +409,7 @@
   }
  ],
  "make_attachments_public": 1,
- "modified": "2024-12-18 11:18:01.142167",
+ "modified": "2025-01-02 10:32:50.664532",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
@@ -494,7 +494,8 @@
   },
   {
    "read": 1,
-   "role": "Fin 1"
+   "role": "Fin 1",
+   "write": 1
   },
   {
    "permlevel": 1,

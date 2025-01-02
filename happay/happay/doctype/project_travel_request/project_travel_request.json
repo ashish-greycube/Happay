@@ -405,7 +405,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2025-01-01 17:57:11.615637",
+ "modified": "2025-01-02 10:25:24.187778",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
@@ -455,7 +455,9 @@
    "email": 1,
    "print": 1,
    "read": 1,
-   "role": "Fin 1"
+   "role": "Fin 1",
+   "submit": 1,
+   "write": 1
   },
   {
    "email": 1,
