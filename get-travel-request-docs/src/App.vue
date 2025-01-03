@@ -3,6 +3,8 @@
     <div class="flex-col w-[35rem] p-2 my-2 shadow-md">
       <p class="text-3xl p-2 text-center">Project Travel Request</p>
 
+      <div class="p-2 text-center">Pending at TA Counts: {{ pendingReq.data.length }}</div>
+
       <div>
         <!-- <div class="p-2" :required="true">
           <FormControl
@@ -221,7 +223,7 @@
         </div>
         
       </div>
-
+      
     </div>
   </div>
 
@@ -229,16 +231,18 @@
 
 
 <script setup>
-import { ref, reactive, inject } from 'vue'
+import { ref, reactive, inject, onMounted } from 'vue'
 import { FileText, X } from 'lucide-vue-next'
 import Link from '@/Link.vue'
 import {FileUploader, FormControl, createListResource, Dialog, toast, ErrorMessage} from "frappe-ui"
+import { useRouter } from 'vue-router'
 
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 let queryParams = Object.fromEntries(params);
 let travelDoc = queryParams.name
 
+// const router = useRouter()
 // const dialog1 = ref(false)
 
 const __ = inject("$translate")
@@ -302,6 +306,21 @@ const travelReq = createListResource({
   fields: ['name','bill_amount', 'service_charge', 'ticket_attachment', 'invoice_attachment', 'supplier_invoice_number', 'supplier_invoice_date'],
 })
 
+let pendingReq = createListResource({
+  doctype: 'Project Travel Request',
+  fields: ['name'],
+  filters: {
+    workflow_state: ['=', 'Pending at TA']
+    },
+    pageLength: 99999,
+})
+
+onMounted(() => {
+  if (pendingReq.data == null) {
+    pendingReq.fetch()
+  }
+})
+
 // function setTicketImage(url) {
 //   travelReq.setValue
 //   travelReq.setValue.submit({
@@ -339,6 +358,7 @@ function updateAmount() {
         onSuccess() {
           // window.open('/success-page')
           window.location.replace('/success-page')
+          // router.push({name: "success"})
           // window.open(url, "_self");
           console.log("Successs")
           console.log(travelReq, "======travelReq")
@@ -352,6 +372,10 @@ function updateAmount() {
         },
         onError() {
           console.log("Error!!")
+          // router.push({name: "success"})
+          // router.replace({ path: '/success-page' })
+          // router.push({ name: "success" })
+          window.open('/success-page')
           throwMessage.value = 'Something Went Wrong.'
           // toast({
           //   title: "Error",
