@@ -15,7 +15,7 @@ frappe.ui.form.on("Expense Claim", {
         })
     },
     onload_post_render(frm){
-        if (!frm.doc.employee){
+        if (!frm.doc.department && !frm.doc.cost_center){
             frm.set_value("custom_project_travel_request","")
         }
         set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm)
@@ -53,7 +53,7 @@ frappe.ui.form.on("Expense Claim", {
                 }
             })
 
-            if (frappe.user.has_role('Projects Manager')) {
+            if (frappe.user.has_role('Projects Approver')) {
                 frappe.db.get_value("Employee",{user_id:frappe.session.user},["expense_approver"])
                 .then(r => {
                     let expense_approver = r.message.expense_approver
@@ -64,28 +64,33 @@ frappe.ui.form.on("Expense Claim", {
     },
 
     cost_center(frm) {
-        let user_role_list = frappe.user_roles
-        if (frappe.user.has_role('Projects Approver')) {
-            frappe.db.get_value("Employee",{user_id:frappe.session.user},["expense_approver"])
-            .then(r => {
-                let expense_approver = r.message.expense_approver
-                frm.set_value("expense_approver", expense_approver)
-            })
-        }
-        else {
-            frappe.call({
-                method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_pm_and_account_from_cost_center",
-                args: {
-                    "cost_center": frm.doc.cost_center
-                },
-                callback: function (response) {
-                    let cc_detials = response.message
-                    if (cc_detials) {
-                        frm.set_value("expense_approver", cc_detials.custom_project_manager)
+        frappe.call({
+            method: "happay.happay.doctype.vendor_invoice.vendor_invoice.get_pm_and_account_from_cost_center",
+            args: {
+                "cost_center": frm.doc.cost_center
+            },
+            callback: function (response) {
+                let cc_detials = response.message
+                if (cc_detials) {
+                    let cc_project_manager =  cc_detials.custom_project_manager
+                    if (frappe.user.has_role('Projects Approver')) {
+                        if (cc_project_manager == frappe.session.user) {
+                            frappe.db.get_value("Employee",{user_id:frappe.session.user},["expense_approver"])
+                            .then(r => {
+                                let expense_approver = r.message.expense_approver
+                                frm.set_value("expense_approver", expense_approver)
+                            })
+                        }
+                        else {
+                            frm.set_value("expense_approver", cc_project_manager)
+                        }
+                    }
+                    else {
+                        frm.set_value("expense_approver", cc_project_manager)
                     }
                 }
-            })
-        }
+            }
+        })
     },
 
     company(frm) {
