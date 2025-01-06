@@ -2,9 +2,9 @@
   <div class="grid place-content-center pt-10">
     <div class="flex-col w-[35rem] p-2 my-2 shadow-md">
       <p class="text-3xl p-2 text-center">Project Travel Request</p>
-
-      <div class="p-2 text-center">Pending at TA Counts: {{ pendingReq.data.length }}</div>
-
+      <br>
+      <div class="text-center text-red-500"><span class="text-xl italic font-medium">Pending at TA </span> Count (s) : {{ pendingReq.data.length }}</div>
+      <br>
       <div>
         <!-- <div class="p-2" :required="true">
           <FormControl
