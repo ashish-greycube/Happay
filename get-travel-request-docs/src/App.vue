@@ -61,7 +61,7 @@
 
     <div class="p-2">
       <FormControl
-      :type="'text'"
+      :type="'number'"
       :ref_for="true"
       size="md"
       variant="subtle"
@@ -75,7 +75,7 @@
 
     <div class="p-2">
       <FormControl
-      :type="'text'"
+      :type="'number'"
       :ref_for="true"
       size="md"
       variant="subtle"
@@ -85,6 +85,10 @@
       v-model="serviceCharges"
       required
     />
+    </div>
+
+    <div class="text-center p-2">
+      <ErrorMessage :message="validateCharges" />
     </div>
 
     <!-- <div class="p-2 text-center" :required="true">
@@ -231,7 +235,7 @@
 
 
 <script setup>
-import { ref, reactive, inject, onMounted } from 'vue'
+import { ref, reactive, inject, onMounted, compile } from 'vue'
 import { FileText, X } from 'lucide-vue-next'
 import Link from '@/Link.vue'
 import {FileUploader, FormControl, createListResource, Dialog, toast, ErrorMessage} from "frappe-ui"
@@ -252,6 +256,7 @@ const invoiceDate = ref("");
 const invoiceNumber = ref("");
 const billAmount = ref("");
 const serviceCharges = ref("");
+const validateCharges = ref("")
 const errorMessage = ref("")
 const throwMessage = ref("")
 
@@ -287,6 +292,9 @@ function validateFile(file) {
 }
 
 function validate_inputs() {
+  console.log(invoiceDate.value, Date.now(), Date.now() < new Date(invoiceDate.value), ' Date.now() < invoiceDate.value')
+  console.log(billAmount.value < serviceCharges.value, billAmount.value,  serviceCharges.value, 'billAmount.value < serviceCharges.value')
+
   if (!travel.travelDoc) {
     errorMessage.value = 'Please select Project Travel Request'
     return false
@@ -297,6 +305,16 @@ function validate_inputs() {
   // }
   if (!travel.invoice_image?.file_url) {
     errorMessage.value = 'Invoice is Required.'
+    return false
+  }
+
+  if(parseFloat(billAmount.value) < parseFloat(serviceCharges.value)){
+    validateCharges.value = 'Service Charge should not be more than Bill Amount.'
+    return false
+  }
+
+  if(Date.now() < new Date(invoiceDate.value)){
+    validateCharges.value =  'Supplier Invoice Date should not be greater than today'
     return false
   }
 }
@@ -369,13 +387,22 @@ function updateAmount() {
           //   position: "bottom-center",
           //   iconClasses: "text-green-500",
           // })
+
+          invoiceDate.value = "",
+          invoiceNumber.value = "",
+          travel.travelDoc = "",
+          billAmount.value = "",
+          serviceCharges.value = "",
+          // travel.ticket_image = null,
+          travel.invoice_image = null
+
         },
         onError() {
           console.log("Error!!")
           // router.push({name: "success"})
           // router.replace({ path: '/success-page' })
           // router.push({ name: "success" })
-          window.open('/success-page')
+          // window.open('/success-page')
           throwMessage.value = 'Something Went Wrong.'
           // toast({
           //   title: "Error",
@@ -388,14 +415,6 @@ function updateAmount() {
         
       },
       
-
-      invoiceDate.value = "",
-      invoiceNumber.value = "",
-      travel.travelDoc = "",
-      billAmount.value = "",
-      serviceCharges.value = "",
-      // travel.ticket_image = null,
-      travel.invoice_image = null,
     )
 
 }
