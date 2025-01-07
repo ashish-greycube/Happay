@@ -149,7 +149,7 @@
    "in_standard_filter": 1,
    "label": "Ticket Booked By",
    "no_copy": 1,
-   "options": "\nInstitution\nSelf\nSponsored",
+   "options": "\nInstitution\nSelf",
    "reqd": 1
   },
   {
@@ -405,7 +405,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2025-01-02 10:25:24.187778",
+ "modified": "2025-01-07 12:49:05.065787",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
