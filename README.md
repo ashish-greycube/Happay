@@ -14,6 +14,15 @@ HapPay
 
 ![](assets/20240711_114112_roles_add.jpeg)
 
+**Ignore CSRF Token**
+
+In site_config josn set ignore_csrf = 1
+
+```
+bench --site site_name set-config ignore_csrf 1
+```
+
+
 #### License
 
 mit
