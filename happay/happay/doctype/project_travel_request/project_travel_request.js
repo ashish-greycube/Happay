@@ -76,6 +76,7 @@ frappe.ui.form.on("Project Travel Request", {
                         frm.set_value("passenger_first_name", employee_detail.first_name)
                         frm.set_value("passenger_last_name", employee_detail.last_name)
                         frm.set_value("passenger_gender", employee_detail.gender)
+                        frm.set_value("passenger_gender", employee_detail.mobile_no)
                     }
                 }
             })
