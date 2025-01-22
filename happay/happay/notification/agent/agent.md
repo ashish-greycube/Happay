@@ -9,6 +9,7 @@
 Passenger First Name: {{doc.passenger_first_name}}<br>
 Passenger Last Name: {{doc.passenger_last_name}}<br>
 Passenger Gender: {{doc.passenger_gender}}<br>
+Passenger Mobile Number: {{doc.passenger_mobile_number}}<br>
 Passenger Email: {{doc.owner}}<br>
 
 {% elif doc.booking_for == "Guest" %}
@@ -18,6 +19,7 @@ Passenger Email: {{doc.owner}}<br>
         <td>Passenger First Name</td>
         <td>Passenger Last Name</td>
         <td>Passenger Gender</td>
+        <td>Passenger Mobile Number</td>
     </tr>
     {% for row in doc.passenger_details %}
     <tr>
@@ -25,6 +27,7 @@ Passenger Email: {{doc.owner}}<br>
         <td>{{row.passenger_first_name}}</td>
         <td>{{row.passenger_last_name}}</td>
         <td>{{row.passenger_gender}}</td>
+        <td>{{row.passenger_mobile_number}}</td>
     </tr>
     {% endfor %}
 </table>

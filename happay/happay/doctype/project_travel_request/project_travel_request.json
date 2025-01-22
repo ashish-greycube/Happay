@@ -21,6 +21,7 @@
   "passenger_first_name",
   "passenger_last_name",
   "passenger_gender",
+  "passenger_mobile_number",
   "passenger_details",
   "section_break_dhlv",
   "trip_type",
@@ -391,6 +392,14 @@
    "hidden": 1,
    "label": "Naming series",
    "options": "PTR-.#"
+  },
+  {
+   "depends_on": "eval:doc.booking_for==\"Self\"",
+   "fieldname": "passenger_mobile_number",
+   "fieldtype": "Data",
+   "label": "Passenger Mobile Number",
+   "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
+   "read_only_depends_on": "eval:doc.booking_for==\"Self\""
   }
  ],
  "index_web_pages_for_search": 1,
@@ -405,7 +414,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2025-01-07 12:49:05.065787",
+ "modified": "2025-01-22 15:20:37.563741",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
