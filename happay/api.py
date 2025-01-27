@@ -160,3 +160,13 @@ def update_posting_date_based_on_approval(self,method):
 	if ("Projects Approver" in user_roles):
 		if self.workflow_state in ["Pending at Fin 1"]:
 			frappe.db.set_value("Expense Claim",self.name,"posting_date",getdate(today()))
+
+def set_expense_claim_in_attached_file(self, method):
+	if len(self.expenses):
+		for row in self.expenses:
+			if row.custom_bill_attachment:
+				get_file_id = frappe.db.get_all("File",
+									filters={"file_url":row.custom_bill_attachment,"attached_to_name":["like",f"%new-expense-claim%"]},
+									fields=["name","attached_to_name"])
+				if len(get_file_id)>0:
+					frappe.db.set_value("File",get_file_id[0].name,"attached_to_name",self.name)
