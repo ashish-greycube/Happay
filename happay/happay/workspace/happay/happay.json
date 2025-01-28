@@ -1,0 +1,183 @@
+{
+ "charts": [
+  {
+   "chart_name": "Top Vendors",
+   "label": "Top Vendors"
+  },
+  {
+   "chart_name": "Cost Center wise Bill Amount Breakup",
+   "label": "Cost Center wise Bill Amount Breakup"
+  },
+  {
+   "chart_name": "Department wise Bill Amount",
+   "label": "Department wise Bill Amount"
+  },
+  {
+   "chart_name": "Expense Account wise Bill Amount",
+   "label": "Expense Account wise Bill Amount"
+  },
+  {
+   "chart_name": "Project Manger wise Vendor Invoice Count",
+   "label": "Project Manger wise Vendor Invoice Count"
+  },
+  {
+   "chart_name": "Sum of Bill Amount of  Vendor Invoices",
+   "label": "Sum of Bill Amount of  Vendor Invoices"
+  }
+ ],
+ "content": "[{\"id\":\"67lR2qVSBs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Happay</span>\",\"col\":12}},{\"id\":\"PY_vY8i09p\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"k2arBhOM7g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Vendor Invoice\",\"col\":3}},{\"id\":\"BzlVnFCeL4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vendor Invoice\",\"col\":3}},{\"id\":\"nd0QZ5y206\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"id\":\"Gr0QvqLMpA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Entry\",\"col\":3}},{\"id\":\"B2yRPAeEJV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Aj_L3ZoloT\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Invoice</b></span>\",\"col\":12}},{\"id\":\"YoA4JlMv5P\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Invoice\",\"col\":3}},{\"id\":\"7lyZAhZ5jU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at PM Invoice\",\"col\":3}},{\"id\":\"2b9Qxs2qGx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN1 Invoice\",\"col\":3}},{\"id\":\"8y7INdPljk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN2 Invoice\",\"col\":3}},{\"id\":\"2PHwLNlXBu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Pay Invoice\",\"col\":3}},{\"id\":\"7xjL7NrhRx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paid Invoice\",\"col\":3}},{\"id\":\"IxNS3Lu3oB\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"zeLXT8Bpm_\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Advance</b></span>\",\"col\":12}},{\"id\":\"jSiDZFCvMl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Advance\",\"col\":3}},{\"id\":\"PqIgUEPOVW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending At PM Advance\",\"col\":3}},{\"id\":\"nig3RDtcHK\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN1 Advance\",\"col\":3}},{\"id\":\"PlnDtSHq2B\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pending at FIN2 Advance\",\"col\":3}},{\"id\":\"ONd8k-4CW-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"To Pay Advance\",\"col\":3}},{\"id\":\"8-jc5Al7wE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paid Advance\",\"col\":3}},{\"id\":\"Y0a_kTK8hV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"EL7-HY8AK9\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Top Vendors\",\"col\":12}},{\"id\":\"PD04DnXTr2\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Sum of Bill Amount of  Vendor Invoices\",\"col\":12}},{\"id\":\"mCbPi32u_4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Project Manger wise Vendor Invoice Count\",\"col\":12}},{\"id\":\"WbQhfwEJSY\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Cost Center wise Bill Amount Breakup\",\"col\":12}},{\"id\":\"_b0W1sqH4u\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Department wise Bill Amount\",\"col\":12}},{\"id\":\"B57GK-XM8e\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Expense Account wise Bill Amount\",\"col\":12}},{\"id\":\"tkffT5Gv-h\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LN3KZ59ZKx\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "creation": "2024-07-08 12:38:15.323632",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "expenses",
+ "idx": 1,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Happay",
+ "links": [],
+ "modified": "2025-01-28 15:25:17.491651",
+ "modified_by": "Administrator",
+ "module": "Happay",
+ "name": "Happay",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 2.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Pending at PM Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at PM\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Draft Advance",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Draft\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Draft Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Draft\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "New",
+   "label": "New Vendor Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Purchase Invoice",
+   "link_to": "Purchase Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Pending at FIN1 Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 1\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Yellow",
+   "doc_view": "List",
+   "label": "Vendor Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "Payment Entry",
+   "link_to": "Payment Entry",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "To Pay Advance",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Pay\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Pending at FIN2 Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 2\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "To Pay Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"To Pay\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Paid Advance",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Paid\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Paid Invoice",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Paid\",false],[\"Vendor Invoice\",\"type\",\"in\",[\"Invoice\",\"Invoice against Advance\",null],false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Pending At PM Advance",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at PM\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Pending at FIN1 Advance",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 1\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Pending at FIN2 Advance",
+   "link_to": "Vendor Invoice",
+   "stats_filter": "[[\"Vendor Invoice\",\"workflow_state\",\"=\",\"Pending at Fin 2\",false],[\"Vendor Invoice\",\"type\",\"=\",\"Advance\",false]]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Happay"
+}
