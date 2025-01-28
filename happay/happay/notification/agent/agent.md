@@ -4,6 +4,8 @@
 
 <p>Please find the details required to book the ticket for the upcoming trip:<br><br></p>
 
+<p>Company:{{doc.company}}</p><br>
+
 <p>Passenger Details:<br><br>
 {% if doc.booking_for == "Self"  %}
 Passenger First Name: {{doc.passenger_first_name}}<br>
