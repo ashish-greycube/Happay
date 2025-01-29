@@ -117,15 +117,16 @@ def validate_posting_date_and_expense_date(self, method):
 def create_user_permission(self, method):
 
 	if self.user_id:
-		employee_user_permission_exists = frappe.db.exists(
-				"User Permission", {"allow": "Employee", "for_value": self.name, "user": self.user_id}
-			)
-
-		if employee_user_permission_exists:
-			return
-
-		add_user_permission("Employee", self.name, self.user_id)
-		frappe.msgprint(_("User permissions for Employee is created"),alert=True)
+		user_roles = frappe.get_roles(self.user_id)
+		if "Finance Team" not in user_roles:
+			employee_user_permission_exists = frappe.db.exists(
+					"User Permission", {"allow": "Employee", "for_value": self.name, "user": self.user_id}
+				)
+			if employee_user_permission_exists:
+				return
+			else :
+				add_user_permission("Employee", self.name, self.user_id)
+				frappe.msgprint(_("User permissions for Employee is created"),alert=True)
 
 def set_department_in_all_row(self, method):
 	if len(self.expenses)>0:
@@ -162,6 +163,7 @@ def update_posting_date_based_on_approval(self,method):
 			frappe.db.set_value("Expense Claim",self.name,"posting_date",getdate(today()))
 
 def set_expense_claim_in_attached_file(self, method):
+	# https://github.com/frappe/frappe/pull/30883
 	if len(self.expenses):
 		for row in self.expenses:
 			if row.custom_bill_attachment:
