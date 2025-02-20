@@ -73,7 +73,7 @@ class VendorInvoice(Document):
 			frappe.db.set_value("Project Travel Request",self.project_travel_request,"workflow_state","Billed")
 
 	def on_update(self):
-		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1"]:
+		if self.workflow_state in ["Rejected by PM","Rejected By Fin 1","Rejected By Fin 2"]:
 			if self.rejection_remark==None or self.rejection_remark=="":
 				frappe.throw(_("Please provide rejection remark"))
 

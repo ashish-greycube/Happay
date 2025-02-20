@@ -159,8 +159,10 @@ let make_all_fields_read_only = function(frm) {
             meta.fields.forEach((value) => {
             console.log(value.fieldname)
             if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
+                if (value.fieldname != "rejection_remark") {
                     frm.set_df_property(value.fieldname, 'read_only', 1)
                 }
+            }
             });
         });
     }

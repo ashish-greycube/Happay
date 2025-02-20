@@ -161,6 +161,11 @@ def update_posting_date_based_on_approval(self,method):
 	if ("Projects Approver" in user_roles):
 		if self.workflow_state in ["Pending at Fin 1"]:
 			frappe.db.set_value("Expense Claim",self.name,"posting_date",getdate(today()))
+		
+def add_rejection_remark_for_rejection(self,method):
+	if self.workflow_state in ["Rejected By Fin 1","Rejected by PM","Rejected By Fin 2"]:
+		if self.custom_rejection_remark==None or self.custom_rejection_remark=="":
+			frappe.throw(_("Please provide rejection remark"))
 
 def set_expense_claim_in_attached_file(self, method):
 	# https://github.com/frappe/frappe/pull/30883

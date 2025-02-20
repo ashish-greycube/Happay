@@ -141,7 +141,8 @@ doc_events = {
                     "happay.api.validate_amount_and_sanctioned_amount"],
         "after_insert": ["happay.api.share_expense_claim_to_employee",
                          "happay.api.set_expense_claim_in_attached_file"],
-        "on_update":"happay.api.update_posting_date_based_on_approval"
+        "on_update":["happay.api.update_posting_date_based_on_approval",
+                     "happay.api.add_rejection_remark_for_rejection"]
 	},
     "Employee": {
         "on_update":"happay.api.create_user_permission"

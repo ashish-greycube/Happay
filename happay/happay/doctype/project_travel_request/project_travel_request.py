@@ -16,6 +16,11 @@ class ProjectTravelRequest(Document):
 		self.validate_dates()
 		self.validate_source_and_destination()
 	
+	def on_update(self):
+		if self.workflow_state in ["Rejected","Rejected by PM"]:
+			if self.rejection_remark==None or self.rejection_remark=="":
+				frappe.throw(_("Please provide rejection remark"))
+
 	def on_update_after_submit(self):
 		self.changes_workflow_status_based_on_ticket_and_invoice()
 		if self.workflow_state == "Billed":
