@@ -30,6 +30,7 @@
   "time_onward",
   "source",
   "expense_account",
+  "rejection_remark",
   "cb_1",
   "expected_outcome",
   "to_date",
@@ -400,6 +401,11 @@
    "label": "Passenger Mobile Number",
    "mandatory_depends_on": "eval:doc.booking_for==\"Self\"",
    "read_only_depends_on": "eval:doc.booking_for==\"Self\""
+  },
+  {
+   "fieldname": "rejection_remark",
+   "fieldtype": "Small Text",
+   "label": "Rejection Remark"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -414,7 +420,7 @@
    "link_fieldname": "custom_project_travel_request"
   }
  ],
- "modified": "2025-01-22 15:20:37.563741",
+ "modified": "2025-02-20 13:06:27.938332",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Project Travel Request",
