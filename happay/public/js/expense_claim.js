@@ -161,8 +161,14 @@ function set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm) {
                 let meta = frappe.get_meta("Expense Claim");
                 meta.fields.forEach((value) => {
                     if (!["Section Break", "Column Break"].includes(value.fieldtype)) {
+                        console.log("--------------")
                         if (!["expenses"].includes(value.fieldname)) {
-                            frm.set_df_property(value.fieldname, 'read_only', 1)
+                            console.log("_______________",value.fieldname)
+                            if (value.fieldname != "custom_rejection_remark") {
+                                console.log("========")
+                                frm.set_df_property(value.fieldname, 'read_only', 1)
+                            }
+                            // frm.set_df_property(value.fieldname, 'read_only', 1)
                         }
                     }
                 });
