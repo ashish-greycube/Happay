@@ -174,5 +174,9 @@ function set_parent_fields_as_readonly_for_fin1_fin2_pm_role(frm) {
                 });
             });
         }   
-    } 
+    }
+    
+    if (frm.is_new() && frappe.user.has_role("Employee")){
+        frm.set_df_property("custom_rejection_remark","read_only",1)
+    }
 }
