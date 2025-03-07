@@ -44,14 +44,14 @@ def change_status_of_vendor_invoice(self,method):
 def create_custom_user_permission_for_project_manager(self,method):
 	if self.is_group==1 and self.custom_project_manager:
 		permission_for_vi = add_user_permission(doctype="User",user=self.custom_project_manager,name=self.custom_project_manager,applicable_for="Vendor Invoice",ignore_permissions=True)
-		permission_for_ptr = add_user_permission(doctype="User",user=self.custom_project_manager,name=self.custom_project_manager,applicable_for="Project Travel Request",ignore_permissions=True)
+		# permission_for_ptr = add_user_permission(doctype="User",user=self.custom_project_manager,name=self.custom_project_manager,applicable_for="Project Travel Request",ignore_permissions=True)
 		check_exist_for_vi = frappe.db.exists("User Permission", {"user":self.custom_project_manager,"applicable_for":"Vendor Invoice"})
-		check_exist_for_ptr = frappe.db.exists("User Permission", {"user":self.custom_project_manager,"applicable_for":"Project Travel Request"})
+		# check_exist_for_ptr = frappe.db.exists("User Permission", {"user":self.custom_project_manager,"applicable_for":"Project Travel Request"})
 		
 		if check_exist_for_vi != None:
 			frappe.msgprint(_("User Permission {0} is added for Vendor Invoice").format(get_link_to_form("User Permission", check_exist_for_vi)),alert=True)
-		if check_exist_for_ptr != None:
-			frappe.msgprint(_("User Permission {0} is added Project Travel Request").format(get_link_to_form("User Permission", check_exist_for_ptr)),alert=True)
+		# if check_exist_for_ptr != None:
+		# 	frappe.msgprint(_("User Permission {0} is added Project Travel Request").format(get_link_to_form("User Permission", check_exist_for_ptr)),alert=True)
 
 def set_cost_center_in_all_row(self, method):
 	if self.custom_to_distribute_diff_cc == 0:
