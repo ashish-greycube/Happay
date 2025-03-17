@@ -273,6 +273,7 @@
    "fieldname": "advance_account",
    "fieldtype": "Link",
    "label": "Advance Account",
+   "mandatory_depends_on": "eval:(doc.company && doc.type==\"Invoice against Advance\" || doc.type==\"Advance\")",
    "no_copy": 1,
    "options": "Account"
   },
@@ -409,7 +410,7 @@
   }
  ],
  "make_attachments_public": 1,
- "modified": "2025-01-20 13:52:24.938126",
+ "modified": "2025-03-17 15:25:30.238960",
  "modified_by": "Administrator",
  "module": "Happay",
  "name": "Vendor Invoice",
