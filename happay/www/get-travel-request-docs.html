@@ -5,10 +5,8 @@
     <link rel="icon" href="/assets/happay/get-travel-request-docs/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Upload Travel  Ticket & Bill</title>
-    <script type="module" crossorigin src="/assets/happay/get-travel-request-docs/assets/index.64244dea.js"></script>
-    <link rel="modulepreload" href="/assets/happay/get-travel-request-docs/assets/vendor.6e4c61e1.js">
-    <link rel="stylesheet" href="/assets/happay/get-travel-request-docs/assets/vendor.1875b906.css">
-    <link rel="stylesheet" href="/assets/happay/get-travel-request-docs/assets/index.86c258fa.css">
+    <script type="module" crossorigin src="/assets/happay/get-travel-request-docs/assets/index.07f59ec6.js"></script>
+    <link rel="stylesheet" href="/assets/happay/get-travel-request-docs/assets/index.f932f5d4.css">
   </head>
   <body>
     <div id="app"></div>
@@ -19,5 +17,12 @@
       window.csrf_token = '{{ frappe.session.csrf_token }}'
     </script>
     
-  </body>
+  
+          <script>
+              {% for key in boot %}
+              window["{{ key }}"] = {{ boot[key] | tojson }};
+              {% endfor %}
+          </script>
+          </body>
+          
 </html>
