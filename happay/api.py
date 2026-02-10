@@ -86,7 +86,7 @@ def share_expense_claim_to_employee(self,method):
 			required_user_list.append(user.name)
 	
 	for user_id in required_user_list:
-		shared_with_user=add(self.doctype, self.name, user=user_id, read=1, write=1, submit=1)
+		shared_with_user=add(self.doctype, self.name, user=user_id, read=1, write=1, submit=0)
 		if shared_with_user:
 				frappe.msgprint(
 					_("Expense Claim {0} is shared with {1} user").format(self.name,user_id),
