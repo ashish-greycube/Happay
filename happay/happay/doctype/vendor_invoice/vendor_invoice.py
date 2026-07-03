@@ -11,6 +11,7 @@ from erpnext.accounts.party import get_party_account
 from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 from frappe.desk.reportview import get_filters_cond, get_match_cond
 from frappe.utils.data import rounded
+import math
 
 class VendorInvoice(Document):
 	def validate(self):
@@ -143,6 +144,15 @@ class VendorInvoice(Document):
 					pi_status = frappe.db.get_value("Journal Entry",check_pe_exists,"docstatus")
 					if pi_status == 0:
 						frappe.throw(_("Journal Entry {0} is in draft state, hence you cannot complete vendor invoice.").format(get_link_to_form("Payment Entry", check_pe_exists)))
+
+	@frappe.whitelist()
+	def calculate_tds_computed_amount(self):
+		if self.tds_amount and self.tds_rate:
+			computed_amount = (self.tds_amount * self.tds_rate) / 100
+			rounded_computed_amount = int(computed_amount) + (1 if computed_amount % 1 >= 0.5 else 0)
+			return rounded_computed_amount
+		else:
+			return 0
 
 
 @frappe.whitelist()
